@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Trip detail — Skybox Global</title>
-<link rel="icon" href="/skybox-icon.svg" type="image/svg+xml" />
+<link rel="icon" href="/skybox-icon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="/_ext/js.skyscnr.com/sttc/hamilton/falcon/static/css/bpk-styles.5b069319.css">
 <style>
   body { margin:0; background:#f4f5f6; color:#05203c; font-family:"Skyscanner Relative",-apple-system,sans-serif; }
@@ -37,8 +37,122 @@
     return `
       <div class="card"><div style="display:flex;justify-content:space-between;align-items:center"><div><div style="font-size:24px;font-weight:800;letter-spacing:1px">${o.booking_reference}</div><div class="meta">${o.duffel_order_id}<span class="pill ${o.status}">${o.status}</span></div></div><div style="text-align:right"><div style="font-size:22px;font-weight:800">${o.total_amount} ${o.currency}</div><div class="meta">${o.contact.email}</div></div></div></div>
       <div class="card"><h2 style="margin:0 0 12px;font-size:18px">Itinerary</h2>${slices || '<div class="meta">No segments.</div>'}</div>
-      <div class="card" style="display:flex;gap:10px;flex-wrap:wrap">${isCancelled ? '<div class="meta">This trip is cancelled.</div>' : '<button class="btn danger" id="cancelBtn">Cancel booking</button>'}<a class="btn ghost" href="/trips">Back to trips</a></div>`;
+      <div class="card" style="display:flex;gap:10px;flex-wrap:wrap">${isCancelled ? '<div class="meta">This trip is cancelled.</div>' : '<button class="btn danger" id="cancelBtn">Cancel booking</button> <button class="btn ghost" id="changeBtn">Request a change</button>'}<a class="btn ghost" href="/trips">Back to trips</a></div>`;
   }
+
+  // ---------------- Change-flight modal flow ----------------
+  function openChangeModal(order) {
+    const modal = document.createElement('div');
+    modal.id = 'sb-change-modal';
+    modal.style.cssText = 'position:fixed;inset:0;z-index:2147483600;background:rgba(5,32,60,.55);display:flex;align-items:center;justify-content:center;padding:20px';
+    // Pull origin/destination from the first slice; default new dates blank.
+    const slices = order.slices || [];
+    const out = slices[0];
+    const back = slices[1];
+    const today = new Date().toISOString().slice(0, 10);
+    modal.innerHTML = `
+      <div style="background:#fff;border-radius:8px;max-width:720px;width:100%;max-height:88vh;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 12px 40px rgba(0,0,0,.2)">
+        <header style="padding:16px 20px;border-bottom:1px solid #eef0f3;display:flex;align-items:center;gap:12px">
+          <h2 style="margin:0;font-size:18px;flex:1">Request a flight change</h2>
+          <button type="button" id="sb-cg-close" aria-label="Close" style="border:0;background:#eef1f5;width:32px;height:32px;border-radius:50%;font-size:18px;cursor:pointer">×</button>
+        </header>
+        <div id="sb-cg-body" style="flex:1;overflow-y:auto;padding:20px">
+          <div id="sb-cg-step1">
+            <p style="margin:0 0 14px;color:#545860">Keep your route (${out ? out.origin.iata + ' → ' + out.destination.iata : ''}); pick new date(s). Penalty + fare difference shown next.</p>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px">
+              <div><label style="font-size:12px;color:#545860">New depart date</label><input id="sb-cg-dep" type="date" min="${today}" style="width:100%;padding:8px;border:1px solid #dadce0;border-radius:4px;font:inherit"></div>
+              ${back ? `<div><label style="font-size:12px;color:#545860">New return date</label><input id="sb-cg-ret" type="date" min="${today}" style="width:100%;padding:8px;border:1px solid #dadce0;border-radius:4px;font:inherit"></div>` : ''}
+            </div>
+          </div>
+          <div id="sb-cg-step2" style="display:none"></div>
+        </div>
+        <footer style="padding:14px 20px;border-top:1px solid #eef0f3;display:flex;gap:10px;justify-content:flex-end">
+          <button type="button" class="btn ghost" id="sb-cg-cancel">Cancel</button>
+          <button type="button" class="btn" id="sb-cg-search">Search changes</button>
+          <button type="button" class="btn" id="sb-cg-confirm" style="display:none;background:#1e8c4a">Confirm change</button>
+        </footer>
+      </div>`;
+    document.body.appendChild(modal);
+    modal.addEventListener('click', (e) => { if (e.target === modal) modal.remove(); });
+    modal.querySelector('#sb-cg-close').addEventListener('click', () => modal.remove());
+    modal.querySelector('#sb-cg-cancel').addEventListener('click', () => modal.remove());
+
+    let pickedOfferId = null;
+
+    modal.querySelector('#sb-cg-search').addEventListener('click', async () => {
+      const dep = modal.querySelector('#sb-cg-dep').value;
+      const ret = back ? modal.querySelector('#sb-cg-ret').value : null;
+      if (!dep) { alert('Pick a new depart date'); return; }
+      if (back && !ret) { alert('Pick a new return date (or contact support for a one-way change)'); return; }
+      const btn = modal.querySelector('#sb-cg-search');
+      btn.disabled = true; btn.textContent = 'Searching…';
+      const newSlices = [{ origin: out.origin.iata, destination: out.destination.iata, departure_date: dep }];
+      if (back) newSlices.push({ origin: back.origin.iata, destination: back.destination.iata, departure_date: ret });
+      try {
+        const r1 = await fetch('/skybox-api/orders/' + encodeURIComponent(id) + '/changes', {
+          method: 'POST', headers: { 'content-type': 'application/json' },
+          body: JSON.stringify({ slices: newSlices }),
+        });
+        const j1 = await r1.json();
+        if (!r1.ok || j1.error) throw new Error(j1.error?.message || 'change request failed');
+        const r2 = await fetch('/skybox-api/orders/' + encodeURIComponent(id) + '/change-offers?request_id=' + encodeURIComponent(j1.change_request_id));
+        const j2 = await r2.json();
+        if (!r2.ok || j2.error) throw new Error(j2.error?.message || 'change offers fetch failed');
+        const offers = (j2.offers || []).slice(0, 12);
+        if (!offers.length) { alert('No change offers available for those dates.'); btn.disabled = false; btn.textContent = 'Search changes'; return; }
+        modal.querySelector('#sb-cg-step1').style.display = 'none';
+        const step2 = modal.querySelector('#sb-cg-step2');
+        step2.style.display = '';
+        step2.innerHTML = `<p style="margin:0 0 12px;color:#545860">${offers.length} change option${offers.length !== 1 ? 's' : ''} returned. Pick one.</p>` + offers.map((o, i) => {
+          const ch = parseFloat(o.change_total_amount || '0');
+          const fee = parseFloat(o.penalty_amount || '0');
+          return `<label style="display:block;padding:12px;border:1px solid #dadce0;border-radius:6px;margin-bottom:8px;cursor:pointer">
+            <div style="display:flex;align-items:center;gap:10px">
+              <input type="radio" name="sb-cg-offer" value="${o.id}">
+              <div style="flex:1">
+                <div style="font-weight:700">${(o.slices && o.slices[0]) ? o.slices[0].origin.iata + ' → ' + o.slices[0].destination.iata : 'Change option ' + (i+1)}</div>
+                <div style="color:#545860;font-size:13px">${(o.slices || []).map((s) => new Date(s.departing_at).toLocaleString()).join(' · ')}</div>
+              </div>
+              <div style="text-align:right">
+                <div style="font-weight:800;font-size:18px">${ch >= 0 ? '+' : ''}${o.change_total_amount} ${o.change_total_currency}</div>
+                ${fee ? `<div style="font-size:11px;color:#5d4037">incl. ${o.penalty_amount} ${o.penalty_currency} penalty</div>` : ''}
+              </div>
+            </div>
+          </label>`;
+        }).join('');
+        step2.addEventListener('change', (ev) => {
+          if (ev.target && ev.target.name === 'sb-cg-offer') {
+            pickedOfferId = ev.target.value;
+            modal.querySelector('#sb-cg-confirm').style.display = '';
+          }
+        });
+        btn.style.display = 'none';
+      } catch (e) {
+        alert(e.message); btn.disabled = false; btn.textContent = 'Search changes';
+      }
+    });
+
+    modal.querySelector('#sb-cg-confirm').addEventListener('click', async () => {
+      if (!pickedOfferId) return;
+      if (!confirm('Confirm this change? It will modify your airline booking and charge any difference.')) return;
+      const btn = modal.querySelector('#sb-cg-confirm');
+      btn.disabled = true; btn.textContent = 'Confirming…';
+      try {
+        const r = await fetch('/skybox-api/orders/' + encodeURIComponent(id) + '/changes/confirm', {
+          method: 'POST', headers: { 'content-type': 'application/json', 'Idempotency-Key': id + ':change:' + pickedOfferId },
+          body: JSON.stringify({ selected_order_change_offer: pickedOfferId }),
+        });
+        const j = await r.json();
+        if (!r.ok || j.error) throw new Error(j.error?.message || 'change confirm failed');
+        alert('Change confirmed.');
+        modal.remove();
+        location.reload();
+      } catch (e) {
+        alert(e.message); btn.disabled = false; btn.textContent = 'Confirm change';
+      }
+    });
+  }
+
   fetch('/skybox-api/orders/' + encodeURIComponent(id)).then((r) => r.json().then((j) => ({ ok: r.ok, j }))).then(({ ok, j }) => {
     if (!ok || j.error) { document.querySelector('#container').innerHTML = '<div class="card">' + (j.error?.message || 'Cannot load order.') + '</div>'; return; }
     document.querySelector('#container').innerHTML = render(j);
@@ -52,6 +166,8 @@
       alert('Cancelled. Refund: ' + (x.refund_amount ? (x.refund_amount + ' ' + x.refund_currency) : 'none'));
       location.reload();
     });
+    const changeBtn = document.getElementById('changeBtn');
+    if (changeBtn) changeBtn.addEventListener('click', () => openChangeModal(j));
   });
 })();
 </script>

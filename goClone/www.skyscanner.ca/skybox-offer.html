@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Review your flight — Skybox Global</title>
-<link rel="icon" href="/skybox-icon.svg" type="image/svg+xml" />
+<link rel="icon" href="/skybox-icon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="/_ext/js.skyscnr.com/sttc/hamilton/falcon/static/css/bpk-styles.5b069319.css">
 <link rel="stylesheet" href="/_ext/js.skyscnr.com/sttc/banana/static/css/bpk-styles.00b4170a.chunk.css">
 <script defer src="/skybox-duffel-components.js"></script>
@@ -56,7 +56,13 @@
     <div>
       <section class="card"><h2>Itinerary</h2><div class="sub" id="ownerLine">Loading…</div><div id="slices"></div></section>
       <section class="card"><h2>Passengers</h2><p class="sub">Names must match each passenger's travel document exactly.</p><div id="paxList"></div></section>
-      <section class="card" id="ancillariesCard" style="display:none"><h2>Add bags &amp; seats</h2><div id="ancillaries"></div></section>
+      <section class="card" id="ancillariesCard" style="display:none"><h2>Add bags</h2><div id="ancillaries"></div></section>
+      <section class="card">
+        <h2>Seats</h2>
+        <p class="sub">Pick your seat now or let the airline assign one at check-in.</p>
+        <button type="button" class="btn ghost" id="openSeatsBtn">Select seats →</button>
+        <div id="selectedSeatsSummary" style="margin-top:8px;font-size:13px;color:#545860"></div>
+      </section>
       <section class="card"><h2>Contact</h2><div class="form-row"><div><label>Email</label><input id="cEmail" type="email" required></div><div><label>Phone</label><input id="cPhone" type="tel" placeholder="+14165551234"></div></div></section>
       <section class="card" id="paymentCard"><h2>Payment</h2><p class="sub">Card data stays with Duffel.</p><div id="cardFormHost">Click <b>Continue to payment</b> to create a Duffel Payment Intent.</div></section>
     </div>
@@ -172,6 +178,174 @@
       $('#payBtn').style.display = '';
     } catch (e) { showErr(e.message); $('#continueBtn').disabled = false; $('#continueBtn').textContent = 'Continue to payment'; }
   });
+  // ---------------- Seat map picker ----------------
+  // Modal that fetches /skybox-api/flights/offers/:id/seat-maps, renders a
+  // per-segment grid, and lets the user pick one seat per passenger per
+  // segment. Selected seats are added to SB.services so the order create
+  // call includes them.
+  let seatMaps = null;
+  const selectedSeats = {}; // key: passengerId|segmentId -> { service_id, designator, amount, currency }
+
+  const seatBtn = document.querySelector('#openSeatsBtn');
+  if (seatBtn) seatBtn.addEventListener('click', openSeatMapModal);
+
+  async function openSeatMapModal() {
+    if (!offer) { showErr('Offer not loaded yet'); return; }
+    const modal = document.createElement('div');
+    modal.id = 'sb-seatmap-modal';
+    modal.style.cssText = 'position:fixed;inset:0;z-index:2147483600;background:rgba(5,32,60,.55);display:flex;align-items:center;justify-content:center;padding:20px';
+    modal.innerHTML = `
+      <div style="background:#fff;border-radius:8px;padding:0;max-width:760px;width:100%;max-height:88vh;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 12px 40px rgba(0,0,0,.2)">
+        <header style="padding:16px 20px;border-bottom:1px solid #eef0f3;display:flex;align-items:center;gap:12px">
+          <h2 style="margin:0;font-size:18px;flex:1">Select your seats</h2>
+          <button type="button" id="sb-seat-close" aria-label="Close" style="border:0;background:#eef1f5;width:32px;height:32px;border-radius:50%;font-size:18px;cursor:pointer">×</button>
+        </header>
+        <div id="sb-seat-tabs" style="display:flex;gap:0;border-bottom:1px solid #eef0f3;overflow-x:auto"></div>
+        <div id="sb-seat-body" style="flex:1;overflow-y:auto;padding:18px 20px;background:#fafbfc">
+          <div style="text-align:center;color:#545860;padding:40px 0">Loading seat map…</div>
+        </div>
+        <footer style="padding:14px 20px;border-top:1px solid #eef0f3;display:flex;align-items:center;gap:12px">
+          <div id="sb-seat-status" style="flex:1;color:#545860;font-size:13px">No seats selected yet</div>
+          <button type="button" class="btn ghost" id="sb-seat-cancel">Cancel</button>
+          <button type="button" class="btn" id="sb-seat-apply">Apply</button>
+        </footer>
+      </div>`;
+    document.body.appendChild(modal);
+    modal.addEventListener('click', (e) => { if (e.target === modal) modal.remove(); });
+    modal.querySelector('#sb-seat-close').addEventListener('click', () => modal.remove());
+    modal.querySelector('#sb-seat-cancel').addEventListener('click', () => modal.remove());
+    modal.querySelector('#sb-seat-apply').addEventListener('click', () => applySeatSelection(modal));
+
+    if (!seatMaps) {
+      try {
+        const r = await fetch('/skybox-api/flights/offers/' + encodeURIComponent(offer.id) + '/seat-maps');
+        const j = await r.json();
+        seatMaps = j.seat_maps || [];
+      } catch (e) { seatMaps = []; }
+    }
+    if (!seatMaps.length) {
+      modal.querySelector('#sb-seat-body').innerHTML = '<div style="text-align:center;color:#545860;padding:40px 0">No seat selection available for this fare. Seats will be assigned at check-in.</div>';
+      return;
+    }
+    // Each seat_map corresponds to a segment. Build a tab per segment.
+    const tabs = modal.querySelector('#sb-seat-tabs');
+    seatMaps.forEach((sm, i) => {
+      const segId = sm.segment_id;
+      const seg = (offer.slices || []).flatMap((s) => s.segments).find((g) => g.id === segId);
+      const label = seg ? (seg.origin + ' → ' + seg.destination) : ('Segment ' + (i + 1));
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.dataset.idx = String(i);
+      btn.style.cssText = 'background:none;border:0;border-bottom:3px solid transparent;padding:12px 16px;cursor:pointer;font:inherit;font-size:13px;color:#545860;white-space:nowrap';
+      btn.textContent = label;
+      btn.addEventListener('click', () => renderSegment(modal, i));
+      tabs.appendChild(btn);
+    });
+    renderSegment(modal, 0);
+  }
+
+  function renderSegment(modal, idx) {
+    Array.from(modal.querySelectorAll('#sb-seat-tabs button')).forEach((b, i) => {
+      const active = i === idx;
+      b.style.color = active ? '#05203c' : '#545860';
+      b.style.fontWeight = active ? '700' : '400';
+      b.style.borderBottomColor = active ? '#0062e3' : 'transparent';
+    });
+    const sm = seatMaps[idx];
+    const body = modal.querySelector('#sb-seat-body');
+    const cabins = sm.cabins || [];
+    let html = `<div style="text-align:center;margin-bottom:14px;color:#545860;font-size:12px;text-transform:uppercase;letter-spacing:.5px">↑ Front of aircraft</div>`;
+    for (const cabin of cabins) {
+      html += `<div style="margin-bottom:18px"><div style="font-size:12px;color:#545860;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">${cabin.cabin_class || 'Cabin'}</div>`;
+      const rows = cabin.rows || [];
+      for (const row of rows) {
+        html += `<div style="display:flex;gap:4px;justify-content:center;margin-bottom:4px">`;
+        for (const section of (row.sections || [])) {
+          html += '<div style="display:flex;gap:4px">';
+          for (const el of (section.elements || [])) {
+            if (el.type === 'seat') {
+              const designator = el.designator;
+              const services = el.available_services || [];
+              const svc = services[0]; // simplification: take the first passenger's service
+              const price = svc ? svc.total_amount + ' ' + svc.total_currency : '';
+              const available = !!svc;
+              const segId = sm.segment_id;
+              const passId = (offer.passengers && offer.passengers[0] && offer.passengers[0].id) || '';
+              const key = passId + '|' + segId;
+              const isSelected = selectedSeats[key] && selectedSeats[key].designator === designator;
+              const style = `display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:4px;font-size:11px;font-weight:600;${
+                isSelected ? 'background:#0062e3;color:#fff;border:2px solid #0046a3' :
+                available ? 'background:#fff;color:#05203c;border:1px solid #dadce0;cursor:pointer' :
+                'background:#eef1f5;color:#a3b1c4;border:1px solid #eef1f5'
+              }`;
+              const dataAttr = available ? `data-seat="${designator}" data-svc="${svc.id}" data-amt="${svc.total_amount}" data-cur="${svc.total_currency}" data-pass="${passId}" data-seg="${segId}"` : '';
+              html += `<div title="${available ? designator + ' · ' + price : 'Unavailable'}" style="${style}" ${dataAttr}>${designator}</div>`;
+            } else if (el.type === 'aisle') {
+              html += '<div style="width:18px"></div>';
+            } else {
+              html += `<div title="${el.type}" style="display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;font-size:10px;color:#a3b1c4">${el.type.slice(0,3)}</div>`;
+            }
+          }
+          html += '</div>';
+        }
+        html += '</div>';
+      }
+      html += '</div>';
+    }
+    body.innerHTML = html;
+    body.querySelectorAll('[data-seat]').forEach((cell) => {
+      cell.addEventListener('click', () => {
+        const passId = cell.dataset.pass, segId = cell.dataset.seg, key = passId + '|' + segId;
+        if (selectedSeats[key] && selectedSeats[key].designator === cell.dataset.seat) {
+          delete selectedSeats[key];
+        } else {
+          selectedSeats[key] = {
+            service_id: cell.dataset.svc,
+            designator: cell.dataset.seat,
+            amount: cell.dataset.amt,
+            currency: cell.dataset.cur,
+            passenger_id: passId,
+            segment_id: segId,
+          };
+        }
+        renderSegment(modal, idx);
+        updateSeatStatus(modal);
+      });
+    });
+    updateSeatStatus(modal);
+  }
+
+  function updateSeatStatus(modal) {
+    const status = modal.querySelector('#sb-seat-status');
+    const items = Object.values(selectedSeats);
+    if (!items.length) { status.textContent = 'No seats selected yet'; return; }
+    const total = items.reduce((a, s) => a + parseFloat(s.amount || 0), 0);
+    const curr = items[0].currency;
+    status.textContent = `${items.length} seat${items.length !== 1 ? 's' : ''} selected · +${total.toFixed(2)} ${curr}`;
+  }
+
+  function applySeatSelection(modal) {
+    // Add seat services to SB.services array used by /confirm.
+    if (!Array.isArray(window.__SB_SERVICES)) window.__SB_SERVICES = [];
+    window.__SB_SERVICES = Object.values(selectedSeats).map((s) => ({ id: s.service_id, quantity: 1 }));
+    // Surface in the summary line under the seat button.
+    const sum = document.querySelector('#selectedSeatsSummary');
+    if (sum) {
+      const items = Object.values(selectedSeats);
+      if (!items.length) sum.textContent = '';
+      else sum.textContent = items.map((s) => s.designator).join(', ') + ' · seats added to your booking';
+    }
+    modal.remove();
+  }
+
+  // Override the readServices() so it picks up seat services too.
+  const _origReadServices = readServices;
+  readServices = function () {
+    const ancil = _origReadServices();
+    const seats = (window.__SB_SERVICES || []);
+    return ancil.concat(seats);
+  };
+
   $('#payBtn').addEventListener('click', async () => {
     if (!confirm('This will create a REAL airline booking and charge the card. Continue?')) return;
     $('#payBtn').disabled = true;
