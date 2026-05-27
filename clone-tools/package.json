@@ -1,0 +1,26 @@
+{
+  "name": "clone-tools",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@duffel/api": "^4.25.0",
+    "@duffel/components": "^3.16.1",
+    "@prisma/client": "^6.19.3",
+    "dotenv": "^17.4.2",
+    "esbuild": "^0.28.0",
+    "playwright": "^1.60.0",
+    "prisma": "^6.19.3",
+    "resend": "^6.12.4"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "^4.11.3",
+    "@playwright/test": "^1.60.0"
+  }
+}

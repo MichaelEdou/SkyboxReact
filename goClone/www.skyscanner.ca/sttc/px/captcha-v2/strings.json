@@ -1,0 +1,2178 @@
+{
+  "strmgmt_meta": {
+    "last-modified": "2025/08/01 12:33"
+  },
+  "ar-AE": {
+    "ktxtCaptcha_robot_checkbox": {
+      "target": "ضع علامة داخل المربع للمتابعة:"
+    },
+    "ktxtCaptcha_robot_copy": {
+      "target": "يُرجى ألا تأخذ هذا الأمر على محمل شخصي - تبدو بعض البرامج النصية والروبوتات كالأشخاص بشكل ملحوظ هذه الأيام!"
+    },
+    "ktxtCaptcha_robot_generic_error": {
+      "target": "حدث خطأ. يُرجى المحاولة لاحقًا"
+    },
+    "ktxtCaptcha_robot_heading": {
+      "target": "هل أنت بشري أم روبوت؟"
+    },
+    "ktxtCaptcha_robot_problems": {
+      "target": "هل ما زلت تواجه صعوبات في الوصول إلى الصفحة؟ جرِّب التحقق من تشغيل جافا سكريبت وملفات تعريف الارتباط وأن متصفّحك لا يمنع تحميلها."
+    },
+    "ktxtHC_ac_1": {
+      "target": "للمتابعة، نحتاج إلى التحقق مرة أخرى من أنك لست روبوتًا! يرجى النقر مع الاستمرار على الزر حتى تكتمل عملية التحقق."
+    },
+    "ktxtHC_ac_1_mobile": {
+      "target": "للمتابعة، نحتاج إلى التحقق من أنك لست روبوت! يرجى النقر مع الاستمرار على الزر حتى تكتمل عملية التحقق."
+    },
+    "ktxtHC_ac_2": {
+      "target": "رائع، يبدو أنك إنسان حقيقي. الرجاء الانتظار قليلاً، ستتمكن من المتابعة قريبًا."
+    },
+    "ktxtHC_al_1": {
+      "target": "هناك مشكلة في الاتصال. يرجى التحقق مرة أخرى من اتصالك بالإنترنت، ثم قم بتحديث الصفحة."
+    },
+    "ktxtHC_al_2": {
+      "target": "أداة التحقق غير متوافقة مع متصفحك. يرجى ترقية المتصفحات أو تبديلها والمحاولة مرة أخرى."
+    },
+    "ktxtHC_button": {
+      "target": "انقر بشكل مستمر"
+    },
+    "ktxtHC_button_mobile": {
+      "target": "انقر بشكل مستمر"
+    },
+    "ktxtHC_failed": {
+      "target": "يُرجى إعادة المحاولة"
+    }
+  },
+  "bg-BG": {
+    "ktxtCaptcha_robot_checkbox": {
+      "target": "Поставете отметка в кутийката, за да продължите:"
+    },
+    "ktxtCaptcha_robot_copy": {
+      "target": "Моля, не приемайте това лично – някои скриптове и ботове изглеждат съвсем живи в днешни дни!"
+    },
+    "ktxtCaptcha_robot_generic_error": {
+      "target": "Грешка. Моля, опитайте отново по-късно."
+    },
+    "ktxtCaptcha_robot_heading": {
+      "target": "Човек ли сте или робот?"
+    },
+    "ktxtCaptcha_robot_problems": {
+      "target": "Още имате проблеми с достъпа до страницата? Проверете дали JavaScript и бисквитките са включени и дали браузърът ви не блокира зареждането им."
+    },
+    "ktxtHC_ac_1": {
+      "target": "За да продължите, трябва да проверим отново дали не сте бот! Щракнете и задръжте бутона, докато процесът на проверка не завърши."
+    },
+    "ktxtHC_ac_1_mobile": {
+      "target": "За да продължите, трябва да проверим отново дали не сте бот! Докоснете и задръжте бутона, докато процесът на проверка не завърши."
+    },
+    "ktxtHC_ac_2": {
+      "target": "Чудесно! Изглежда сте реално, живо човешко същество. Изчакайте малко, скоро ще можете да продължите напред."
+    },
+    "ktxtHC_al_1": {
+      "target": "Има проблем с връзката. Проверете отново връзката си с интернет, а след това обновете страницата."
+    },
+    "ktxtHC_al_2": {
+      "target": "Инструментът за проверка не е съвместим с браузъра ви. Актуализирайте или сменете браузърите и опитайте отново."
+    },
+    "ktxtHC_button": {
+      "target": "Щракнете тук и задръжте"
+    },
+    "ktxtHC_button_mobile": {
+      "target": "Докоснете тук и задръжте"
+    },
+    "ktxtHC_failed": {
+      "target": "Опитайте отново"
+    }
+  },
+  "ca-ES": {
+    "ktxtCaptcha_robot_checkbox": {
+      "target": "Marca la casella per continuar:"
+    },
+    "ktxtCaptcha_robot_copy": {
+      "target": "No és res personal; avui dia hi ha scripts i robots molt humans!"
+    },
+    "ktxtCaptcha_robot_generic_error": {
+      "target": "S'ha produït un error. Si us plau, torna-ho a provar d'aquí a una estona."
+    },
+    "ktxtCaptcha_robot_heading": {
+      "target": "Ets una persona o un robot?"
+    },
+    "ktxtCaptcha_robot_problems": {
+      "target": "Continues tenint problemes per accedir a la pàgina? Comprova si has activat JavaScript i les galetes, i que el teu navegador no impedeixi que es carreguin."
+    },
+    "ktxtHC_ac_1": {
+      "target": "Per continuar, hem d’assegurar-nos que no ets un robot. Fes clic i mantingues el botó premut fins que es completi el procés de verificació."
+    },
+    "ktxtHC_ac_1_mobile": {
+      "target": "Per continuar, hem d’assegurar-nos que no ets un robot. Toca el botó i mantingue’l premut fins que es completi el procés de verificació."
+    },
+    "ktxtHC_ac_2": {
+      "target": "Perfecte! Sembla que no ets un robot. Espera’t un moment; de seguida podràs continuar."
+    },
+    "ktxtHC_al_1": {
+      "target": "Hi ha problemes de connexió. Assegura’t que la teva connexió a internet funciona bé i actualitza la pàgina."
+    },
+    "ktxtHC_al_2": {
+      "target": "L’eina de verificació no és compatible amb el teu navegador. Actualitza’l o fes servir un altre navegador i torna-ho a provar."
+    },
+    "ktxtHC_button": {
+      "target": "Clica i aguanta"
+    },
+    "ktxtHC_button_mobile": {
+      "target": "Toca i aguanta"
+    },
+    "ktxtHC_failed": {
+      "target": "Torna-ho a provar"
+    }
+  },
+  "cs-CZ": {
+    "ktxtCaptcha_robot_checkbox": {
+      "target": "Pokračujte zaškrtnutím políčka:"
+    },
+    "ktxtCaptcha_robot_copy": {
+      "target": "Neberte si to osobně - některé skripty a boty jsou v dnešní době až příliš živé!"
+    },
+    "ktxtCaptcha_robot_generic_error": {
+      "target": "Došlo k chybě. Zkuste to znovu později"
+    },
+    "ktxtCaptcha_robot_heading": {
+      "target": "Jste člověk, nebo robot?"
+    },
+    "ktxtCaptcha_robot_problems": {
+      "target": "Máte stále potíže s přístupem na stránku? Zkuste zkontrolovat, jestli máte zapnutý JavaScript a cookies a že váš prohlížeč neblokuje jejich načítání."
+    },
+    "ktxtHC_ac_1": {
+      "target": "Abychom mohli pokračovat, potřebujeme ověřit, že nejste bot. Klikněte a podržte tlačítko až do dokončení ověřovacího procesu."
+    },
+    "ktxtHC_ac_1_mobile": {
+      "target": "Abychom mohli pokračovat, potřebujeme ověřit, že nejste bot. Klikněte a podržte tlačítko, dokud ověřovací proces neskončí."
+    },
+    "ktxtHC_ac_2": {
+      "target": "Výborně, zdá se, že jste živá lidská bytost. Chvilku počkejte a budete moct pokračovat."
+    },
+    "ktxtHC_al_1": {
+      "target": "Něco se nepovedlo. Ověřte si prosím připojení k internetu a obnovte stránku."
+    },
+    "ktxtHC_al_2": {
+      "target": "Ověřovací nástroj nefunguje ve vašem prohlížeči. Aktualizujte jej nebo otevřete jiný prohlížeč a zkuste to znovu."
+    },
+    "ktxtHC_button": {
+      "target": "Kliknout a držet"
+    },
+    "ktxtHC_button_mobile": {
+      "target": "Kliknout a držet"
+    },
+    "ktxtHC_failed": {
+      "target": "Zkuste to znovu"
+    }
+  },
+  "da-DK": {
+    "ktxtCaptcha_robot_checkbox": {
+      "target": "Marker feltet for at fortsætte:"
+    },
+    "ktxtCaptcha_robot_copy": {
+      "target": "Tag det endelig ikke personligt - nogle scripts og robotter er meget realistiske i vore dage!"
+    },
+    "ktxtCaptcha_robot_generic_error": {
+      "target": "Der opstod en fejl. Prøv igen senere"
+    },
+    "ktxtCaptcha_robot_heading": {
+      "target": "Er du en person eller en robot?"
+    },
+    "ktxtCaptcha_robot_problems": {
+      "target": "Har du stadig problemer med at få adgang til siden? Prøv at tjekke, at du har JavaScript og cookies slået til, og at din browser ikke blokerer indlæsningen af dem."
+    },
+    "ktxtHC_ac_1": {
+      "target": "For at fortsætte skal vi dobbelttjekke, at du ikke er en robot. Klik på knappen, og hold den nede, indtil bekræftelsesprocessen er afsluttet."
+    },
+    "ktxtHC_ac_1_mobile": {
+      "target": "For at fortsætte skal vi dobbelttjekke, at du ikke er en robot. Klik på knappen, og hold den nede, indtil bekræftelsesprocessen er afsluttet."
+    },
+    "ktxtHC_ac_2": {
+      "target": "Det ser ud til, at du er et rigtigt, levende menneske. Vent venligst et øjeblik. Du kan snart fortsætte."
+    },
+    "ktxtHC_al_1": {
+      "target": "Der er et problem med forbindelsen. Kontrollér venligst din internetforbindelse, og opdater derefter siden."
+    },
+    "ktxtHC_al_2": {
+      "target": "Bekræftelsesværktøjet er ikke kompatibelt med din browser. Opgrader eller skift browser, og prøv igen."
+    },
+    "ktxtHC_button": {
+      "target": "Klik og hold nede"
+    },
+    "ktxtHC_button_mobile": {
+      "target": "Klik, og hold nede"
+    },
+    "ktxtHC_failed": {
+      "target": "Prøv igen"
+    }
+  },
+  "de-AT": {
+    "ktxtCaptcha_robot_checkbox": {
+      "target": "Kästchen ankreuzen, um fortzufahren:"
+    },
+    "ktxtCaptcha_robot_copy": {
+      "target": "Nimm das bitte nicht persönlich – einige Skripts und Bots sind heutzutage bemerkenswert lebensecht!"
+    },
+    "ktxtCaptcha_robot_generic_error": {
+      "target": "Ein Fehler ist aufgetreten. Bitte versuchen Sie es später erneut."
+    },
+    "ktxtCaptcha_robot_heading": {
+      "target": "Bist du ein Mensch oder ein Roboter?"
+    },
+    "ktxtCaptcha_robot_problems": {
+      "target": "Du kannst immer noch nicht auf die Seite zugreifen? Bitte überprüfe, ob du JavaScript und Cookies eingeschaltet hast und stelle sicher, dass dein Browser den Ladevorgang nicht unterdrückt."
+    },
+    "ktxtHC_ac_1": {
+      "target": "Bevor du fortfahren kannst, müssen wir überprüfen, dass du kein Bot bist. Klicke und halte den Button, bis die Überprüfung abgeschlossen ist."
+    },
+    "ktxtHC_ac_1_mobile": {
+      "target": "Bevor du fortfahren kannst, müssen wir überprüfen, dass du kein Bot bist. Halte den Button gedrückt, bis die Überprüfung abgeschlossen ist."
+    },
+    "ktxtHC_ac_2": {
+      "target": "Super, du scheinst ein echter Mensch zu sein. Nur noch einen Moment Geduld, gleich kannst du fortfahren."
+    },
+    "ktxtHC_al_1": {
+      "target": "Verbindungsfehler! Bitte überprüfe deine Internetverbindung und aktualisiere dann die Seite."
+    },
+    "ktxtHC_al_2": {
+      "target": "Unser Prüftool ist mit deinem Browser nicht kompatibel. Bitte führe ein Update durch oder versuche es noch mal mit einem anderen Browser."
+    },
+    "ktxtHC_button": {
+      "target": "Klicken und halten"
+    },
+    "ktxtHC_button_mobile": {
+      "target": "Tippen und halten"
+    },
+    "ktxtHC_failed": {
+      "target": "Bitte versuche es erneut"
+    }
+  },
+  "de-CH": {
+    "ktxtCaptcha_robot_checkbox": {
+      "target": "Kästchen ankreuzen, um fortzufahren:"
+    },
+    "ktxtCaptcha_robot_copy": {
+      "target": "Nimm das bitte nicht persönlich – einige Skripts und Bots sind heutzutage bemerkenswert lebensecht!"
+    },
+    "ktxtCaptcha_robot_generic_error": {
+      "target": "Ein Fehler ist aufgetreten. Bitte versuchen Sie es später erneut."
+    },
+    "ktxtCaptcha_robot_heading": {
+      "target": "Bist du ein Mensch oder ein Roboter?"
+    },
+    "ktxtCaptcha_robot_problems": {
+      "target": "Du kannst immer noch nicht auf die Seite zugreifen? Bitte überprüfe, ob du JavaScript und Cookies eingeschaltet hast und stelle sicher, dass dein Browser den Ladevorgang nicht unterdrückt."
+    },
+    "ktxtHC_ac_1": {
+      "target": "Bevor du fortfahren kannst, müssen wir überprüfen, dass du kein Bot bist. Klicke und halte den Button, bis die Überprüfung abgeschlossen ist."
+    },
+    "ktxtHC_ac_1_mobile": {
+      "target": "Bevor du fortfahren kannst, müssen wir überprüfen, dass du kein Bot bist. Halte den Button gedrückt, bis die Überprüfung abgeschlossen ist."
+    },
+    "ktxtHC_ac_2": {
+      "target": "Super, du scheinst ein echter Mensch zu sein. Nur noch einen Moment Geduld, gleich kannst du fortfahren."
+    },
+    "ktxtHC_al_1": {
+      "target": "Verbindungsfehler! Bitte überprüfe deine Internetverbindung und aktualisiere dann die Seite."
+    },
+    "ktxtHC_al_2": {
+      "target": "Unser Prüftool ist mit deinem Browser nicht kompatibel. Bitte führe ein Update durch oder versuche es noch mal mit einem anderen Browser."
+    },
+    "ktxtHC_button": {
+      "target": "Klicken und halten"
+    },
+    "ktxtHC_button_mobile": {
+      "target": "Tippen und halten"
+    },
+    "ktxtHC_failed": {
+      "target": "Bitte versuche es erneut"
+    }
+  },
+  "de-DE": {
+    "ktxtCaptcha_robot_checkbox": {
+      "target": "Kästchen ankreuzen, um fortzufahren:"
+    },
+    "ktxtCaptcha_robot_copy": {
+      "target": "Nimm das bitte nicht persönlich – einige Skripts und Bots sind heutzutage bemerkenswert lebensecht!"
+    },
+    "ktxtCaptcha_robot_generic_error": {
+      "target": "Ein Fehler ist aufgetreten. Bitte versuchen Sie es später erneut."
+    },
+    "ktxtCaptcha_robot_heading": {
+      "target": "Bist du ein Mensch oder ein Roboter?"
+    },
+    "ktxtCaptcha_robot_problems": {
+      "target": "Du kannst immer noch nicht auf die Seite zugreifen? Bitte überprüfe, ob du JavaScript und Cookies eingeschaltet hast und stelle sicher, dass dein Browser den Ladevorgang nicht unterdrückt."
+    },
+    "ktxtHC_ac_1": {
+      "target": "Bevor du fortfahren kannst, müssen wir überprüfen, dass du kein Bot bist. Klicke und halte den Button, bis die Überprüfung abgeschlossen ist."
+    },
+    "ktxtHC_ac_1_mobile": {
+      "target": "Bevor du fortfahren kannst, müssen wir überprüfen, dass du kein Bot bist. Halte den Button gedrückt, bis die Überprüfung abgeschlossen ist."
+    },
+    "ktxtHC_ac_2": {
+      "target": "Super, du scheinst ein echter Mensch zu sein. Nur noch einen Moment Geduld, gleich kannst du fortfahren."
+    },
+    "ktxtHC_al_1": {
+      "target": "Verbindungsfehler! Bitte überprüfe deine Internetverbindung und aktualisiere dann die Seite."
+    },
+    "ktxtHC_al_2": {
+      "target": "Unser Prüftool ist mit deinem Browser nicht kompatibel. Bitte führe ein Update durch oder versuche es noch mal mit einem anderen Browser."
+    },
+    "ktxtHC_button": {
+      "target": "Klicken und halten"
+    },
+    "ktxtHC_button_mobile": {
+      "target": "Tippen und halten"
+    },
+    "ktxtHC_failed": {
+      "target": "Bitte versuche es erneut"
+    }
+  },
+  "el-GR": {
+    "ktxtCaptcha_robot_checkbox": {
+      "target": "Επιλέξτε το πλαίσιο για να συνεχίσετε:"
+    },
+    "ktxtCaptcha_robot_copy": {
+      "target": "Παρακαλώ μην το παίρνετε προσωπικά - μερικά σενάρια και μποτ είναι εξαιρετικά ρεαλιστικά στις μέρες μας!"
+    },
+    "ktxtCaptcha_robot_generic_error": {
+      "target": "Παρουσιάστηκε σφάλμα. Παρακαλούμε προσπαθήστε ξανά αργότερα"
+    },
+    "ktxtCaptcha_robot_heading": {
+      "target": "Είστε άνθρωπος ή ρομπότ;"
+    },
+    "ktxtCaptcha_robot_problems": {
+      "target": "Έχετε ακόμα προβλήματα πρόσβασης στη σελίδα; Δοκιμάστε να ελέγξετε ότι έχετε ενεργοποιήσει το JavaScript και τα cookies και ότι το πρόγραμμα περιήγησής σας δεν εμποδίζει τη φόρτωσή τους."
+    },
+    "ktxtHC_ac_1": {
+      "target": "Για να συνεχίσετε, πρέπει να ελέγξουμε ότι δεν είστε bot! Κάντε κλικ και κρατήστε πατημένο το κουμπί, μέχρι να ολοκληρωθεί η διαδικασία επαλήθευσης."
+    },
+    "ktxtHC_ac_1_mobile": {
+      "target": "Για να συνεχίσετε, πρέπει να ελέγξουμε ότι δεν είστε bot! Πατήστε και κρατήστε πατημένο το κουμπί, μέχρι να ολοκληρωθεί η διαδικασία επαλήθευσης."
+    },
+    "ktxtHC_ac_2": {
+      "target": "Τέλεια! Απ’ ό,τι φαίνεται, είστε πραγματικός χρήστης. Περιμένετε, και σε πολύ λίγο θα συνεχίσετε στην πλατφόρμα μας."
+    },
+    "ktxtHC_al_1": {
+      "target": "Υπήρξε πρόβλημα σύνδεσης. Ελέγξτε ξανά τη σύνδεσή σας στο διαδίκτυο και ανανεώστε τη σελίδα."
+    },
+    "ktxtHC_al_2": {
+      "target": "Το εργαλείο ελέγχου δεν είναι συμβατό με το πρόγραμμα περιήγησής σας. Αναβαθμίστε ή αλλάξτε το πρόγραμμα περιήγησης που χρησιμοποιείτε και προσπαθήστε ξανά."
+    },
+    "ktxtHC_button": {
+      "target": "Κάντε κλικ και κρατήστε"
+    },
+    "ktxtHC_button_mobile": {
+      "target": "Πατήστε και κρατήστε"
+    },
+    "ktxtHC_failed": {
+      "target": "Προσπαθήστε ξανά"
+    }
+  },
+  "en-AU": {
+    "ktxtCaptcha_robot_checkbox": {
+      "target": "Check the box to continue:"
+    },
+    "ktxtCaptcha_robot_copy": {
+      "target": "Please don’t take this personally - some scripts and bots are remarkably lifelike these days!"
+    },
+    "ktxtCaptcha_robot_generic_error": {
+      "target": "An Error occured. Please try again later"
+    },
+    "ktxtCaptcha_robot_heading": {
+      "target": "Are you a person or a robot?"
+    },
+    "ktxtCaptcha_robot_problems": {
+      "target": "Still having problems accessing the page? Try checking you have JavaScript and cookies turned on and that your browser isn’t blocking them from loading."
+    },
+    "ktxtHC_ac_1": {
+      "target": "To continue we need to double check you’re not a bot! Please click and hold the button until the verification process is complete."
+    },
+    "ktxtHC_ac_1_mobile": {
+      "target": "To continue we need to double check you’re not a bot! Please tap and hold the button until the verification process is complete."
+    },
+    "ktxtHC_ac_2": {
+      "target": "Great, looks like you’re a real, live human. Please wait a moment, you’ll be able to continue on your way shortly."
+    },
+    "ktxtHC_al_1": {
+      "target": "There’s a connection issue. Please double check your internet connection, then refresh the page."
+    },
+    "ktxtHC_al_2": {
+      "target": "The verification tool isn’t compatible with your browser. Please upgrade or switch browsers and try again."
+    },
+    "ktxtHC_button": {
+      "target": "Click and hold"
+    },
+    "ktxtHC_button_mobile": {
+      "target": "Tap and hold"
+    },
+    "ktxtHC_failed": {
+      "target": "Please try again"
+    }
+  },
+  "en-CA": {
+    "ktxtCaptcha_robot_checkbox": {
+      "target": "Check the box to continue:"
+    },
+    "ktxtCaptcha_robot_copy": {
+      "target": "Please don’t take this personally - some scripts and bots are remarkably lifelike these days!"
+    },
+    "ktxtCaptcha_robot_generic_error": {
+      "target": "An Error occured. Please try again later"
+    },
+    "ktxtCaptcha_robot_heading": {
+      "target": "Are you a person or a robot?"
+    },
+    "ktxtCaptcha_robot_problems": {
+      "target": "Still having problems accessing the page? Try checking you have JavaScript and cookies turned on and that your browser isn’t blocking them from loading."
+    },
+    "ktxtHC_ac_1": {
+      "target": "To continue we need to double check you’re not a bot! Please click and hold the button until the verification process is complete."
+    },
+    "ktxtHC_ac_1_mobile": {
+      "target": "To continue we need to double check you’re not a bot! Please tap and hold the button until the verification process is complete."
+    },
+    "ktxtHC_ac_2": {
+      "target": "Great, looks like you’re a real, live human. Please wait a moment, you’ll be able to continue on your way shortly."
+    },
+    "ktxtHC_al_1": {
+      "target": "There’s a connection issue. Please double check your internet connection, then refresh the page."
+    },
+    "ktxtHC_al_2": {
+      "target": "The verification tool isn’t compatible with your browser. Please upgrade or switch browsers and try again."
+    },
+    "ktxtHC_button": {
+      "target": "Click and hold"
+    },
+    "ktxtHC_button_mobile": {
+      "target": "Tap and hold"
+    },
+    "ktxtHC_failed": {
+      "target": "Please try again"
+    }
+  },
+  "en-GB": {
+    "ktxtCaptcha_robot_checkbox": {
+      "target": "Check the box to continue:"
+    },
+    "ktxtCaptcha_robot_copy": {
+      "target": "Please don’t take this personally - some scripts and bots are remarkably lifelike these days!"
+    },
+    "ktxtCaptcha_robot_generic_error": {
+      "target": "An Error occured. Please try again later"
+    },
+    "ktxtCaptcha_robot_heading": {
+      "target": "Are you a person or a robot?"
+    },
+    "ktxtCaptcha_robot_problems": {
+      "target": "Still having problems accessing the page? Try checking you have JavaScript and cookies turned on and that your browser isn’t blocking them from loading."
+    },
+    "ktxtHC_ac_1": {
+      "target": "To continue we need to double check you’re not a bot! Please click and hold the button until the verification process is complete."
+    },
+    "ktxtHC_ac_1_mobile": {
+      "target": "To continue we need to double check you’re not a bot! Please tap and hold the button until the verification process is complete."
+    },
+    "ktxtHC_ac_2": {
+      "target": "Great, looks like you’re a real, live human. Please wait a moment, you’ll be able to continue on your way shortly."
+    },
+    "ktxtHC_al_1": {
+      "target": "There’s a connection issue. Please double check your internet connection, then refresh the page."
+    },
+    "ktxtHC_al_2": {
+      "target": "The verification tool isn’t compatible with your browser. Please upgrade or switch browsers and try again."
+    },
+    "ktxtHC_button": {
+      "target": "Click and hold"
+    },
+    "ktxtHC_button_mobile": {
+      "target": "Tap and hold"
+    },
+    "ktxtHC_failed": {
+      "target": "Please try again"
+    }
+  },
+  "en-GG": {
+    "ktxtCaptcha_robot_checkbox": {
+      "target": "Check the box to continue:"
+    },
+    "ktxtCaptcha_robot_copy": {
+      "target": "Please don’t take this personally - some scripts and bots are remarkably lifelike these days!"
+    },
+    "ktxtCaptcha_robot_generic_error": {
+      "target": "An Error occured. Please try again later"
+    },
+    "ktxtCaptcha_robot_heading": {
+      "target": "Are you a person or a robot?"
+    },
+    "ktxtCaptcha_robot_problems": {
+      "target": "Still having problems accessing the page? Try checking you have JavaScript and cookies turned on and that your browser isn’t blocking them from loading."
+    },
+    "ktxtHC_ac_1": {
+      "target": "To continue we need to double check you’re not a bot! Please click and hold the button until the verification process is complete."
+    },
+    "ktxtHC_ac_1_mobile": {
+      "target": "To continue we need to double check you’re not a bot! Please tap and hold the button until the verification process is complete."
+    },
+    "ktxtHC_ac_2": {
+      "target": "Great, looks like you’re a real, live human. Please wait a moment, you’ll be able to continue on your way shortly."
+    },
+    "ktxtHC_al_1": {
+      "target": "There’s a connection issue. Please double check your internet connection, then refresh the page."
+    },
+    "ktxtHC_al_2": {
+      "target": "The verification tool isn’t compatible with your browser. Please upgrade or switch browsers and try again."
+    },
+    "ktxtHC_button": {
+      "target": "Click and hold"
+    },
+    "ktxtHC_button_mobile": {
+      "target": "Tap and hold"
+    },
+    "ktxtHC_failed": {
+      "target": "Please try again"
+    }
+  },
+  "en-US": {
+    "ktxtCaptcha_robot_checkbox": {
+      "target": "Check the box to continue:"
+    },
+    "ktxtCaptcha_robot_copy": {
+      "target": "Please don’t take this personally - some scripts and bots are remarkably lifelike these days!"
+    },
+    "ktxtCaptcha_robot_generic_error": {
+      "target": "An error occurred. Please try again later"
+    },
+    "ktxtCaptcha_robot_heading": {
+      "target": "Are you a person or a robot?"
+    },
+    "ktxtCaptcha_robot_problems": {
+      "target": "Still having problems accessing the page? Try checking you have JavaScript and cookies turned on and that your browser isn’t blocking them from loading."
+    },
+    "ktxtHC_ac_1": {
+      "target": "To continue, we need to double-check you’re not a bot! Please click and hold the button until the verification process is complete."
+    },
+    "ktxtHC_ac_1_mobile": {
+      "target": "To continue, we need to double-check you’re not a bot! Please tap and hold the button until the verification process is complete."
+    },
+    "ktxtHC_ac_2": {
+      "target": "Great, looks like you’re a real, live human. Please wait a moment, you’ll be able to continue on your way shortly."
+    },
+    "ktxtHC_al_1": {
+      "target": "There’s a connection issue. Please double-check your internet connection, then refresh the page."
+    },
+    "ktxtHC_al_2": {
+      "target": "The verification tool isn’t compatible with your browser. Please upgrade or switch browsers and try again."
+    },
+    "ktxtHC_button": {
+      "target": "Click and hold"
+    },
+    "ktxtHC_button_mobile": {
+      "target": "Tap and hold"
+    },
+    "ktxtHC_failed": {
+      "target": "Please try again"
+    }
+  },
+  "es-AR": {
+    "ktxtCaptcha_robot_checkbox": {
+      "target": "Marcá la casilla para continuar:"
+    },
+    "ktxtCaptcha_robot_copy": {
+      "target": "No te lo tomes como algo personal, ¡algunos scripts y bots son muy realistas hoy en día!"
+    },
+    "ktxtCaptcha_robot_generic_error": {
+      "target": "Hubo un error. Volvé a intentarlo más tarde"
+    },
+    "ktxtCaptcha_robot_heading": {
+      "target": "¿Sos una persona o un robot?"
+    },
+    "ktxtCaptcha_robot_problems": {
+      "target": "¿Seguís teniendo problemas para acceder a la página? Comprobá que tenés JavaScript y las cookies activados y que tu navegador no está bloqueando la carga."
+    },
+    "ktxtHC_ac_1": {
+      "target": "Para continuar, necesitamos asegurarnos de que no seas un bot. Hacé clic y mantené presionado el botón hasta que se complete el proceso de verificación."
+    },
+    "ktxtHC_ac_1_mobile": {
+      "target": "Para continuar, necesitamos asegurarnos de que no seas un bot. Tocá y mantené presionado el botón hasta que se complete el proceso de verificación."
+    },
+    "ktxtHC_ac_2": {
+      "target": "Genial, parece que sos un humano de verdad. Esperá un momento, pronto vas a poder seguir tu camino."
+    },
+    "ktxtHC_al_1": {
+      "target": "Hay un problema de conexión. Verificá tu conexión a Internet y actualizá la página."
+    },
+    "ktxtHC_al_2": {
+      "target": "La herramienta de verificación no es compatible con tu navegador. Actualizalo o cambiá de navegador y volvé a intentarlo."
+    },
+    "ktxtHC_button": {
+      "target": "Hacé clic y mantené"
+    },
+    "ktxtHC_button_mobile": {
+      "target": "Tocá y mantené"
+    },
+    "ktxtHC_failed": {
+      "target": "Volvé a intentarlo"
+    }
+  },
+  "es-CO": {
+    "ktxtCaptcha_robot_checkbox": {
+      "target": "Marca la casilla para continuar:"
+    },
+    "ktxtCaptcha_robot_copy": {
+      "target": "No te lo tomes como algo personal: ¡algunos guiones y bots son muy realistas hoy en día!"
+    },
+    "ktxtCaptcha_robot_generic_error": {
+      "target": "Se produjo un error. Inténtalo de nuevo más tarde"
+    },
+    "ktxtCaptcha_robot_heading": {
+      "target": "¿Eres una persona o un robot?"
+    },
+    "ktxtCaptcha_robot_problems": {
+      "target": "¿Sigues teniendo problemas para acceder a la página? Comprueba que JavaScript y las cookies estén activados y que tu navegador no esté impidiendo que se carguen."
+    },
+    "ktxtHC_ac_1": {
+      "target": "Para continuar, necesitamos comprobar que no eres un bot. Toca y mantén presionado el botón hasta que se complete el proceso de verificación."
+    },
+    "ktxtHC_ac_1_mobile": {
+      "target": "Para continuar, necesitamos comprobar que no eres un bot. Toca y mantén presionado el botón hasta que se complete el proceso de verificación."
+    },
+    "ktxtHC_ac_2": {
+      "target": "Genial, parece que eres un(a) humano(a) de verdad. Espera un momento, podrás continuar en breve."
+    },
+    "ktxtHC_al_1": {
+      "target": "Hay un problema de conexión. Comprueba tu conexión a Internet y actualiza la página."
+    },
+    "ktxtHC_al_2": {
+      "target": "La herramienta de verificación no es compatible con tu navegador. Actualízalo o cambia de navegador e inténtalo de nuevo."
+    },
+    "ktxtHC_button": {
+      "target": "Haz clic y mantén pulsado"
+    },
+    "ktxtHC_button_mobile": {
+      "target": "Toca y mantén pulsado"
+    },
+    "ktxtHC_failed": {
+      "target": "Inténtalo de nuevo"
+    }
+  },
+  "es-ES": {
+    "ktxtCaptcha_robot_checkbox": {
+      "target": "Marca la casilla para continuar:"
+    },
+    "ktxtCaptcha_robot_copy": {
+      "target": "No es nada personal, pero hoy en día hay scripts y robots que parecen personas de verdad."
+    },
+    "ktxtCaptcha_robot_generic_error": {
+      "target": "Se ha producido un error. Por favor, inténtalo más tarde."
+    },
+    "ktxtCaptcha_robot_heading": {
+      "target": "¿Eres una persona o un robot?"
+    },
+    "ktxtCaptcha_robot_problems": {
+      "target": "¿Sigues teniendo problemas para acceder a la página? Comprueba que hayas activado JavaScript y las cookies, y que el navegador no impida que se carguen."
+    },
+    "ktxtHC_ac_1": {
+      "target": "Para continuar, necesitamos comprobar que no eres un robot. Haz clic en el botón y mantenlo pulsado hasta que el proceso de verificación se haya completado."
+    },
+    "ktxtHC_ac_1_mobile": {
+      "target": "Para continuar, necesitamos comprobar que no eres un robot. Toca el botón y mantenlo pulsado hasta que el proceso de verificación se haya completado."
+    },
+    "ktxtHC_ac_2": {
+      "target": "Estupendo, hemos comprobado que eres humano. En un momentito podrás continuar."
+    },
+    "ktxtHC_al_1": {
+      "target": "Hay un problema de conexión. Comprueba que tu red funciona y actualiza la página."
+    },
+    "ktxtHC_al_2": {
+      "target": "La herramienta de verificación no es compatible con tu navegador. Actualízalo o cambia a otro que tengas instalado e inténtalo de nuevo."
+    },
+    "ktxtHC_button": {
+      "target": "Haz clic y mantén pulsado"
+    },
+    "ktxtHC_button_mobile": {
+      "target": "Toca y mantén pulsado"
+    },
+    "ktxtHC_failed": {
+      "target": "Inténtalo de nuevo"
+    }
+  },
+  "es-MX": {
+    "ktxtCaptcha_robot_checkbox": {
+      "target": "Marca la casilla para continuar:"
+    },
+    "ktxtCaptcha_robot_copy": {
+      "target": "No te lo tomes personal, ¡algunos scripts y bots son muy realistas hoy en día!"
+    },
+    "ktxtCaptcha_robot_generic_error": {
+      "target": "Se ha producido un error. Por favor, inténtalo más tarde."
+    },
+    "ktxtCaptcha_robot_heading": {
+      "target": "¿Eres una persona o un robot?"
+    },
+    "ktxtCaptcha_robot_problems": {
+      "target": "¿Todavía tienes problemas para acceder a la página? Intenta verificar que tienes activado JavaScript y las cookies y que tu navegador no los está bloqueando durante la carga."
+    },
+    "ktxtHC_ac_1": {
+      "target": "Para avanzar, tenemos que confirmar que no eres un bot. Haz clic y mantén presionado el botón hasta que se complete el proceso de verificación."
+    },
+    "ktxtHC_ac_1_mobile": {
+      "target": "Para avanzar, tenemos que confirmar que no eres un bot. Toca y mantén presionado el botón hasta que se complete el proceso de verificación."
+    },
+    "ktxtHC_ac_2": {
+      "target": "Muy bien, parece que sí eres una persona real. Espera un momento y podrás continuar en breve."
+    },
+    "ktxtHC_al_1": {
+      "target": "Ocurrió un problema con la conexión. Verifica tu conexión a Internet y, luego, actualiza la página."
+    },
+    "ktxtHC_al_2": {
+      "target": "La herramienta de verificación no es compatible con tu navegador. Actualízalo o abre otro, e intenta de nuevo."
+    },
+    "ktxtHC_button": {
+      "target": "Haz clic y mantén presionado"
+    },
+    "ktxtHC_button_mobile": {
+      "target": "Toca y mantén presionado"
+    },
+    "ktxtHC_failed": {
+      "target": "Vuelve a intentarlo"
+    }
+  },
+  "fi-FI": {
+    "ktxtCaptcha_robot_checkbox": {
+      "target": "Klikkaa neliötä jatkaaksesi:"
+    },
+    "ktxtCaptcha_robot_copy": {
+      "target": "Ethän ota tätä henkilökohtaisesti - jotkin botit ja skriptit ovat hyvin aitoja nykyään!"
+    },
+    "ktxtCaptcha_robot_generic_error": {
+      "target": "Tapahtui virhe. Yritä uudelleen myöhemmin."
+    },
+    "ktxtCaptcha_robot_heading": {
+      "target": "Oletko oikea henkilö vai robotti?"
+    },
+    "ktxtCaptcha_robot_problems": {
+      "target": "Etkö vieläkään pääse sivulle? Tarkista, että JavaScript ja evästeet ovat sallittu, ja että selaimesi ei estä niitä lataamasta."
+    },
+    "ktxtHC_ac_1": {
+      "target": "Jotta voit jatkaa, meidän on vielä tarkistettava, ettet ole botti! Klikkaa painiketta ja pidä se pohjassa, kunnes varmennusprosessi on valmis."
+    },
+    "ktxtHC_ac_1_mobile": {
+      "target": "Jotta voit jatkaa, meidän on vielä tarkistettava, ettet ole botti! Klikkaa painiketta ja pidä se pohjassa, kunnes varmennusprosessi on valmis."
+    },
+    "ktxtHC_ac_2": {
+      "target": "Hienoa, näyttää siltä, että olet oikea, elävä ihminen. Hetki vain, niin voit jatkaa matkaasi aivan pian."
+    },
+    "ktxtHC_al_1": {
+      "target": "Yhteyksissä on jotain ongelmia. Tarkista, että verkkoyhteytesi toimii, ja lataa sitten tämä sivu uudestaan."
+    },
+    "ktxtHC_al_2": {
+      "target": "Tämä varmennustyökalu ei ole yhteensopiva selaimesi kanssa. Päivitä tai vaihda selaimesi ja yritä uudelleen."
+    },
+    "ktxtHC_button": {
+      "target": "Paina ja pidä pohjassa"
+    },
+    "ktxtHC_button_mobile": {
+      "target": "Paina ja pidä pohjassa"
+    },
+    "ktxtHC_failed": {
+      "target": "Yritä uudelleen"
+    }
+  },
+  "fr-BE": {
+    "ktxtCaptcha_robot_checkbox": {
+      "target": "Cochez la case pour continuer :"
+    },
+    "ktxtCaptcha_robot_copy": {
+      "target": "Ne le prenez pas personnellement, certains scripts et robots sont très doués pour se faire passer pour des humains !"
+    },
+    "ktxtCaptcha_robot_generic_error": {
+      "target": "Une erreur est survenue. Veuillez réessayer plus tard"
+    },
+    "ktxtCaptcha_robot_heading": {
+      "target": "Êtes-vous une personne ou un robot ?"
+    },
+    "ktxtCaptcha_robot_problems": {
+      "target": "Si vous n'arrivez toujours pas à afficher la page correctement, vérifiez que JavaScript et les cookies sont activés et que votre navigateur ne les empêche pas de se charger."
+    },
+    "ktxtHC_ac_1": {
+      "target": "Pour continuer, nous devons vérifier que vous n’êtes pas un robot ! Veuillez cliquer sur le bouton et le maintenir jusqu’à ce que le processus de vérification soit terminé."
+    },
+    "ktxtHC_ac_1_mobile": {
+      "target": "Pour continuer, nous devons vérifier que vous n’êtes pas un robot ! Veuillez appuyer sur le bouton et le maintenir enfoncé jusqu’à ce que le processus de vérification soit terminé."
+    },
+    "ktxtHC_ac_2": {
+      "target": "Super, on dirait que vous êtes bien une vraie personne. Veuillez patienter un instant, vous pourrez reprendre sous peu."
+    },
+    "ktxtHC_al_1": {
+      "target": "Une erreur de connexion s’est produite. Veuillez vérifier votre connexion à Internet, puis recharger la page."
+    },
+    "ktxtHC_al_2": {
+      "target": "L’outil de vérification n’est pas compatible avec votre navigateur. Veuillez mettre à jour votre navigateur ou en utiliser un autre, puis essayez à nouveau."
+    },
+    "ktxtHC_button": {
+      "target": "Cliquer et maintenir"
+    },
+    "ktxtHC_button_mobile": {
+      "target": "Appuyer et maintenir"
+    },
+    "ktxtHC_failed": {
+      "target": "Veuillez réessayer"
+    }
+  },
+  "fr-CA": {
+    "ktxtCaptcha_robot_checkbox": {
+      "target": "Cochez la case pour continuer :"
+    },
+    "ktxtCaptcha_robot_copy": {
+      "target": "Ne le prenez pas personnellement, certains scripts et robots sont remarquablement réalistes de nos jours!"
+    },
+    "ktxtCaptcha_robot_generic_error": {
+      "target": "Une erreur s'est produite. Veuillez réessayer plus tard."
+    },
+    "ktxtCaptcha_robot_heading": {
+      "target": "Êtes-vous une personne ou un robot?"
+    },
+    "ktxtCaptcha_robot_problems": {
+      "target": "Vous avez toujours des problèmes pour accéder à la page? Vérifiez que JavaScript et les témoins sont activés et que votre navigateur ne bloque pas leur chargement."
+    },
+    "ktxtHC_ac_1": {
+      "target": "Pour continuer, nous devons vérifier que vous n'êtes pas un robot! Cliquez et maintenez le bouton enfoncé jusqu'à ce que le processus de vérification soit terminé."
+    },
+    "ktxtHC_ac_1_mobile": {
+      "target": "Pour continuer, nous devons vérifier que vous n'êtes pas un robot! Appuyez et maintenez le bouton enfoncé jusqu'à ce que le processus de vérification soit terminé."
+    },
+    "ktxtHC_ac_2": {
+      "target": "Super, il semble bien que vous êtes une vraie personne. Veuillez patienter un instant, vous pourrez reprendre sous peu."
+    },
+    "ktxtHC_al_1": {
+      "target": "Il y a un problème de connexion. Vérifiez votre connexion Internet, puis actualisez la page."
+    },
+    "ktxtHC_al_2": {
+      "target": "L'outil de vérification n'est pas compatible avec votre navigateur. Veuillez mettre à jour votre navigateur ou en changer, puis réessayer."
+    },
+    "ktxtHC_button": {
+      "target": "Cliquer et maintenir"
+    },
+    "ktxtHC_button_mobile": {
+      "target": "Appuyer et maintenir"
+    },
+    "ktxtHC_failed": {
+      "target": "Veuillez réessayer"
+    }
+  },
+  "fr-CH": {
+    "ktxtCaptcha_robot_checkbox": {
+      "target": "Cochez la case pour continuer :"
+    },
+    "ktxtCaptcha_robot_copy": {
+      "target": "Ne le prenez pas personnellement, certains scripts et robots sont très doués pour se faire passer pour des humains !"
+    },
+    "ktxtCaptcha_robot_generic_error": {
+      "target": "Une erreur est survenue. Veuillez réessayer plus tard"
+    },
+    "ktxtCaptcha_robot_heading": {
+      "target": "Êtes-vous une personne ou un robot ?"
+    },
+    "ktxtCaptcha_robot_problems": {
+      "target": "Si vous n'arrivez toujours pas à afficher la page correctement, vérifiez que JavaScript et les cookies sont activés et que votre navigateur ne les empêche pas de se charger."
+    },
+    "ktxtHC_ac_1": {
+      "target": "Pour continuer, nous devons vérifier que vous n’êtes pas un robot ! Veuillez cliquer sur le bouton et le maintenir jusqu’à ce que le processus de vérification soit terminé."
+    },
+    "ktxtHC_ac_1_mobile": {
+      "target": "Pour continuer, nous devons vérifier que vous n’êtes pas un robot ! Veuillez appuyer sur le bouton et le maintenir enfoncé jusqu’à ce que le processus de vérification soit terminé."
+    },
+    "ktxtHC_ac_2": {
+      "target": "Super, on dirait que vous êtes bien une vraie personne. Veuillez patienter un instant, vous pourrez reprendre sous peu."
+    },
+    "ktxtHC_al_1": {
+      "target": "Une erreur de connexion s’est produite. Veuillez vérifier votre connexion à Internet, puis recharger la page."
+    },
+    "ktxtHC_al_2": {
+      "target": "L’outil de vérification n’est pas compatible avec votre navigateur. Veuillez mettre à jour votre navigateur ou en utiliser un autre, puis essayez à nouveau."
+    },
+    "ktxtHC_button": {
+      "target": "Cliquer et maintenir"
+    },
+    "ktxtHC_button_mobile": {
+      "target": "Appuyer et maintenir"
+    },
+    "ktxtHC_failed": {
+      "target": "Veuillez réessayer"
+    }
+  },
+  "fr-FR": {
+    "ktxtCaptcha_robot_checkbox": {
+      "target": "Cochez la case pour continuer :"
+    },
+    "ktxtCaptcha_robot_copy": {
+      "target": "Ne le prenez pas personnellement, certains scripts et robots sont très doués pour se faire passer pour des humains !"
+    },
+    "ktxtCaptcha_robot_generic_error": {
+      "target": "Une erreur est survenue. Veuillez réessayer plus tard"
+    },
+    "ktxtCaptcha_robot_heading": {
+      "target": "Êtes-vous une personne ou un robot ?"
+    },
+    "ktxtCaptcha_robot_problems": {
+      "target": "Si vous n'arrivez toujours pas à afficher la page correctement, vérifiez que JavaScript et les cookies sont activés et que votre navigateur ne les empêche pas de se charger."
+    },
+    "ktxtHC_ac_1": {
+      "target": "Pour continuer, nous devons vérifier que vous n’êtes pas un robot ! Veuillez cliquer sur le bouton et le maintenir jusqu’à ce que le processus de vérification soit terminé."
+    },
+    "ktxtHC_ac_1_mobile": {
+      "target": "Pour continuer, nous devons vérifier que vous n’êtes pas un robot ! Veuillez appuyer sur le bouton et le maintenir enfoncé jusqu’à ce que le processus de vérification soit terminé."
+    },
+    "ktxtHC_ac_2": {
+      "target": "Super, on dirait que vous êtes bien une vraie personne. Veuillez patienter un instant, vous pourrez reprendre sous peu."
+    },
+    "ktxtHC_al_1": {
+      "target": "Une erreur de connexion s’est produite. Veuillez vérifier votre connexion à Internet, puis recharger la page."
+    },
+    "ktxtHC_al_2": {
+      "target": "L’outil de vérification n’est pas compatible avec votre navigateur. Veuillez mettre à jour votre navigateur ou en utiliser un autre, puis essayez à nouveau."
+    },
+    "ktxtHC_button": {
+      "target": "Cliquer et maintenir"
+    },
+    "ktxtHC_button_mobile": {
+      "target": "Appuyer et maintenir"
+    },
+    "ktxtHC_failed": {
+      "target": "Veuillez réessayer"
+    }
+  },
+  "he-IL": {
+    "ktxtCaptcha_robot_checkbox": {
+      "target": "יש לסמן את התיבה כדי להמשיך:"
+    },
+    "ktxtCaptcha_robot_copy": {
+      "target": "בבקשה אל תיקחו את זה באופן אישי – יש היום בוטים ומחשבים שממש דומים לבני אדם!"
+    },
+    "ktxtCaptcha_robot_generic_error": {
+      "target": "משהו השתבש. יש לנסות שוב מאוחר יותר"
+    },
+    "ktxtCaptcha_robot_heading": {
+      "target": "האם אתם אדם או רובוט?"
+    },
+    "ktxtCaptcha_robot_problems": {
+      "target": "עדיין נתקלים בבעיות בגישה לדף? נסו לבדוק אם JavaScript וקובצי ה-Cookie מופעלים ואם הדפדפן שלכם אינו חוסם את הטעינה שלהם."
+    },
+    "ktxtHC_ac_1": {
+      "target": "כדי להמשיך אנחנו צריכים לבדוק שאתם לא רובוט! יש ללחוץ לחיצה ארוכה על הלחצן עד להשלמת תהליך האימות."
+    },
+    "ktxtHC_ac_1_mobile": {
+      "target": "כדי להמשיך אנחנו צריכים לבדוק שאתם לא רובוט! יש להקיש הקשה ארוכה על הלחצן עד להשלמת תהליך האימות."
+    },
+    "ktxtHC_ac_2": {
+      "target": "נהדר, נראה שאתם בני אנוש חיים ואמיתיים. אז רק עוד רגע, מיד תוכלו להמשיך הלאה."
+    },
+    "ktxtHC_al_1": {
+      "target": "יש בעיה בחיבור. כדאי לבדוק שוב את חיבור האינטרנט שלכם ואז לרענן את הדף."
+    },
+    "ktxtHC_al_2": {
+      "target": "כלי האימות לא תואם לדפדפן שלכם. יש לעדכן את הדפדפן או להשתמש בדפדפן אחר ולנסות שוב."
+    },
+    "ktxtHC_button": {
+      "target": "יש ללחוץ כאן לחיצה ארוכה"
+    },
+    "ktxtHC_button_mobile": {
+      "target": "יש להקיש הקשה ארוכה"
+    },
+    "ktxtHC_failed": {
+      "target": "יש לנסות שוב"
+    }
+  },
+  "hi-IN": {
+    "ktxtCaptcha_robot_checkbox": {
+      "target": "जारी रखने के लिए बॉक्स पर सही का निशान लगाएँ:"
+    },
+    "ktxtCaptcha_robot_copy": {
+      "target": "कृपया इस बात का बुरा ना मानें - कुछ स्क्रिप्ट और बॉट्स इन दिनों लोगों जितने असली लगते हैं!"
+    },
+    "ktxtCaptcha_robot_generic_error": {
+      "target": "कोई गड़बड़ी हुई। कृपया फिर से कोशिश करें"
+    },
+    "ktxtCaptcha_robot_heading": {
+      "target": "आप इंसान हैं या रोबॉट?"
+    },
+    "ktxtCaptcha_robot_problems": {
+      "target": "अभी भी पेज पर नहीं जा पा रहे? ज़रा देख लें कि आपने JavaScript और कुकीज़ चालू कर रखी हैं और कहीं आपका ब्राउज़र उन्हें लोड होने से रोक तो नहीं रहा।"
+    },
+    "ktxtHC_ac_1": {
+      "target": "जारी रखने के लिए हमें यह जानना बहुत ज़रूरी है कि आप कोई बॉट नहीं हैं! वेरिफ़िकेशन की प्रोसेस पूरी होने तक कृपया बटन को क्लिक करके दबाकर रखें।"
+    },
+    "ktxtHC_ac_1_mobile": {
+      "target": "जारी रखने के लिए हमें यह जानना बहुत ज़रूरी है कि आप कोई बॉट नहीं हैं! वेरिफ़िकेशन की प्रोसेस पूरी होने तक कृपया बटन को टैप करके दबाकर रखें।"
+    },
+    "ktxtHC_ac_2": {
+      "target": "शानदार, ऐसा लगता है कि आप एक असली, जीवित इंसान हैं। कृपया थोड़ा इंतज़ार करें, आप जल्द ही आगे बढ़ पाएँगे।"
+    },
+    "ktxtHC_al_1": {
+      "target": "कनेक्शन में कोई समस्या है। कृपया अपने इंटरनेट कनेक्शन की दोबारा जाँच करें, फिर पेज को रिफ़्रेश करें।"
+    },
+    "ktxtHC_al_2": {
+      "target": "वेरिफ़िकेशन टूल आपके ब्राउज़र पर काम नहीं कर रहा है। कृपया इसे अपग्रेड करें या किसी दूसरे ब्राउज़र का इस्तेमाल करके फिर से कोशिश करें।"
+    },
+    "ktxtHC_button": {
+      "target": "क्लिक करके होल्ड करें"
+    },
+    "ktxtHC_button_mobile": {
+      "target": "टैप करके होल्ड करें"
+    },
+    "ktxtHC_failed": {
+      "target": "कृपया फिर से कोशिश करें"
+    }
+  },
+  "hr-HR": {
+    "ktxtCaptcha_robot_checkbox": {
+      "target": "Označite okvir za nastavak:"
+    },
+    "ktxtCaptcha_robot_copy": {
+      "target": "Ne zezamo vas - neke skripte i internetski botovi danas se ponašaju kao da su živi!"
+    },
+    "ktxtCaptcha_robot_generic_error": {
+      "target": "Došlo je do pogreške. Pokušajte ponovno kasnije"
+    },
+    "ktxtCaptcha_robot_heading": {
+      "target": "Jeste li živa osoba ili robot?"
+    },
+    "ktxtCaptcha_robot_problems": {
+      "target": "Još uvijek imate problema s pristupom stranici? Provjerite jesu li kod vas uključeni JavaScript i kolačići, odnosno da ih vaš preglednik možda ne blokira u učitavanju."
+    },
+    "ktxtHC_ac_1": {
+      "target": "Da biste mogli nastaviti, moramo provjeriti jeste li robot. Kliknite gumb i zadržite dok postupak verifikacije ne završi."
+    },
+    "ktxtHC_ac_1_mobile": {
+      "target": "Da biste mogli nastaviti, moramo provjeriti jeste li robot. Dodirnite gumb i zadržite dok postupak verifikacije ne završi."
+    },
+    "ktxtHC_ac_2": {
+      "target": "Odlično, potvrdili smo da niste robot! Pričekajte trenutak, uskoro ćete moći nastaviti."
+    },
+    "ktxtHC_al_1": {
+      "target": "Nešto nije u redu s vezom. Provjerite svoju internetsku vezu pa osvježite stranicu."
+    },
+    "ktxtHC_al_2": {
+      "target": "Alat za verifikaciju nije kompatibilan s vašim preglednikom. Ažurirajte preglednik ili otvorite neki drugi pa pokušajte ponovno."
+    },
+    "ktxtHC_button": {
+      "target": "Kliknite i zadržite"
+    },
+    "ktxtHC_button_mobile": {
+      "target": "Dodirnite i zadržite"
+    },
+    "ktxtHC_failed": {
+      "target": "Pokušajte ponovno"
+    }
+  },
+  "hu-HU": {
+    "ktxtCaptcha_robot_checkbox": {
+      "target": "A folytatáshoz jelölje be a jelölőnégyzetet:"
+    },
+    "ktxtCaptcha_robot_copy": {
+      "target": "Ne vegye sértésnek – manapság vannak már életszerűre megírt parancsfájlok és botok is!"
+    },
+    "ktxtCaptcha_robot_generic_error": {
+      "target": "Hiba történt. Kérjük, próbálja újra később"
+    },
+    "ktxtCaptcha_robot_heading": {
+      "target": "Ön személy vagy robot?"
+    },
+    "ktxtCaptcha_robot_problems": {
+      "target": "Továbbra sem tudja elérni az oldalt? Ellenőrizze, hogy a JavaScript és a cookie-k be vannak-e kapcsolva, és hogy a böngészője nem blokkolja-e ezek betöltését."
+    },
+    "ktxtHC_ac_1": {
+      "target": "A folytatáshoz először ellenőriznünk kell, hogy nem vagy-e robot. Arra kérünk, hogy ehhez tartsd lenyomva a gombot, amíg végrehajtjuk a hitelesítést."
+    },
+    "ktxtHC_ac_1_mobile": {
+      "target": "A folytatáshoz először ellenőriznünk kell, hogy nem vagy-e robot. Arra kérünk, hogy ehhez tartsd lenyomva a gombot, amíg végrehajtjuk a hitelesítést."
+    },
+    "ktxtHC_ac_2": {
+      "target": "Szuper, úgy tűnik, igazi ember vagy. Egy pillanat, és máris továbbléphetsz."
+    },
+    "ktxtHC_al_1": {
+      "target": "Kapcsolati hiba. Ellenőrizd az internetkapcsolatot, és frissítsd az oldalt."
+    },
+    "ktxtHC_al_2": {
+      "target": "A hitelesítőeszköz nem kompatibilis a böngésződdel. Frissíts a böngésző legújabb verziójára, vagy válts másik böngészőre, és próbálkozz újra."
+    },
+    "ktxtHC_button": {
+      "target": "Tartsd lenyomva"
+    },
+    "ktxtHC_button_mobile": {
+      "target": "Tartsd lenyomva"
+    },
+    "ktxtHC_failed": {
+      "target": "Próbálkozz újra"
+    }
+  },
+  "id-ID": {
+    "ktxtCaptcha_robot_checkbox": {
+      "target": "Centang kotak untuk melanjutkan:"
+    },
+    "ktxtCaptcha_robot_copy": {
+      "target": "Mohon jangan terlalu diambil hati - beberapa naskah dan bot akan benar-benar aktif hari ini!"
+    },
+    "ktxtCaptcha_robot_generic_error": {
+      "target": "Terjadi Kesalahan. Coba lagi nanti"
+    },
+    "ktxtCaptcha_robot_heading": {
+      "target": "Apakah Anda manusia atau robot?"
+    },
+    "ktxtCaptcha_robot_problems": {
+      "target": "Masih mengalami kesulitan saat mengakses halaman? Coba periksa apakah JavaScript dan cookie Anda telah diaktifkan dan browser Anda tidak memblokirnya."
+    },
+    "ktxtHC_ac_1": {
+      "target": "Untuk melanjutkan, kami perlu memastikan bahwa Anda bukan robot! Harap klik, lalu tahan tombolnya hingga proses verifikasi selesai."
+    },
+    "ktxtHC_ac_1_mobile": {
+      "target": "Untuk melanjutkan, kami perlu memastikan bahwa Anda bukan robot! Harap ketuk, lalu tahan tombolnya hingga proses verifikasi selesai."
+    },
+    "ktxtHC_ac_2": {
+      "target": "Bagus, sepertinya Anda orang sungguhan. Mohon tunggu sebentar, Anda bisa melanjutkan beberapa saat lagi."
+    },
+    "ktxtHC_al_1": {
+      "target": "Ada masalah koneksi. Mohon periksa ulang koneksi internet Anda, lalu muat ulang halaman."
+    },
+    "ktxtHC_al_2": {
+      "target": "Alat verifikasi tidak kompatibel dengan browser Anda. Mohon tingkatkan atau ubah browser lalu coba lagi."
+    },
+    "ktxtHC_button": {
+      "target": "Klik, lalu tahan"
+    },
+    "ktxtHC_button_mobile": {
+      "target": "ketuk, lalu tahan"
+    },
+    "ktxtHC_failed": {
+      "target": "Silakan coba lagi"
+    }
+  },
+  "it-CH": {
+    "ktxtCaptcha_robot_checkbox": {
+      "target": "Seleziona la casella per continuare:"
+    },
+    "ktxtCaptcha_robot_copy": {
+      "target": "Non è una questione personale. Ultimamente script e bot sono particolarmente attivi!"
+    },
+    "ktxtCaptcha_robot_generic_error": {
+      "target": "Errore. Riprova più tardi"
+    },
+    "ktxtCaptcha_robot_heading": {
+      "target": "Sei una persona o un robot?"
+    },
+    "ktxtCaptcha_robot_problems": {
+      "target": "Hai ancora problemi di accesso alla pagina? Prova a verificare se disponi di JavaScript, se i cookie sono attivati e assicurati che il browser non ne blocchi il caricamento."
+    },
+    "ktxtHC_ac_1": {
+      "target": "Per continuare, abbiamo bisogno di verificare che tu non sia un bot. Clicca sul pulsante e tienilo premuto fino a quando il processo di verifica non sarà completo."
+    },
+    "ktxtHC_ac_1_mobile": {
+      "target": "Per continuare, dobbiamo verificare che tu non sia un bot. Tocca il pulsante e tienilo premuto fino a quando il processo di verifica non sarà completato."
+    },
+    "ktxtHC_ac_2": {
+      "target": "Fantastico, abbiamo appurato che sei una persona in carne e ossa! A breve potrai continuare l’operazione."
+    },
+    "ktxtHC_al_1": {
+      "target": "Si è verificato un problema di connessione. Controlla la tua rete Internet, poi aggiorna la pagina."
+    },
+    "ktxtHC_al_2": {
+      "target": "Lo strumento di verifica non è compatibile con il tuo browser. Aggiornalo o cambialo e riprova."
+    },
+    "ktxtHC_button": {
+      "target": "Clicca e tieni premuto"
+    },
+    "ktxtHC_button_mobile": {
+      "target": "Tocca e tieni premuto"
+    },
+    "ktxtHC_failed": {
+      "target": "Riprova"
+    }
+  },
+  "it-IT": {
+    "ktxtCaptcha_robot_checkbox": {
+      "target": "Seleziona la casella per continuare:"
+    },
+    "ktxtCaptcha_robot_copy": {
+      "target": "Non è una questione personale. Ultimamente script e bot sono particolarmente attivi!"
+    },
+    "ktxtCaptcha_robot_generic_error": {
+      "target": "Errore. Riprova più tardi"
+    },
+    "ktxtCaptcha_robot_heading": {
+      "target": "Sei una persona o un robot?"
+    },
+    "ktxtCaptcha_robot_problems": {
+      "target": "Hai ancora problemi di accesso alla pagina? Prova a verificare se disponi di JavaScript, se i cookie sono attivati e assicurati che il browser non ne blocchi il caricamento."
+    },
+    "ktxtHC_ac_1": {
+      "target": "Per continuare, abbiamo bisogno di verificare che tu non sia un bot. Clicca sul pulsante e tienilo premuto fino a quando il processo di verifica non sarà completo."
+    },
+    "ktxtHC_ac_1_mobile": {
+      "target": "Per continuare, dobbiamo verificare che tu non sia un bot. Tocca il pulsante e tienilo premuto fino a quando il processo di verifica non sarà completato."
+    },
+    "ktxtHC_ac_2": {
+      "target": "Fantastico, abbiamo appurato che sei una persona in carne e ossa! A breve potrai continuare l’operazione."
+    },
+    "ktxtHC_al_1": {
+      "target": "Si è verificato un problema di connessione. Controlla la tua rete Internet, poi aggiorna la pagina."
+    },
+    "ktxtHC_al_2": {
+      "target": "Lo strumento di verifica non è compatibile con il tuo browser. Aggiornalo o cambialo e riprova."
+    },
+    "ktxtHC_button": {
+      "target": "Clicca e tieni premuto"
+    },
+    "ktxtHC_button_mobile": {
+      "target": "Tocca e tieni premuto"
+    },
+    "ktxtHC_failed": {
+      "target": "Riprova"
+    }
+  },
+  "ja-JP": {
+    "ktxtCaptcha_robot_checkbox": {
+      "target": "ボックスにチェックを入れてから続行してください。"
+    },
+    "ktxtCaptcha_robot_copy": {
+      "target": "このプロセスは、本物と区別しづらいスクリプトやボットの防止対策として行われているものです。"
+    },
+    "ktxtCaptcha_robot_generic_error": {
+      "target": "エラーが発生しました。 後ほどもう一度お試しください"
+    },
+    "ktxtCaptcha_robot_heading": {
+      "target": "人かロボットかを確認"
+    },
+    "ktxtCaptcha_robot_problems": {
+      "target": "ページへのアクセスの問題が解決しない場合は、JavaScriptとCookieが有効になっていること、ブラウザーでブロックされていないことを確認してください。"
+    },
+    "ktxtHC_ac_1": {
+      "target": "続行するにはロボットではないことを確認をする必要があります。ボタンをクリックして長押ししたままの状態で、認証プロセスが完了するまでお待ちください。"
+    },
+    "ktxtHC_ac_1_mobile": {
+      "target": "続行するにはロボットではないことを確認する必要があります。ボタンをタップし、認証プロセスが完了するまで長押ししたままの状態でお待ちください。"
+    },
+    "ktxtHC_ac_2": {
+      "target": "ありがとうございます。ロボットではないことが確認できました。すぐに次のページが開きますのでお待ちください。"
+    },
+    "ktxtHC_al_1": {
+      "target": "接続に問題が発生しました。インターネットに接続していることを確認してからページを更新してください。"
+    },
+    "ktxtHC_al_2": {
+      "target": "お使いのブラウザでは認証ツールをご利用いただけません。アップグレードするか、別のブラウザでもう一度お試しください。"
+    },
+    "ktxtHC_button": {
+      "target": "クリックして長押し"
+    },
+    "ktxtHC_button_mobile": {
+      "target": "タップして長押し"
+    },
+    "ktxtHC_failed": {
+      "target": "もう一度お試しください"
+    }
+  },
+  "ko-KR": {
+    "ktxtCaptcha_robot_checkbox": {
+      "target": "계속하려면 박스를 체크하세요."
+    },
+    "ktxtCaptcha_robot_copy": {
+      "target": "기분 나쁘게 생각하지 말아 주세요. 요즘 스크립트와 로봇은 놀라울 정도로 사람 같답니다!"
+    },
+    "ktxtCaptcha_robot_generic_error": {
+      "target": "오류가 발생했습니다. 나중에 다시 시도하십시오"
+    },
+    "ktxtCaptcha_robot_heading": {
+      "target": "귀하는 사람인가요, 로봇인가요?"
+    },
+    "ktxtCaptcha_robot_problems": {
+      "target": "아직도 페이지 접속에 문제가 있나요? JavaScript와 쿠키가 활성화되어 있고, 브라우저에서 로딩을 차단하지 않았는지 확인해 주세요."
+    },
+    "ktxtHC_ac_1": {
+      "target": "계속 진행하려면 봇이 아님을 확인해주셔야 합니다. 인증 절차가 완료될 때까지 버튼을 클릭한 채 손을 떼지 마세요."
+    },
+    "ktxtHC_ac_1_mobile": {
+      "target": "계속 진행하려면 봇이 아님을 확인해주셔야 합니다. 인증 절차가 완료될 때까지 버튼을 누른 채 손을 떼지 마세요."
+    },
+    "ktxtHC_ac_2": {
+      "target": "인증이 완료되었습니다. 잠시만 기다리면 다시 진행하실 수 있습니다. "
+    },
+    "ktxtHC_al_1": {
+      "target": "연결에 문제가 있습니다. 인터넷 연결을 다시 한번 확인한 후 페이지를 새로 고침하세요."
+    },
+    "ktxtHC_al_2": {
+      "target": "사용하시는 브라우저가 인증 도구와 호환되지 않습니다. 브라우저를 업그레이드하거나 다른 브라우저를 사용해 다시 시도해주세요. "
+    },
+    "ktxtHC_button": {
+      "target": "클릭한 채 기다리기"
+    },
+    "ktxtHC_button_mobile": {
+      "target": "누른 채 기다리기"
+    },
+    "ktxtHC_failed": {
+      "target": "다시 시도해주세요"
+    }
+  },
+  "ms-MY": {
+    "ktxtCaptcha_robot_checkbox": {
+      "target": "Tandakan kotak untuk teruskan:"
+    },
+    "ktxtCaptcha_robot_copy": {
+      "target": "Jangan terasa hati - sesetengah skrip dan bot akhir-akhir ini kelihatan sangat hidup!"
+    },
+    "ktxtCaptcha_robot_generic_error": {
+      "target": "Satu ralat berlaku. Sila cuba lagi kemudian"
+    },
+    "ktxtCaptcha_robot_heading": {
+      "target": "Adakah anda manusia atau robot?"
+    },
+    "ktxtCaptcha_robot_problems": {
+      "target": "Masih mempunyai masalah mengakses halaman? Cuba semak sama ada JavaScript dan kuki anda dihidupkan dan pelayar anda tidak menyekat daripada memuatkannya."
+    },
+    "ktxtHC_ac_1": {
+      "target": "Untuk meneruskan, kami perlu memastikan sekali lagi anda bukan bot! Sila klik dan jangan lepas butang hingga proses pengesahan selesai."
+    },
+    "ktxtHC_ac_1_mobile": {
+      "target": "Untuk meneruskan, kami perlu memastikan sekali lagi anda bukan bot! Sila ketik dan jangan lepas butang hingga proses pengesahan selesai."
+    },
+    "ktxtHC_ac_2": {
+      "target": "Bagus, nampaknya anda manusia sebenar. Sila tunggu sebentar, anda akan dapat meneruskan tidak lama lagi."
+    },
+    "ktxtHC_al_1": {
+      "target": "Ada masalah sambungan. Sila pastikan sekali lagi sambungan internet anda, kemudian segarkan semula laman ini."
+    },
+    "ktxtHC_al_2": {
+      "target": "Alat pengesahan tidak serasi dengan pelayar anda. Sila naik taraf atau tukar pelayar dan cuba semula."
+    },
+    "ktxtHC_button": {
+      "target": "Klik dan jangan lepas"
+    },
+    "ktxtHC_button_mobile": {
+      "target": "Ketik dan jangan lepas"
+    },
+    "ktxtHC_failed": {
+      "target": "Sila cuba semula"
+    }
+  },
+  "nb-NO": {
+    "ktxtCaptcha_robot_checkbox": {
+      "target": "Kryss av i boksen for å fortsette:"
+    },
+    "ktxtCaptcha_robot_copy": {
+      "target": "Ikke ta dette personlig - noen skripter og roboter er utrolig livaktige nå for tiden!"
+    },
+    "ktxtCaptcha_robot_generic_error": {
+      "target": "Det oppstod en feil. Vennligst prøv igjen senere"
+    },
+    "ktxtCaptcha_robot_heading": {
+      "target": "Er du en person eller en robot?"
+    },
+    "ktxtCaptcha_robot_problems": {
+      "target": "Har du fortsatt problemer med å få tilgang til siden? Prøv å sjekke om du har JavaScript og informasjonskapsler slått på og at nettleseren ikke blokkerer dem fra å laste inn."
+    },
+    "ktxtHC_ac_1": {
+      "target": "For å gå videre må vi dobbeltsjekke at du ikke er en bot! Klikk og hold inne knappen til verifiseringsprosessen er fullført."
+    },
+    "ktxtHC_ac_1_mobile": {
+      "target": "For å gå videre må vi dobbeltsjekke at du ikke er en bot! Klikk og hold inne knappen til verifiseringsprosessen er fullført."
+    },
+    "ktxtHC_ac_2": {
+      "target": "Flott, det ser ut som du er et ekte, levende menneske. Vent et øyeblikk, så kommer du deg straks videre."
+    },
+    "ktxtHC_al_1": {
+      "target": "Det oppstod et problem med forbindelsen. Kontroller internettforbindelsen din og last inn siden på nytt."
+    },
+    "ktxtHC_al_2": {
+      "target": "Verifiseringsverktøyet er ikke kompatibelt med nettleseren din. Oppgrader eller bytt nettleser og prøv på nytt.."
+    },
+    "ktxtHC_button": {
+      "target": "Klikk og hold inne"
+    },
+    "ktxtHC_button_mobile": {
+      "target": "Klikk og hold inne"
+    },
+    "ktxtHC_failed": {
+      "target": "Prøv på nytt"
+    }
+  },
+  "nl-BE": {
+    "ktxtCaptcha_robot_checkbox": {
+      "target": "Schakel het selectievakje in om door te gaan:"
+    },
+    "ktxtCaptcha_robot_copy": {
+      "target": "Dit is niet persoonlijk bedoeld; tegenwoordig zijn sommige scripts en bots bijna niet meer van echte mensen te onderscheiden!"
+    },
+    "ktxtCaptcha_robot_generic_error": {
+      "target": "Er heeft zich een fout voorgedaan. Probeer het later nog eens"
+    },
+    "ktxtCaptcha_robot_heading": {
+      "target": "Ben je een persoon of een robot?"
+    },
+    "ktxtCaptcha_robot_problems": {
+      "target": "Ervaar je nog steeds problemen bij het openen van de pagina? Controleer of je JavaScript en cookies hebt ingeschakeld en of je browser ze niet blokkeert tijdens het laden."
+    },
+    "ktxtHC_ac_1": {
+      "target": "Voordat we doorgaan, willen we graag zeker weten dat je geen bot bent. Houd de knop ingedrukt totdat het verificatieproces is afgerond."
+    },
+    "ktxtHC_ac_1_mobile": {
+      "target": "Voordat we doorgaan, willen we graag zeker weten dat je geen bot bent. Houd de knop ingedrukt totdat het verificatieproces is afgerond."
+    },
+    "ktxtHC_ac_2": {
+      "target": "Mooi, zo te zien ben je een mens van vlees en bloed. Even geduld, je kunt zo weer verder."
+    },
+    "ktxtHC_al_1": {
+      "target": "Er is een verbindingsprobleem. Kijk of je internetverbinding werkt en vernieuw daarna de pagina."
+    },
+    "ktxtHC_al_2": {
+      "target": "De verificatietool is niet geschikt voor je browser. Upgrade of verander van browser en probeer het opnieuw."
+    },
+    "ktxtHC_button": {
+      "target": "Klikken en vasthouden"
+    },
+    "ktxtHC_button_mobile": {
+      "target": "Tikken en vasthouden"
+    },
+    "ktxtHC_failed": {
+      "target": "Probeer het opnieuw"
+    }
+  },
+  "nl-NL": {
+    "ktxtCaptcha_robot_checkbox": {
+      "target": "Schakel het selectievakje in om door te gaan:"
+    },
+    "ktxtCaptcha_robot_copy": {
+      "target": "Dit is niet persoonlijk bedoeld; tegenwoordig zijn sommige scripts en bots bijna niet meer van echte mensen te onderscheiden!"
+    },
+    "ktxtCaptcha_robot_generic_error": {
+      "target": "Er heeft zich een fout voorgedaan. Probeer het later nog eens"
+    },
+    "ktxtCaptcha_robot_heading": {
+      "target": "Ben je een persoon of een robot?"
+    },
+    "ktxtCaptcha_robot_problems": {
+      "target": "Ervaar je nog steeds problemen bij het openen van de pagina? Controleer of je JavaScript en cookies hebt ingeschakeld en of je browser ze niet blokkeert tijdens het laden."
+    },
+    "ktxtHC_ac_1": {
+      "target": "Voordat we doorgaan, willen we graag zeker weten dat je geen bot bent. Houd de knop ingedrukt totdat het verificatieproces is afgerond."
+    },
+    "ktxtHC_ac_1_mobile": {
+      "target": "Voordat we doorgaan, willen we graag zeker weten dat je geen bot bent. Houd de knop ingedrukt totdat het verificatieproces is afgerond."
+    },
+    "ktxtHC_ac_2": {
+      "target": "Mooi, zo te zien ben je een mens van vlees en bloed. Even geduld, je kunt zo weer verder."
+    },
+    "ktxtHC_al_1": {
+      "target": "Er is een verbindingsprobleem. Kijk of je internetverbinding werkt en vernieuw daarna de pagina."
+    },
+    "ktxtHC_al_2": {
+      "target": "De verificatietool is niet geschikt voor je browser. Upgrade of verander van browser en probeer het opnieuw."
+    },
+    "ktxtHC_button": {
+      "target": "Klikken en vasthouden"
+    },
+    "ktxtHC_button_mobile": {
+      "target": "Tikken en vasthouden"
+    },
+    "ktxtHC_failed": {
+      "target": "Probeer het opnieuw"
+    }
+  },
+  "pl-PL": {
+    "ktxtCaptcha_robot_checkbox": {
+      "target": "Aby kontynuować, zaznacz to pole:"
+    },
+    "ktxtCaptcha_robot_copy": {
+      "target": "Nie traktuj tego osobiście – obecnie niektóre skrypty i boty wyjątkowo dobrze potrafią udawać ludzi!"
+    },
+    "ktxtCaptcha_robot_generic_error": {
+      "target": "Wystąpił błąd. Spróbuj ponownie później."
+    },
+    "ktxtCaptcha_robot_heading": {
+      "target": "Czy jesteś osobą czy robotem?"
+    },
+    "ktxtCaptcha_robot_problems": {
+      "target": "W dalszym ciągu masz problem z uzyskaniem dostępu do tej strony? Sprawdź, czy masz włączoną obsługę JavaScript i ciasteczka (cookies) oraz czy Twoja przeglądarka nie blokuje ich wczytywania."
+    },
+    "ktxtHC_ac_1": {
+      "target": "Aby kontynuować, musimy sprawdzić, czy nie jesteś botem. Kliknij przycisk i przytrzymaj go do momentu, kiedy weryfikacja się zakończy."
+    },
+    "ktxtHC_ac_1_mobile": {
+      "target": "Aby kontynuować, musimy sprawdzić, czy nie jesteś botem. Kliknij przycisk i przytrzymaj go do momentu, kiedy weryfikacja się zakończy."
+    },
+    "ktxtHC_ac_2": {
+      "target": "OK, wygląda na to, że jesteś człowiekiem. Poczekaj chwilę – zaraz przejdziemy dalej."
+    },
+    "ktxtHC_al_1": {
+      "target": "Jest problem z połączeniem. Sprawdź swoje połączenie internetowe i odśwież stronę."
+    },
+    "ktxtHC_al_2": {
+      "target": "Narzędzie do weryfikacji jest niekompatybilne z Twoją przeglądarką. Zaktualizuj ją lub użyj innej."
+    },
+    "ktxtHC_button": {
+      "target": "Kliknij i przytrzymaj"
+    },
+    "ktxtHC_button_mobile": {
+      "target": "Kliknij i przytrzymaj"
+    },
+    "ktxtHC_failed": {
+      "target": "Spróbuj ponownie"
+    }
+  },
+  "pt-BR": {
+    "ktxtCaptcha_robot_checkbox": {
+      "target": "Marque a caixa para continuar:"
+    },
+    "ktxtCaptcha_robot_copy": {
+      "target": "Não leve para o lado pessoal, alguns scripts e bots são incrivelmente realistas hoje em dia."
+    },
+    "ktxtCaptcha_robot_generic_error": {
+      "target": "Ocorreu um erro. Tente novamente mais tarde"
+    },
+    "ktxtCaptcha_robot_heading": {
+      "target": "Você é uma pessoa ou um robô?"
+    },
+    "ktxtCaptcha_robot_problems": {
+      "target": "Ainda com problemas para acessar esta página? Tente verificar se tem o JavaScript e os cookies ativados e se seu navegador não está bloqueando o carregamento."
+    },
+    "ktxtHC_ac_1": {
+      "target": "Para prosseguir, precisamos verificar que você não é um robô! Clique e segure o botão até que o processo de verificação seja concluído."
+    },
+    "ktxtHC_ac_1_mobile": {
+      "target": "Para prosseguir, precisamos verificar que você não é um robô! Toque e segure o botão até que o processo de verificação seja concluído."
+    },
+    "ktxtHC_ac_2": {
+      "target": "Tudo certo, parece que você é um humano de verdade. Aguarde um momento, você poderá continuar seu caminho em breve."
+    },
+    "ktxtHC_al_1": {
+      "target": "Há um problema de conexão. Verifique sua conexão com a internet e atualize a página."
+    },
+    "ktxtHC_al_2": {
+      "target": "A ferramenta de verificação não é compatível com seu navegador. Atualize-o ou mude de navegador e tente novamente."
+    },
+    "ktxtHC_button": {
+      "target": "Clique e segure"
+    },
+    "ktxtHC_button_mobile": {
+      "target": "Toque e segure"
+    },
+    "ktxtHC_failed": {
+      "target": "Tente novamente"
+    }
+  },
+  "pt-PT": {
+    "ktxtCaptcha_robot_checkbox": {
+      "target": "Selecione a caixa para continuar:"
+    },
+    "ktxtCaptcha_robot_copy": {
+      "target": "Não leve isto a peito - alguns scripts e bots são extremamente realistas hoje em dia!"
+    },
+    "ktxtCaptcha_robot_generic_error": {
+      "target": "Ocorreu um erro. Por favor tente mais tarde."
+    },
+    "ktxtCaptcha_robot_heading": {
+      "target": "É uma pessoa ou um robot?"
+    },
+    "ktxtCaptcha_robot_problems": {
+      "target": "Continua a ter dificuldades em aceder à página? Experimente verificar se tem o JavaScript e os cookies ativos e que o seu navegador não os está a impedir de carregar."
+    },
+    "ktxtHC_ac_1": {
+      "target": "Para continuar, temos de verificar se não é um bot! Clique e mantenha o botão premido até que o processo de verificação seja concluído."
+    },
+    "ktxtHC_ac_1_mobile": {
+      "target": "Para continuar, temos de verificar se não é um bot! Clique e mantenha o botão premido até que o processo de verificação seja concluído."
+    },
+    "ktxtHC_ac_2": {
+      "target": "Excelente! Parece que é mesmo um humano. Aguarde um momento, poderá continuar o que estava a fazer em breve."
+    },
+    "ktxtHC_al_1": {
+      "target": "Há um problema de ligação. Verifique a sua ligação à Internet e atualize a página."
+    },
+    "ktxtHC_al_2": {
+      "target": "A ferramenta de verificação não é compatível com o seu navegador. Atualize ou troque de navegador e tente novamente."
+    },
+    "ktxtHC_button": {
+      "target": "Clique e mantenha premido"
+    },
+    "ktxtHC_button_mobile": {
+      "target": "Clique e mantenha premido"
+    },
+    "ktxtHC_failed": {
+      "target": "Tente novamente"
+    }
+  },
+  "ro-RO": {
+    "ktxtCaptcha_robot_checkbox": {
+      "target": "Bifați caseta pentru a continua:"
+    },
+    "ktxtCaptcha_robot_copy": {
+      "target": "Vă rugăm să nu o luați personal - unele scripturi și boți sunt incredibil de realiști în prezent!"
+    },
+    "ktxtCaptcha_robot_generic_error": {
+      "target": "A apărut o eroare. Încearcă din nou mai târziu"
+    },
+    "ktxtCaptcha_robot_heading": {
+      "target": "Sunteți o persoană sau un robot?"
+    },
+    "ktxtCaptcha_robot_problems": {
+      "target": "Aveți probleme în continuare la accesarea paginii? Încercați să verificați dacă aveți JavaScript și modulele cookie activate și dacă browserul dvs. nu le blochează la încărcare."
+    },
+    "ktxtHC_ac_1": {
+      "target": "Pentru a continua, trebuie să verificăm că nu ești robot. Dă clic și menține apăsat butonul până la finalizarea procesului de verificare."
+    },
+    "ktxtHC_ac_1_mobile": {
+      "target": "Pentru a continua, trebuie să verificăm că nu ești robot. Atinge și menține apăsat butonul până la finalizarea procesului de verificare."
+    },
+    "ktxtHC_ac_2": {
+      "target": "Excelent! Se pare că ești o persoană reală. Te rugăm să aștepți un moment, vei putea continua în curând."
+    },
+    "ktxtHC_al_1": {
+      "target": "A apărut o problemă de conexiune. Verifică-ți conexiunea la internet, apoi reîmprospătează pagina."
+    },
+    "ktxtHC_al_2": {
+      "target": "Instrumentul de verificare nu este compatibil cu browserul tău. Te rugăm să faci upgrade sau să schimbi browserul și să încerci din nou."
+    },
+    "ktxtHC_button": {
+      "target": "Dă clic și menține apăsat"
+    },
+    "ktxtHC_button_mobile": {
+      "target": "Atinge și menține apăsat"
+    },
+    "ktxtHC_failed": {
+      "target": "Încearcă din nou"
+    }
+  },
+  "ru-RU": {
+    "ktxtCaptcha_robot_checkbox": {
+      "target": "Поставьте галочку, чтобы продолжить:"
+    },
+    "ktxtCaptcha_robot_copy": {
+      "target": "Не обижайтесь, пожалуйста, но сегодня некоторые скрипты и боты ведут себя на удивление правдоподобно!"
+    },
+    "ktxtCaptcha_robot_generic_error": {
+      "target": "Произошла ошибка. Пожалуйста, попробуйте еще раз позже"
+    },
+    "ktxtCaptcha_robot_heading": {
+      "target": "Докажите, что вы не робот"
+    },
+    "ktxtCaptcha_robot_problems": {
+      "target": "Все равно не можете получить доступ к странице? Убедитесь, что JavaScript и файлы cookie включены и браузер не блокирует их загрузку."
+    },
+    "ktxtHC_ac_1": {
+      "target": "Мы должны проверить, что вы не бот! Нажмите и удерживайте кнопку, пока не завершится процесс верификации."
+    },
+    "ktxtHC_ac_1_mobile": {
+      "target": "Мы должны убедиться, что вы не бот. Нажмите и удерживайте кнопку до конца проверки."
+    },
+    "ktxtHC_ac_2": {
+      "target": "Ура, вы настоящий, живой человек! Немного подождите, скоро вы сможете перейти на сайт. "
+    },
+    "ktxtHC_al_1": {
+      "target": "Проблема с соединением. Проверьте подключение к Интернету и обновите страницу."
+    },
+    "ktxtHC_al_2": {
+      "target": "Инструмент для верификации несовместим с вашим браузером. Установите новую версию или используйте другой браузер и повторите попытку."
+    },
+    "ktxtHC_button": {
+      "target": "Нажмите и удерживайте"
+    },
+    "ktxtHC_button_mobile": {
+      "target": "Нажмите и удерживайте"
+    },
+    "ktxtHC_failed": {
+      "target": "Повторите попытку"
+    }
+  },
+  "sk-SK": {
+    "ktxtCaptcha_robot_checkbox": {
+      "target": "Pokračujte zaškrtnutím okienka:"
+    },
+    "ktxtCaptcha_robot_copy": {
+      "target": "Neberte to osobne, niektoré skripty a roboty sú v súčasnosti veľmi realistické!"
+    },
+    "ktxtCaptcha_robot_generic_error": {
+      "target": "Došlo k chybe. Skúste to znova neskôr."
+    },
+    "ktxtCaptcha_robot_heading": {
+      "target": "Ste človek alebo robot?"
+    },
+    "ktxtCaptcha_robot_problems": {
+      "target": "Stále sa vám nedarí dostať na stránku? Skúste skontrolovať, či máte zapnutý JavaScript a súbory \"cookie\" a či im prehľadávač nebráni v načítaní."
+    },
+    "ktxtHC_ac_1": {
+      "target": "Aby ste mohli pokračovať, musíme overiť, či nie ste robot. Kliknite na tlačidlo a podržte ho, kým sa proces overovania nedokončí."
+    },
+    "ktxtHC_ac_1_mobile": {
+      "target": "Aby ste mohli pokračovať, musíme overiť, či nie ste robot. Ťuknite na tlačidlo a podržte ho, kým sa proces overovania nedokončí."
+    },
+    "ktxtHC_ac_2": {
+      "target": "Výborne, vyzerá to, že ste skutočný, živý človek. Ešte chvíľu vydržte, onedlho budete môcť pokračovať ďalej."
+    },
+    "ktxtHC_al_1": {
+      "target": "Vyskytol sa problém s pripojením. Dôkladne skontrolujte svoje internetové pripojenie a potom obnovte stránku."
+    },
+    "ktxtHC_al_2": {
+      "target": "Overovací nástroj nie je kompatibilný s vaším prehliadačom. Inovujte ho alebo použite iný prehliadač a skúste to znovu."
+    },
+    "ktxtHC_button": {
+      "target": "Kliknite a podržte"
+    },
+    "ktxtHC_button_mobile": {
+      "target": "Ťuknite a podržte"
+    },
+    "ktxtHC_failed": {
+      "target": "Skúste to znovu"
+    }
+  },
+  "sv-SE": {
+    "ktxtCaptcha_robot_checkbox": {
+      "target": "Markera rutan för att fortsätta:"
+    },
+    "ktxtCaptcha_robot_copy": {
+      "target": "Ta det inte personligt – skript och robotar kan vara väldigt mänskliga nu för tiden!"
+    },
+    "ktxtCaptcha_robot_generic_error": {
+      "target": "Det har uppstått ett fel. Försök gärna igen senare"
+    },
+    "ktxtCaptcha_robot_heading": {
+      "target": "Är du en människa eller en robot?"
+    },
+    "ktxtCaptcha_robot_problems": {
+      "target": "Har du fortfarande svårt att komma in på sidan? Kolla att du har aktiverat JavaScript och cookies, och att din webbläsare inte blockerar dem."
+    },
+    "ktxtHC_ac_1": {
+      "target": "För att fortsätta behöver vi dubbelkolla att du inte är en robot! Vänligen klicka och håll inne knappen tills verifieringsprocessen är färdig."
+    },
+    "ktxtHC_ac_1_mobile": {
+      "target": "För att fortsätta behöver vi dubbelkolla att du inte är en robot! Tryck och håll inne knappen tills verifieringsprocessen är färdig."
+    },
+    "ktxtHC_ac_2": {
+      "target": "Bra, vi ser att du är en verklig, levande människa. Vänligen vänta en kort stund så kan du snart gå vidare."
+    },
+    "ktxtHC_al_1": {
+      "target": "Det uppstod ett anslutningsfel. Kontrollera din internetanslutning och ladda sedan om sidan."
+    },
+    "ktxtHC_al_2": {
+      "target": "Verifieringsverktyget är inte kompatibelt med din webbläsare. Uppdatera eller byt webbläsare och försök igen."
+    },
+    "ktxtHC_button": {
+      "target": "Klicka och håll."
+    },
+    "ktxtHC_button_mobile": {
+      "target": "Tryck och håll inne"
+    },
+    "ktxtHC_failed": {
+      "target": "Försök igen"
+    }
+  },
+  "th-TH": {
+    "ktxtCaptcha_robot_checkbox": {
+      "target": "เลือกช่องด้านล่างเพื่อดำเนินการต่อ"
+    },
+    "ktxtCaptcha_robot_copy": {
+      "target": "โปรดอย่าคิดมาก ที่เราต้องถามเพราะโปรแกรมสคริปต์กับบ็อตสมัยนี้พัฒนาให้สื่อสารได้ใกล้เคียงมนุษย์มากขึ้น"
+    },
+    "ktxtCaptcha_robot_generic_error": {
+      "target": "เกิดข้อผิดพลาดขึ้น โปรดลองอีกครั้งภายหลัง"
+    },
+    "ktxtCaptcha_robot_heading": {
+      "target": "คุณคือมนุษย์หรือโรบ็อต"
+    },
+    "ktxtCaptcha_robot_problems": {
+      "target": "หากยังมีปัญหาในการเข้าใช้งานเว็บ ลองตรวจดูว่าได้เปิด JavaScript กับคุกกี้ไว้หรือไม่ และเบราว์เซอร์ไม่ได้บล็อกการทำงานไม่ให้โหลด"
+    },
+    "ktxtHC_ac_1": {
+      "target": "หากต้องการดำเนินการต่อ เราต้องเช็คให้แน่ใจว่าคุณไม่ใช่บอท โปรดคลิกปุ่มค้างไว้จนกว่าขั้นตอนยืนยันตัวตนจะแล้วเสร็จ"
+    },
+    "ktxtHC_ac_1_mobile": {
+      "target": "หากต้องการดำเนินการต่อ เราต้องเช็คให้แน่ใจว่าคุณไม่ใช่บอท โปรดแตะปุ่มค้างไว้จนกว่าขั้นตอนยืนยันตัวตนจะแล้วเสร็จ"
+    },
+    "ktxtHC_ac_2": {
+      "target": "เยี่ยมไปเลย ดูเหมือนว่าคุณจะเป็นคนจริงๆ โปรดรอสักครู่ คุณจะดำเนินการต่อได้ตามเดิมเร็วๆ นี้"
+    },
+    "ktxtHC_al_1": {
+      "target": "เกิดปัญหาในการเชื่อมต่อ โปรดเช็คให้แน่ใจว่ามีสัญญาณอินเทอร์เน็ต แล้วรีเฟรชหน้านี้"
+    },
+    "ktxtHC_al_2": {
+      "target": "เครื่องมือยืนยันตัวตนใช้กับเบราว์เซอร์ของคุณไม่ได้ โปรดอัพเกรดหรือสลับเบราว์เซอร์แล้วลองอีกครั้ง"
+    },
+    "ktxtHC_button": {
+      "target": "คลิกค้างไว้"
+    },
+    "ktxtHC_button_mobile": {
+      "target": "แตะค้างไว้"
+    },
+    "ktxtHC_failed": {
+      "target": "โปรดลองอีกครั้ง"
+    }
+  },
+  "tl-PH": {
+    "ktxtCaptcha_robot_checkbox": {
+      "target": "Lagyan ng check ang kahon para magpatuloy:"
+    },
+    "ktxtCaptcha_robot_copy": {
+      "target": "Huwag mo sanang dibdibin - talagang parang mga totoong tao ang ilang script at bot ngayon!"
+    },
+    "ktxtCaptcha_robot_generic_error": {
+      "target": "Nagkaroon ng Error. Pakisubukan muli mamaya"
+    },
+    "ktxtCaptcha_robot_heading": {
+      "target": "Tao ka ba o robot?"
+    },
+    "ktxtCaptcha_robot_problems": {
+      "target": "Nagkakaproble pa rin sa pag-access sa page? Subukang tiyaking naka-on ang iyong JavaScript at cookies at hindi naba-block ng browser mo ang mga ito sa pag-load."
+    },
+    "ktxtHC_ac_1": {
+      "target": "Para magpatuloy, kailangan naming linawin na hindi ka isang bot! I-click at pindutin nang matagal ang button hanggang sa makumpleto ang proseso ng beripikasyon."
+    },
+    "ktxtHC_ac_1_mobile": {
+      "target": "Para magpatuloy, kailangan naming linawin na hindi ka isang bot! I-click at pindutin nang matagal ang button hanggang sa makumpleto ang proseso ng beripikasyon."
+    },
+    "ktxtHC_ac_2": {
+      "target": "Ayos, mukhang isa kang tunay na tao. Maghintay ng ilang sandali at maipagpapatuloy mo na ang iyong ginagawa sa ilang sandali."
+    },
+    "ktxtHC_al_1": {
+      "target": "May problema sa koneksyon. Suriin nang mabuti ang iyong koneksyon sa internet, pagkatapos ay i-refresh ang page."
+    },
+    "ktxtHC_al_2": {
+      "target": "Hindi tugma ang tool ng beripikasyon sa iyong browser. I-upgrade o palitan ang mga browser at subukang muli."
+    },
+    "ktxtHC_button": {
+      "target": "I-click at pindutin nang matagal"
+    },
+    "ktxtHC_button_mobile": {
+      "target": "I-click at pindutin"
+    },
+    "ktxtHC_failed": {
+      "target": "Subukang muli"
+    }
+  },
+  "tr-TR": {
+    "ktxtCaptcha_robot_checkbox": {
+      "target": "Devam etmek için kutuyu işaretleyin:"
+    },
+    "ktxtCaptcha_robot_copy": {
+      "target": "Lütfen bu durumu kişisel olarak algılamayın - bazı kodlar ve robotlar, bugünlerde oldukça canlı gibi duruyor!"
+    },
+    "ktxtCaptcha_robot_generic_error": {
+      "target": "Bir hata oldu. Lütfen daha sonra yeniden deneyin."
+    },
+    "ktxtCaptcha_robot_heading": {
+      "target": "İnsan mısınız yoksa robot mu?"
+    },
+    "ktxtCaptcha_robot_problems": {
+      "target": "Hâlâ sayfaya erişmekte sorun mu yaşıyorsunuz? JavaScript ve çerezlerin açık olup olmadığını ve tarayıcınızın bunların yüklenmesini engelleyip engellemediğini kontrol edin."
+    },
+    "ktxtHC_ac_1": {
+      "target": "Devam edebilmek için robot olmadığınızı doğrulamamız gerekiyor. Lütfen doğrulama tamamlanana kadar düğmeyi basılı tutun."
+    },
+    "ktxtHC_ac_1_mobile": {
+      "target": "Devam edebilmek için robot olmadığınızı doğrulamamız gerekiyor. Lütfen doğrulama tamamlanana kadar düğmeye basılı tutun."
+    },
+    "ktxtHC_ac_2": {
+      "target": "Harika! Gerçek bir insan olduğunuzu doğruladık. Lütfen biraz bekleyin. Kısa süre sonra işleminize devam edebilirsiniz."
+    },
+    "ktxtHC_al_1": {
+      "target": "Bağlantı sorunu var. Lütfen internet bağlantınızı kontrol ettikten sonra sayfayı yenileyin."
+    },
+    "ktxtHC_al_2": {
+      "target": "Doğrulama aracı tarayıcınızla uyumlu değil. Lütfen tarayıcınızı yükseltin veya başka bir tarayıcı kullanarak tekrar deneyin."
+    },
+    "ktxtHC_button": {
+      "target": "Basılı tutun"
+    },
+    "ktxtHC_button_mobile": {
+      "target": "Basılı tutun"
+    },
+    "ktxtHC_failed": {
+      "target": "Lütfen tekrar deneyin"
+    }
+  },
+  "uk-UA": {
+    "ktxtCaptcha_robot_checkbox": {
+      "target": "Установіть прапорець, щоб продовжити:"
+    },
+    "ktxtCaptcha_robot_copy": {
+      "target": "Не ображайтеся – зараз деякі скрипти та боти надзвичайно добре прикидаються людьми."
+    },
+    "ktxtCaptcha_robot_generic_error": {
+      "target": "Сталася помилка. Повторіть спробу пізніше"
+    },
+    "ktxtCaptcha_robot_heading": {
+      "target": "Ви людина чи робот?"
+    },
+    "ktxtCaptcha_robot_problems": {
+      "target": "Усе одно не можете отримати доступ до сторінки? Переконайтеся, що JavaScript та файли cookie включено і що браузер не блокує їхнє завантаження."
+    },
+    "ktxtHC_ac_1": {
+      "target": "Щоб продовжити, нам потрібно переконатися, що ви не бот! Натисніть та утримуйте кнопку до завершення процесу верифікації."
+    },
+    "ktxtHC_ac_1_mobile": {
+      "target": "Щоб продовжити, нам потрібно переконатися, що ви не бот! Натисніть та утримуйте кнопку до завершення процесу верифікації."
+    },
+    "ktxtHC_ac_2": {
+      "target": "Чудово! Схоже, ви людина. Зачекайте хвилинку, незабаром ви зможете продовжити."
+    },
+    "ktxtHC_al_1": {
+      "target": "Проблема з підключенням. Перевірте з’єднання з Інтернетом, а потім оновіть сторінку."
+    },
+    "ktxtHC_al_2": {
+      "target": "Інструмент верифікації не сумісний із вашим браузером. Виконайте оновлення або змініть браузер та спробуйте ще раз."
+    },
+    "ktxtHC_button": {
+      "target": "Натисніть та утримуйте"
+    },
+    "ktxtHC_button_mobile": {
+      "target": "Натисніть та утримуйте"
+    },
+    "ktxtHC_failed": {
+      "target": "Спробуйте ще раз"
+    }
+  },
+  "vi-VN": {
+    "ktxtCaptcha_robot_checkbox": {
+      "target": "Đánh dấu chọn ô để tiếp tục:"
+    },
+    "ktxtCaptcha_robot_copy": {
+      "target": "Xin đừng xem đây là vấn đề cá nhân - những ngày này, một số chương trình rất giống như thật!"
+    },
+    "ktxtCaptcha_robot_generic_error": {
+      "target": "Đã xảy ra Lỗi. Vui lòng thử lại sau"
+    },
+    "ktxtCaptcha_robot_heading": {
+      "target": "Bạn là người hay người máy?"
+    },
+    "ktxtCaptcha_robot_problems": {
+      "target": "Bạn vẫn có vấn đề khi truy cập vào trang? Hãy thử kiểm tra JavaScript của bạn và bật cookie để trình duyệt của bạn không còn chặn chúng tải về."
+    },
+    "ktxtHC_ac_1": {
+      "target": "Để tiếp tục, chúng tôi cần kiểm tra lại nhằm đảm bảo bạn không phải là rô-bốt! Vui lòng nhấp và giữ nút này cho đến khi quy trình xác minh hoàn tất."
+    },
+    "ktxtHC_ac_1_mobile": {
+      "target": "Để tiếp tục, chúng tôi cần kiểm tra lại nhằm đảm bảo bạn không phải là rô-bốt! Vui lòng nhấn và giữ nút này cho đến khi quy trình xác minh hoàn tất."
+    },
+    "ktxtHC_ac_2": {
+      "target": "Tuyệt vời, có vẻ như bạn đúng là người thực. Vui lòng đợi trong giây lát, bạn sẽ sớm có thể tiếp tục tiến trình."
+    },
+    "ktxtHC_al_1": {
+      "target": "Đã xảy ra sự cố kết nối. Vui lòng kiểm tra lại kết nối internet của bạn, sau đó tải lại trang."
+    },
+    "ktxtHC_al_2": {
+      "target": "Công cụ xác minh không tương thích với trình duyệt của bạn. Vui lòng nâng cấp hoặc chuyển sang trình duyệt khác và thử lại."
+    },
+    "ktxtHC_button": {
+      "target": "Nhấp và giữ"
+    },
+    "ktxtHC_button_mobile": {
+      "target": "Nhấn và giữ"
+    },
+    "ktxtHC_failed": {
+      "target": "Vui lòng thử lại"
+    }
+  },
+  "xx-XX": {
+    "ktxtCaptcha_robot_checkbox": {
+      "target": "[Ċȟêêêċǩ ťȟêêê ƀøøøẋ ťøøøø ċøøøøñťııııñüüüüêêêê:]"
+    },
+    "ktxtCaptcha_robot_copy": {
+      "target": "[Ƥĺêêààšêê đøøñ’ť ťààǩêê ťȟııš ƥêêȓšøøñààĺĺÿ - šøøɱêê šċȓııƥťš ààñđ ƀøøťš ààȓêê ȓêêɱààȓǩààƀĺÿ ĺııƒêêĺııǩêê ťȟêêšêê đàààÿš!]"
+    },
+    "ktxtCaptcha_robot_generic_error": {
+      "target": "[ÅÅñ ȄȄȓȓøøȓ øøċċüüüȓêêêđ. Ƥĺêêêàààšêêê ťȓÿ àààğàààıııñ ĺàààťêêêȓ]"
+    },
+    "ktxtCaptcha_robot_heading": {
+      "target": "[ÅÅÅȓêêê ÿøøøüüü ààà ƥêêêȓšøøøñ øøøȓ ààà ȓøøøƀøøøøť?]"
+    },
+    "ktxtCaptcha_robot_problems": {
+      "target": "[Șťııĺĺ ȟààṽııñğ ƥȓøøƀĺêêɱš ààċċêêššııñğ ťȟêê ƥààğêê? Ťȓÿ ċȟêêċǩııñğ ÿøøüü ȟààṽêê ĴààṽààȘċȓııƥť ààñđ ċøøøøǩııêêš ťüüȓñêêđ øøñ ààñđ ťȟààť ÿøøüüȓ ƀȓøøẁšêêȓ ııšñ’ť ƀĺøøċǩııñğ ťȟêêɱ ƒȓøøøɱ ĺøøøàààđıııñğ.]"
+    },
+    "ktxtHC_ac_1": {
+      "target": "[Ťø ċøñťıñüêê ẁêê ñêêêêđ ťøø đøøüüƀĺêê ċȟêêċǩ ÿøøüü’ȓêê ñøøť àà ƀøøť! Ƥĺêêààšêê ċĺııċǩ ààñđ ȟøøĺđ ťȟêê ƀüüťťøøñ üüñťııĺ ťȟêê ṽêêȓııƒııċààťııøøñ ƥȓøøċêêšš ııš ċøøɱƥĺêêťêê.]"
+    },
+    "ktxtHC_ac_1_mobile": {
+      "target": "[Ťø ċøñťıñüêê ẁêê ñêêêêđ ťøø đøøüüƀĺêê ċȟêêċǩ ÿøøüü’ȓêê ñøøť àà ƀøøť! Ƥĺêêààšêê ťààƥ ààñđ ȟøøĺđ ťȟêê ƀüüťťøøñ üüñťııĺ ťȟêê ṽêêȓııƒııċààťııøøñ ƥȓøøċêêšš ııš ċøøɱƥĺêêťêê.]"
+    },
+    "ktxtHC_ac_2": {
+      "target": "[Ġȓêàť, ĺøøǩš ĺııǩêê ÿøøüü’ȓêê àà ȓêêààĺ, ĺııṽêê ȟüüɱààñ. Ƥĺêêààšêê ẁààııť àà ɱøøɱêêñť, ÿøøüü’ĺĺ ƀêê ààƀĺêê ťøø ċøøñťııñüüêê øøñ ÿøøüüȓ ẁààÿ šȟøøȓťĺÿ.]"
+    },
+    "ktxtHC_al_1": {
+      "target": "[Ťȟêȓê’š à ċøøññêêċťııøøñ ııššüüêê. Ƥĺêêààšêê đøøüüƀĺêê ċȟêêċǩ ÿøøüüȓ ııñťêêȓñêêť ċøøññêêċťııøøñ, ťȟêêñ ȓêêƒȓêêšȟ ťȟêê ƥààğêê.]"
+    },
+    "ktxtHC_al_2": {
+      "target": "[Ťȟê ṽêêȓııƒııċààťııøøñ ťøøøøĺ ııšñ’ť ċøøɱƥààťııƀĺêê ẁııťȟ ÿøøüüȓ ƀȓøøẁšêêȓ. Ƥĺêêààšêê üüƥğȓààđêê øøȓ šẁııťċȟ ƀȓøøẁšêêȓš ààñđ ťȓÿ ààğààııñ.]"
+    },
+    "ktxtHC_button": {
+      "target": "[Ċĺıııııċǩ ààààààñđ ȟøøøøøøĺđ]"
+    },
+    "ktxtHC_button_mobile": {
+      "target": "[Ťàààààƥ àààààñđ ȟøøøøøĺđ]"
+    },
+    "ktxtHC_failed": {
+      "target": "[Ƥĺêêêàààšêêêê ťȓÿ ààààğààààııııñ]"
+    }
+  },
+  "zh-CN": {
+    "ktxtCaptcha_robot_checkbox": {
+      "target": "选中复选框以继续："
+    },
+    "ktxtCaptcha_robot_copy": {
+      "target": "请不要介意，因为最近有些脚本和机器人太逼真了！"
+    },
+    "ktxtCaptcha_robot_generic_error": {
+      "target": "出现错误。 请稍后重试"
+    },
+    "ktxtCaptcha_robot_heading": {
+      "target": "您是人还是机器人？"
+    },
+    "ktxtCaptcha_robot_problems": {
+      "target": "访问页面仍然存在问题？请确保您已开启 JavaScript 和 Cookie，且浏览器没有阻止其进行加载。"
+    },
+    "ktxtHC_ac_1": {
+      "target": "要继续到下一步，我们需要检查您不是机器人！请点击并按住按钮，直到验证过程完成。 "
+    },
+    "ktxtHC_ac_1_mobile": {
+      "target": "要继续到下一步，我们需要检查您不是机器人！请点击并按住按钮，直到验证过程完成。"
+    },
+    "ktxtHC_ac_2": {
+      "target": "太好了，看起来您是真人在操作。请稍等，您很快就可以继续下去了。 "
+    },
+    "ktxtHC_al_1": {
+      "target": "存在连接问题。请检查您的互联网连接，然后刷新页面。 "
+    },
+    "ktxtHC_al_2": {
+      "target": "验证工具与您的浏览器不兼容。请升级或切换浏览器，然后重试。"
+    },
+    "ktxtHC_button": {
+      "target": "点击并按住"
+    },
+    "ktxtHC_button_mobile": {
+      "target": "点击并按住"
+    },
+    "ktxtHC_failed": {
+      "target": "请重试"
+    }
+  },
+  "zh-HK": {
+    "ktxtCaptcha_robot_checkbox": {
+      "target": "勾選方塊以繼續："
+    },
+    "ktxtCaptcha_robot_copy": {
+      "target": "請不要介意 - 最近有些編程語言和機器人非常逼真！"
+    },
+    "ktxtCaptcha_robot_generic_error": {
+      "target": "發生了錯誤。 請稍後重試"
+    },
+    "ktxtCaptcha_robot_heading": {
+      "target": "您是人還是機器人？"
+    },
+    "ktxtCaptcha_robot_problems": {
+      "target": "仍然無法存取該頁面？請試著檢查 JavaScript 和 Cookie 是否已開啓，並確保您的瀏覽器不會阻止其加載。"
+    },
+    "ktxtHC_ac_1": {
+      "target": "如要繼續操作，我們必須先確認你不是機器人！請點擊並長按此按鈕，直到驗證流程結束再放開。"
+    },
+    "ktxtHC_ac_1_mobile": {
+      "target": "如要繼續操作，我們必須先確認你不是機器人！請輕點並長按此按鈕，直到驗證流程結束再放開。"
+    },
+    "ktxtHC_ac_2": {
+      "target": "太好了！我們已確認你是活生生的人類。請稍後，我們會盡快將你導向下一頁。"
+    },
+    "ktxtHC_al_1": {
+      "target": "發生連線問題。請確認你的網路連線並重新整理此頁面。"
+    },
+    "ktxtHC_al_2": {
+      "target": "你的瀏覽器不支援此驗證工具。請更新版本或改用其他瀏覽器，接著再驗證一次。"
+    },
+    "ktxtHC_button": {
+      "target": "點擊並長按"
+    },
+    "ktxtHC_button_mobile": {
+      "target": "輕點並長按"
+    },
+    "ktxtHC_failed": {
+      "target": "請再試一次"
+    }
+  },
+  "zh-SG": {
+    "ktxtCaptcha_robot_checkbox": {
+      "target": "勾選方塊以繼續："
+    },
+    "ktxtCaptcha_robot_copy": {
+      "target": "請不要介意 - 最近有些編程語言和機器人非常逼真！"
+    },
+    "ktxtCaptcha_robot_generic_error": {
+      "target": "發生了錯誤。 請稍後重試"
+    },
+    "ktxtCaptcha_robot_heading": {
+      "target": "您是人還是機器人？"
+    },
+    "ktxtCaptcha_robot_problems": {
+      "target": "仍然無法存取該頁面？請試著檢查 JavaScript 和 Cookie 是否已開啓，並確保您的瀏覽器不會阻止其加載。"
+    },
+    "ktxtHC_ac_1": {
+      "target": "如要繼續操作，我們必須先確認你不是機器人！請點擊並長按此按鈕，直到驗證流程結束再放開。"
+    },
+    "ktxtHC_ac_1_mobile": {
+      "target": "如要繼續操作，我們必須先確認你不是機器人！請輕點並長按此按鈕，直到驗證流程結束再放開。"
+    },
+    "ktxtHC_ac_2": {
+      "target": "太好了！我們已確認你是活生生的人類。請稍後，我們會盡快將你導向下一頁。"
+    },
+    "ktxtHC_al_1": {
+      "target": "發生連線問題。請確認你的網路連線並重新整理此頁面。"
+    },
+    "ktxtHC_al_2": {
+      "target": "你的瀏覽器不支援此驗證工具。請更新版本或改用其他瀏覽器，接著再驗證一次。"
+    },
+    "ktxtHC_button": {
+      "target": "點擊並長按"
+    },
+    "ktxtHC_button_mobile": {
+      "target": "輕點並長按"
+    },
+    "ktxtHC_failed": {
+      "target": "請再試一次"
+    }
+  },
+  "zh-TW": {
+    "ktxtCaptcha_robot_checkbox": {
+      "target": "勾選方塊以繼續："
+    },
+    "ktxtCaptcha_robot_copy": {
+      "target": "請不要介意 - 最近有些編程語言和機器人非常逼真！"
+    },
+    "ktxtCaptcha_robot_generic_error": {
+      "target": "發生了錯誤。 請稍後重試"
+    },
+    "ktxtCaptcha_robot_heading": {
+      "target": "您是人還是機器人？"
+    },
+    "ktxtCaptcha_robot_problems": {
+      "target": "仍然無法存取該頁面？請試著檢查 JavaScript 和 Cookie 是否已開啓，並確保您的瀏覽器不會阻止其加載。"
+    },
+    "ktxtHC_ac_1": {
+      "target": "如要繼續操作，我們必須先確認你不是機器人！請點擊並長按此按鈕，直到驗證流程結束再放開。"
+    },
+    "ktxtHC_ac_1_mobile": {
+      "target": "如要繼續操作，我們必須先確認你不是機器人！請輕點並長按此按鈕，直到驗證流程結束再放開。"
+    },
+    "ktxtHC_ac_2": {
+      "target": "太好了！我們已確認你是活生生的人類。請稍後，我們會盡快將你導向下一頁。"
+    },
+    "ktxtHC_al_1": {
+      "target": "發生連線問題。請確認你的網路連線並重新整理此頁面。"
+    },
+    "ktxtHC_al_2": {
+      "target": "你的瀏覽器不支援此驗證工具。請更新版本或改用其他瀏覽器，接著再驗證一次。"
+    },
+    "ktxtHC_button": {
+      "target": "點擊並長按"
+    },
+    "ktxtHC_button_mobile": {
+      "target": "輕點並長按"
+    },
+    "ktxtHC_failed": {
+      "target": "請再試一次"
+    }
+  }
+}

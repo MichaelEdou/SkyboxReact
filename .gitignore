@@ -1,0 +1,34 @@
+# ---- SECRETS — never commit ----
+**/.env
+**/.env.*
+!**/.env.example
+
+# ---- Database (live data) ----
+**/prisma/*.db
+**/prisma/*.db-journal
+
+# ---- Dependencies (reproducible from package.json) ----
+**/node_modules/
+
+# ---- Playwright test outputs ----
+**/test-results/
+**/test-report/
+**/playwright-report/
+
+# ---- OS / editor cruft ----
+.DS_Store
+Thumbs.db
+*.swp
+.vscode/
+.idea/
+
+# ---- Generated screenshots / videos ----
+clone-tools/skybox-*.png
+clone-tools/header-*.png
+clone-tools/local-*.png
+clone-tools/*.webm
+clone-tools/click-audit.json
+clone-tools/button-display-audit.json
+
+# ---- Logs ----
+*.log

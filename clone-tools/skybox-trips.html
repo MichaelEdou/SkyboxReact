@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en-CA" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>My trips — Skybox Global</title>
+<link rel="icon" href="/skybox-icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/_ext/js.skyscnr.com/sttc/hamilton/falcon/static/css/bpk-styles.5b069319.css">
+<style>
+  body { margin:0; background:#f4f5f6; color:#05203c; font-family:"Skyscanner Relative",-apple-system,sans-serif; }
+  .top { background:#05203c; color:#fff; padding:18px 24px; display:flex; align-items:center; gap:16px; }
+  .brand { font-weight:900; font-size:22px; color:#fff; text-decoration:none; display:inline-flex; gap:8px; align-items:center; }
+  .mark { display:inline-block; width:22px; height:22px; background:#fff; -webkit-mask:radial-gradient(circle at 50% 100%,#000 9px,transparent 10px) no-repeat,conic-gradient(from 200deg at 50% 100%,#000 0 140deg,transparent 0) no-repeat; mask:radial-gradient(circle at 50% 100%,#000 9px,transparent 10px) no-repeat,conic-gradient(from 200deg at 50% 100%,#000 0 140deg,transparent 0) no-repeat; }
+  .top .right { margin-left:auto; display:flex; gap:8px; }
+  .top .right a, .top .right button { color:#fff; background:transparent; border:1px solid rgba(255,255,255,.35); border-radius:18px; padding:6px 14px; font:inherit; cursor:pointer; text-decoration:none; }
+  .wrap { max-width:1000px; margin:0 auto; padding:28px 24px; }
+  h1 { margin:0 0 18px; }
+  .card { background:#fff; border-radius:8px; padding:18px 22px; box-shadow:0 1px 3px rgba(0,0,0,.08); margin-bottom:14px; display:grid; grid-template-columns:1fr auto; gap:16px; align-items:center; }
+  .pill { display:inline-block; background:#eef1f5; color:#05203c; border-radius:12px; padding:2px 10px; font-size:12px; font-weight:700; margin-left:6px; }
+  .pill.cancelled { background:#fdecea; color:#5f2120; }
+  .pill.confirmed { background:#e2f5ea; color:#1d6b3b; }
+  .btn { display:inline-block; padding:10px 16px; border-radius:24px; background:#0062e3; color:#fff; font-weight:700; text-decoration:none; font-size:14px; border:0; cursor:pointer; }
+  .empty { padding:60px; text-align:center; color:#545860; background:#fff; border-radius:8px; }
+  .signin { padding:30px; text-align:center; background:#fff; border-radius:8px; }
+  .signin input { padding:10px 12px; border:1px solid #dadce0; border-radius:24px; width:280px; font:inherit; }
+</style>
+</head>
+<body>
+<header class="top">
+  <a class="brand" href="/"><span class="mark"></span>Skybox Global</a>
+  <div class="right"><a href="/">Home</a><button id="logoutBtn" style="display:none">Sign out</button></div>
+</header>
+<main class="wrap">
+  <h1>My trips</h1>
+  <div id="container">Loading…</div>
+</main>
+<script>
+(function () {
+  const $ = (s) => document.querySelector(s);
+  fetch('/skybox-api/auth/me').then((r) => r.json()).then((j) => {
+    if (!j.user) {
+      $('#container').innerHTML = `<div class="signin"><p>Sign in to view your trips.</p><form id="f"><input id="email" type="email" placeholder="you@example.com" required> <button class="btn" type="submit" style="border:0">Send sign-in link</button></form><p style="margin-top:14px;font-size:12px;color:#545860">In dev mode the link prints to the server console.</p></div>`;
+      $('#f').addEventListener('submit', async (ev) => {
+        ev.preventDefault();
+        const r = await fetch('/skybox-api/auth/login', { method:'POST', headers:{'content-type':'application/json'}, body: JSON.stringify({ email: $('#email').value }) });
+        const k = await r.json();
+        $('#container').innerHTML = '<div class="signin"><p>' + (k.message || 'Check your email.') + '</p></div>';
+      });
+      return;
+    }
+    $('#logoutBtn').style.display = '';
+    $('#logoutBtn').addEventListener('click', () => fetch('/skybox-api/auth/logout', { method:'POST' }).then(() => location.reload()));
+    return fetch('/skybox-api/orders').then((r) => r.json());
+  }).then((j) => {
+    if (!j || !j.orders) return;
+    if (!j.orders.length) { $('#container').innerHTML = '<div class="empty">No bookings yet. <br><br><a class="btn" href="/flights">Search flights</a></div>'; return; }
+    $('#container').innerHTML = j.orders.map((o) => `<div class="card"><div><div style="font-size:18px;font-weight:700">${o.booking_reference}<span class="pill ${o.status}">${o.status}</span></div><div style="color:#545860;font-size:14px">${o.starts_at ? new Date(o.starts_at).toLocaleDateString() : ''} · ${o.total_amount} ${o.currency}</div></div><a class="btn" href="/trips/${o.id}">Open</a></div>`).join('');
+  });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="en-CA" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Review your flight — Skybox Global</title>
+<link rel="icon" href="/skybox-icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/_ext/js.skyscnr.com/sttc/hamilton/falcon/static/css/bpk-styles.5b069319.css">
+<link rel="stylesheet" href="/_ext/js.skyscnr.com/sttc/banana/static/css/bpk-styles.00b4170a.chunk.css">
+<script defer src="/skybox-duffel-components.js"></script>
+<style>
+  :root { --bg:#f4f5f6; --card:#fff; --ink:#05203c; --soft:#545860; --accent:#0062e3; --border:#dadce0; --shadow:0 1px 3px rgba(0,0,0,.08),0 2px 8px rgba(0,0,0,.04); }
+  body { margin:0; background:var(--bg); color:var(--ink); font-family:"Skyscanner Relative",-apple-system,sans-serif; }
+  .top { background:var(--ink); color:#fff; padding:18px 24px; display:flex; align-items:center; gap:24px; }
+  .brand { font-weight:900; font-size:22px; color:#fff; text-decoration:none; display:inline-flex; gap:8px; align-items:center; }
+  .mark { display:inline-block; width:22px; height:22px; background:#fff; -webkit-mask:radial-gradient(circle at 50% 100%,#000 9px,transparent 10px) no-repeat,conic-gradient(from 200deg at 50% 100%,#000 0 140deg,transparent 0) no-repeat; mask:radial-gradient(circle at 50% 100%,#000 9px,transparent 10px) no-repeat,conic-gradient(from 200deg at 50% 100%,#000 0 140deg,transparent 0) no-repeat; }
+  .wrap { max-width:1100px; margin:0 auto; padding:24px; }
+  .grid { display:grid; grid-template-columns:1fr 320px; gap:24px; align-items:flex-start; }
+  @media (max-width:880px) { .grid { grid-template-columns:1fr; } }
+  .card { background:var(--card); border-radius:8px; padding:20px; box-shadow:var(--shadow); margin-bottom:16px; }
+  .card h2 { margin:0 0 12px; font-size:18px; }
+  .sub { color:var(--soft); font-size:13px; margin:0 0 12px; }
+  .price-box { position:sticky; top:16px; }
+  .price-box .amount { font-size:30px; font-weight:800; }
+  .leg { display:grid; grid-template-columns:36px 1fr; gap:12px; padding:10px 0; align-items:center; border-bottom:1px solid #eef0f3; }
+  .leg:last-child { border-bottom:0; }
+  .logo { width:32px; height:32px; border-radius:6px; background:#eef1f5; display:inline-flex; align-items:center; justify-content:center; overflow:hidden; }
+  .logo img { max-width:100%; max-height:100%; }
+  .row { display:flex; gap:12px; align-items:baseline; font-size:14px; }
+  .row .time { font-weight:700; font-size:16px; }
+  .row .iata { color:var(--soft); font-size:13px; }
+  .row .dur { color:var(--soft); font-size:13px; margin-left:auto; }
+  .pax { background:#fafbfc; border:1px solid var(--border); border-radius:6px; padding:14px; margin-bottom:10px; }
+  .pax h3 { margin:0 0 10px; font-size:14px; text-transform:uppercase; color:var(--soft); }
+  .form-row { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:8px; }
+  .form-row label { font-size:12px; color:var(--soft); }
+  .form-row input, .form-row select { width:100%; padding:8px 10px; border:1px solid var(--border); border-radius:4px; font:inherit; box-sizing:border-box; }
+  .ancillary { display:flex; justify-content:space-between; align-items:center; padding:8px 0; border-bottom:1px dashed #eef0f3; font-size:14px; }
+  .btn { display:inline-block; padding:12px 22px; border:0; border-radius:24px; background:var(--accent); color:#fff; font-weight:700; cursor:pointer; font-size:14px; text-decoration:none; }
+  .btn.ghost { background:transparent; color:var(--accent); border:1px solid var(--border); }
+  .btn[disabled] { background:#a3b1c4; cursor:not-allowed; }
+  .toast { padding:12px 14px; border-radius:6px; margin-bottom:12px; font-size:14px; }
+  .toast.err { background:#fdecea; color:#5f2120; }
+  .toast.live { background:#fff8e1; color:#5d4037; }
+  #cardFormHost { min-height:140px; border:2px dashed var(--border); border-radius:6px; padding:18px; background:#fbfcfd; }
+  .spinner { display:inline-block; width:14px; height:14px; border:2px solid #fff; border-top-color:transparent; border-radius:50%; animation: spin 1s linear infinite; vertical-align:-3px; margin-right:6px; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+</style>
+</head>
+<body>
+<header class="top"><a class="brand" href="/"><span class="mark"></span>Skybox Global</a></header>
+<main class="wrap">
+  <div id="liveBadge" class="toast live" style="display:none">LIVE booking mode — pressing <b>Pay &amp; Confirm</b> creates a real airline reservation with real charges.</div>
+  <div id="errBox"></div>
+  <div class="grid">
+    <div>
+      <section class="card"><h2>Itinerary</h2><div class="sub" id="ownerLine">Loading…</div><div id="slices"></div></section>
+      <section class="card"><h2>Passengers</h2><p class="sub">Names must match each passenger's travel document exactly.</p><div id="paxList"></div></section>
+      <section class="card" id="ancillariesCard" style="display:none"><h2>Add bags &amp; seats</h2><div id="ancillaries"></div></section>
+      <section class="card"><h2>Contact</h2><div class="form-row"><div><label>Email</label><input id="cEmail" type="email" required></div><div><label>Phone</label><input id="cPhone" type="tel" placeholder="+14165551234"></div></div></section>
+      <section class="card" id="paymentCard"><h2>Payment</h2><p class="sub">Card data stays with Duffel.</p><div id="cardFormHost">Click <b>Continue to payment</b> to create a Duffel Payment Intent.</div></section>
+    </div>
+    <aside>
+      <div class="card price-box">
+        <div class="amount" id="total">—</div>
+        <div class="sub" id="totalSub">total · taxes &amp; fees included</div>
+        <div style="margin-top:14px;display:flex;flex-direction:column;gap:8px">
+          <button class="btn" id="continueBtn">Continue to payment</button>
+          <button class="btn" id="payBtn" style="display:none;background:#1e8c4a">Pay &amp; Confirm booking</button>
+          <a class="btn ghost" href="javascript:history.back()">Back to results</a>
+        </div>
+        <p class="sub" style="margin-top:14px;font-size:12px">Offer expires at <span id="expires">—</span></p>
+      </div>
+    </aside>
+  </div>
+</main>
+<script>
+(function () {
+  const $ = (s) => document.querySelector(s);
+  const m = location.pathname.match(/\/flights\/offer\/([^/?#]+)/);
+  const offerId = m ? decodeURIComponent(m[1]) : null;
+  if (!offerId) { $('#errBox').innerHTML = '<div class="toast err">No offer id in URL.</div>'; return; }
+  let offer = null, sessionId = null, paymentIntent = null, cardCaptured = false;
+
+  function fmtTime(iso) { return iso ? new Date(iso).toLocaleTimeString('en-CA', { hour:'2-digit', minute:'2-digit' }) : ''; }
+  function fmtDate(iso) { return iso ? new Date(iso).toLocaleDateString('en-CA', { weekday:'short', month:'short', day:'numeric' }) : ''; }
+  function fmtDur(iso) { const x = /^P?T?(?:(\d+)H)?(?:(\d+)M)?/.exec(iso || ''); if (!x) return iso || ''; const h = x[1] ? +x[1] : 0, mn = x[2] ? +x[2] : 0; return (h ? h+'h ' : '') + (mn ? mn+'m' : ''); }
+  function fmtPrice(a, c) { try { return new Intl.NumberFormat('en-CA', { style:'currency', currency:c, maximumFractionDigits:0 }).format(parseFloat(a)); } catch { return a + ' ' + c; } }
+  function showErr(msg) { $('#errBox').innerHTML = `<div class="toast err"><b>Error.</b> ${msg}</div>`; }
+
+  function renderSlice(s) {
+    const segs = s.segments.map((seg) => {
+      const carrier = seg.marketing_carrier;
+      const logo = carrier && carrier.logo ? `<img src="${carrier.logo}" alt="">` : `<span style="font-size:10px;font-weight:700;color:#666">${(carrier && carrier.iata) || '–'}</span>`;
+      return `<div class="leg"><div class="logo">${logo}</div><div><div class="row"><span class="time">${fmtTime(seg.departing_at)}</span><span class="iata">${seg.origin}</span><span style="color:#a0a4ab">→</span><span class="time">${fmtTime(seg.arriving_at)}</span><span class="iata">${seg.destination}</span><span class="dur">${fmtDur(seg.duration)}</span></div><div class="row" style="margin-top:2px;color:#545860;font-size:13px"><span>${fmtDate(seg.departing_at)}</span><span>${carrier && carrier.name ? carrier.name : ''}${seg.flight_number ? ' · '+seg.flight_number : ''}</span></div></div></div>`;
+    }).join('');
+    return `<h3 style="margin:14px 0 4px;font-size:14px;color:#545860">${s.origin.iata} → ${s.destination.iata} · ${fmtDur(s.duration)}</h3>${segs}`;
+  }
+  function renderPassengers(ps) {
+    $('#paxList').innerHTML = ps.map((p, i) => `<div class="pax" data-idx="${i}" data-passenger-id="${p.id}"><h3>Passenger ${i+1} · ${p.type}</h3><div class="form-row"><div><label>Title</label><select class="pf-title"><option value="mr">Mr</option><option value="mrs">Mrs</option><option value="ms">Ms</option><option value="miss">Miss</option><option value="dr">Dr</option></select></div><div><label>Gender</label><select class="pf-gender"><option value="m">Male</option><option value="f">Female</option><option value="x">Unspecified</option></select></div></div><div class="form-row"><div><label>Given name(s)</label><input class="pf-given" required></div><div><label>Family name</label><input class="pf-family" required></div></div><div class="form-row"><div><label>Date of birth</label><input class="pf-dob" type="date" required></div><div><label>Nationality (ISO-2)</label><input class="pf-nat" maxlength="2" placeholder="CA"></div></div>${i === 0 ? '<div class="form-row"><div><label>Email</label><input class="pf-email" type="email"></div><div><label>Phone</label><input class="pf-phone" type="tel"></div></div>' : ''}</div>`).join('');
+  }
+  function renderAncillaries(svc) {
+    if (!svc || !svc.length) return;
+    $('#ancillariesCard').style.display = '';
+    $('#ancillaries').innerHTML = svc.slice(0, 12).map((s) => { const label = s.metadata?.designator || s.metadata?.maximum_weight_kg ? `${s.type} · ${s.metadata?.designator || s.metadata?.maximum_weight_kg + 'kg bag'}` : s.type; return `<div class="ancillary"><div><input type="checkbox" class="anc-toggle" data-id="${s.id}"><label>${label}</label></div><div>${fmtPrice(s.total_amount, s.total_currency)}</div></div>`; }).join('');
+  }
+  function readPassengers() {
+    return Array.from(document.querySelectorAll('.pax')).map((el) => ({
+      id: el.dataset.passengerId, title: el.querySelector('.pf-title').value, gender: el.querySelector('.pf-gender').value,
+      given_name: el.querySelector('.pf-given').value.trim(), family_name: el.querySelector('.pf-family').value.trim(),
+      born_on: el.querySelector('.pf-dob').value,
+      ...(el.querySelector('.pf-nat').value ? { nationality: el.querySelector('.pf-nat').value.toUpperCase() } : {}),
+      ...(el.querySelector('.pf-email')?.value ? { email: el.querySelector('.pf-email').value } : {}),
+      ...(el.querySelector('.pf-phone')?.value ? { phone_number: el.querySelector('.pf-phone').value } : {}),
+    }));
+  }
+  function readServices() { return Array.from(document.querySelectorAll('.anc-toggle:checked')).map((el) => ({ id: el.dataset.id, quantity: 1 })); }
+
+  fetch('/skybox-api/flights/offers/' + encodeURIComponent(offerId)).then((r) => r.json().then((j) => ({ ok: r.ok, j }))).then(({ ok, j }) => {
+    if (!ok || j.error) { showErr(j.error?.message || 'offer fetch failed'); return; }
+    offer = j.offer;
+    $('#ownerLine').textContent = (offer.owner?.name || 'Operating carrier') + ' · expires ' + new Date(offer.expires_at).toLocaleTimeString();
+    $('#expires').textContent = new Date(offer.expires_at).toLocaleString();
+    $('#slices').innerHTML = offer.slices.map(renderSlice).join('');
+    $('#total').textContent = fmtPrice(offer.total_amount, offer.total_currency);
+    renderPassengers(offer.passengers);
+    renderAncillaries(offer.available_services);
+    return fetch('/skybox-api/sessions', { method:'POST', headers:{'content-type':'application/json'}, body: JSON.stringify({ offer_id: offer.id }) }).then((r) => r.json());
+  }).then((j) => { if (!j) return; if (j.error) { showErr(j.error.message); return; } sessionId = j.session_id; }).catch((e) => showErr(e.message));
+
+  function mountCardForm(pi) {
+    const host = $('#cardFormHost');
+    host.style.padding = '0'; host.style.border = '0'; host.style.background = 'transparent';
+    host.innerHTML = '';
+    if (window.customElements && customElements.get && customElements.get('duffel-card-form')) {
+      const form = document.createElement('duffel-card-form');
+      form.setAttribute('client_key', pi.client_token);
+      form.setAttribute('intent', 'to-create-card-for-temporary-use');
+      form.addEventListener('cardCreatedSuccessfully', () => { cardCaptured = true; });
+      form.addEventListener('cardSavedSuccessfully', () => { cardCaptured = true; });
+      host.appendChild(form);
+    } else {
+      host.innerHTML = '<div class="toast err">Duffel Card Form bundle not loaded. Re-run <code>esbuild @duffel/components/custom-elements.js</code>.</div>';
+    }
+  }
+  async function captureCard() {
+    const form = document.querySelector('duffel-card-form');
+    if (!form) return;
+    if (typeof form.triggerSubmit === 'function') await form.triggerSubmit();
+    else if (typeof form.submit === 'function') await form.submit();
+  }
+
+  $('#continueBtn').addEventListener('click', async () => {
+    if (!sessionId) return showErr('session not ready');
+    const passengers = readPassengers();
+    for (const p of passengers) if (!p.given_name || !p.family_name || !p.born_on) return showErr('please fill all passenger fields');
+    const contact = { email: $('#cEmail').value.trim(), phone: $('#cPhone').value.trim() || undefined };
+    if (!contact.email) return showErr('contact email required');
+    const services = readServices();
+    $('#continueBtn').disabled = true;
+    $('#continueBtn').innerHTML = '<span class="spinner"></span>Preparing payment…';
+    try {
+      const pr = await fetch('/skybox-api/sessions/' + sessionId, { method:'PATCH', headers:{'content-type':'application/json'}, body: JSON.stringify({ passengers, services, contact }) });
+      if (!pr.ok) throw new Error((await pr.json()).error?.message || 'session update failed');
+      const pir = await fetch('/skybox-api/sessions/' + sessionId + '/payment-intent', { method:'POST' });
+      const pi = await pir.json();
+      if (!pir.ok || pi.error) throw new Error(pi.error?.message || 'payment intent failed');
+      paymentIntent = pi;
+      if (pi.live_mode) $('#liveBadge').style.display = '';
+      mountCardForm(pi);
+      $('#continueBtn').style.display = 'none';
+      $('#payBtn').style.display = '';
+    } catch (e) { showErr(e.message); $('#continueBtn').disabled = false; $('#continueBtn').textContent = 'Continue to payment'; }
+  });
+  $('#payBtn').addEventListener('click', async () => {
+    if (!confirm('This will create a REAL airline booking and charge the card. Continue?')) return;
+    $('#payBtn').disabled = true;
+    $('#payBtn').innerHTML = '<span class="spinner"></span>Capturing card…';
+    try {
+      await captureCard();
+      const start = Date.now();
+      while (!cardCaptured && Date.now() - start < 15000) await new Promise((r) => setTimeout(r, 200));
+      $('#payBtn').innerHTML = '<span class="spinner"></span>Booking…';
+      const r = await fetch('/skybox-api/sessions/' + sessionId + '/confirm', { method:'POST', headers:{'content-type':'application/json','Idempotency-Key': sessionId + ':confirm'}, body: JSON.stringify({}) });
+      const j = await r.json();
+      if (!r.ok || j.error) throw new Error(j.error?.message || 'order create failed');
+      location.href = '/flights/confirmation/' + encodeURIComponent(j.order_id);
+    } catch (e) { showErr(e.message); $('#payBtn').disabled = false; $('#payBtn').textContent = 'Pay & Confirm booking'; }
+  });
+})();
+</script>
+</body>
+</html>

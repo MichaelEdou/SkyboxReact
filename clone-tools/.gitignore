@@ -1,0 +1,15 @@
+.env
+.env.*
+!.env.example
+node_modules/
+prisma/*.db
+prisma/*.db-journal
+test-results/
+test-report/
+*.log
+skybox-*.png
+local-*.png
+header-*.png
+*.json.bak
+click-audit.json
+button-display-audit.json

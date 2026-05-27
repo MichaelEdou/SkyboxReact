@@ -1,0 +1,15 @@
+{
+  "name": "Skybox Global",
+  "short_name": "Skybox Global",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#05203c",
+  "theme_color": "#05203c",
+  "icons": [
+    {
+      "src": "/skybox-icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}

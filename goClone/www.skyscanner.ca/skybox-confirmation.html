@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en-CA" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Booking confirmed — Skybox Global</title>
+<link rel="icon" href="/skybox-icon.svg" type="image/svg+xml" />
+<link rel="stylesheet" href="/_ext/js.skyscnr.com/sttc/hamilton/falcon/static/css/bpk-styles.5b069319.css">
+<style>
+  body { margin:0; background:#f4f5f6; color:#05203c; font-family:"Skyscanner Relative",-apple-system,sans-serif; }
+  .top { background:#05203c; color:#fff; padding:18px 24px; display:flex; align-items:center; gap:24px; }
+  .brand { font-weight:900; font-size:22px; color:#fff; text-decoration:none; display:inline-flex; gap:8px; align-items:center; }
+  .mark { display:inline-block; width:22px; height:22px; background:#fff; -webkit-mask:radial-gradient(circle at 50% 100%,#000 9px,transparent 10px) no-repeat,conic-gradient(from 200deg at 50% 100%,#000 0 140deg,transparent 0) no-repeat; mask:radial-gradient(circle at 50% 100%,#000 9px,transparent 10px) no-repeat,conic-gradient(from 200deg at 50% 100%,#000 0 140deg,transparent 0) no-repeat; }
+  .wrap { max-width:800px; margin:0 auto; padding:32px 24px; }
+  .hero { background:#1e8c4a; color:#fff; padding:30px 28px; border-radius:8px; margin-bottom:20px; }
+  .hero h1 { margin:0 0 6px; font-size:24px; }
+  .card { background:#fff; border-radius:8px; padding:22px 24px; box-shadow:0 1px 3px rgba(0,0,0,.08); margin-bottom:16px; }
+  .pill { display:inline-block; background:#eef1f5; color:#05203c; border-radius:12px; padding:3px 10px; font-size:12px; font-weight:700; }
+  .btn { display:inline-block; padding:10px 18px; border-radius:24px; background:#0062e3; color:#fff; font-weight:700; text-decoration:none; }
+  .btn.ghost { background:transparent; color:#0062e3; border:1px solid #dadce0; }
+</style>
+</head>
+<body>
+<header class="top"><a class="brand" href="/"><span class="mark"></span>Skybox Global</a></header>
+<main class="wrap">
+  <div class="hero"><h1>Booking confirmed</h1><p style="margin:0;opacity:.92">Your reservation is held with the airline.</p></div>
+  <div class="card" id="summary">Loading order…</div>
+  <div class="card" style="display:flex;gap:10px"><a class="btn" href="/trips">View all my trips</a><a class="btn ghost" href="/">Plan another trip</a></div>
+</main>
+<script>
+(function () {
+  const id = location.pathname.split('/').pop();
+  fetch('/skybox-api/orders/' + encodeURIComponent(id)).then((r) => r.json().then((j) => ({ ok: r.ok, j }))).then(({ ok, j }) => {
+    if (!ok || j.error) { document.querySelector('#summary').textContent = j.error?.message || 'order fetch failed'; return; }
+    document.querySelector('#summary').innerHTML = `
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+        <div><div style="font-size:13px;color:#545860">Booking reference</div><div style="font-size:22px;font-weight:800;letter-spacing:1px">${j.booking_reference}</div></div>
+        <span class="pill">${j.status}</span>
+      </div>
+      <div style="color:#545860;margin-bottom:14px">Total <b>${j.total_amount} ${j.currency}</b> · ${j.contact.email || ''}</div>
+      <div>${(j.slices || []).map((s) => `<div style="padding:8px 0;border-bottom:1px solid #eef0f3"><div style="font-weight:700">${s.origin.iata} → ${s.destination.iata}</div><div style="color:#545860;font-size:13px">${s.segments.length} segment(s)</div></div>`).join('')}</div>`;
+  });
+})();
+</script>
+</body>
+</html>
