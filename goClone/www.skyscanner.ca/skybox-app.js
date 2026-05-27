@@ -15,12 +15,17 @@
   // accessible title attribute.
   (function injectHideCSS() {
     const css = [
+      // Hide Stays / Hotels / Cars tabs everywhere they appear.
       'button[role="tab"][title="Stays"],',
       'button[role="tab"][title="Hotels"],',
       'button[role="tab"][title="Cars"],',
       'a[href="/hotels"][class*="tab"],',
       'a[href="/car-rental"][class*="tab"],',
-      'a[href="/carhire"][class*="tab"]',
+      'a[href="/carhire"][class*="tab"],',
+      // Hide "Add a place to stay" parallel-search checkbox (it would search hotels alongside flights).
+      '[class*="ParallelSearchOptionContainer"],',
+      'label:has(> input[name="parallel-search-option"]),',
+      'input[name="parallel-search-option"]',
       '{ display: none !important; }',
     ].join(' ');
     const tag = document.createElement('style');

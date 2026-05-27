@@ -51,6 +51,43 @@ function processFile(file) {
 
 walk(OUT_DIR);
 
+// Wipe Skyscanner's third-party tracking IDs from every text file. These
+// are baked into the captured JS bundles / inline init scripts and would
+// otherwise send your traffic to their analytics accounts.
+const TRACKER_PATTERNS = [
+  // New Relic init block.
+  /;?\s*window\.NREUM\|\|\(NREUM=\{\}\);?\s*NREUM\.init=\{[\s\S]*?\};?\s*NREUM\.loader_config=\{[\s\S]*?\};?\s*NREUM\.info=\{[\s\S]*?\};?/g,
+  // Bare NREUM key/value occurrences.
+  /licenseKey\s*:\s*["']NRJS-[A-Za-z0-9]+["']/g,
+  /accountID\s*:\s*["']3117610["']/g,
+  /trustKey\s*:\s*["']3117593["']/g,
+  /agentID\s*:\s*["']473224290["']/g,
+  /applicationID\s*:\s*["']473224290["']/g,
+  // GTM container id.
+  /GTM-W8ZST32/g,
+  /UA-\d{5,}-\d+/g,
+  /G-XEEM7L2YCB/g,
+  // PerimeterX captcha endpoint hint.
+  /NRJS-8ee30fb60b5d38aac95/g,
+];
+let trackersWiped = 0;
+function walkAll(dir, fn) {
+  for (const name of fs.readdirSync(dir)) {
+    const full = path.join(dir, name);
+    const stat = fs.statSync(full);
+    if (stat.isDirectory()) walkAll(full, fn);
+    else fn(full);
+  }
+}
+walkAll(OUT_DIR, (file) => {
+  if (!/\.(html?|js|mjs|json|css|txt|xml|svg)$/i.test(file)) return;
+  let s; try { s = fs.readFileSync(file, 'utf8'); } catch { return; }
+  const before = s;
+  for (const re of TRACKER_PATTERNS) s = s.replace(re, () => { trackersWiped++; return ''; });
+  if (s !== before) fs.writeFileSync(file, s);
+});
+console.log(`[strip-skyscanner] tracking ID occurrences wiped: ${trackersWiped}`);
+
 // Drop in a neutral Skybox icon + og image (single sun-mark SVG).
 const ICON_SVG = `<?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
