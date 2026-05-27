@@ -66,8 +66,15 @@ function offerSummary(o, includeServices = false) {
     base_amount: o.base_amount, tax_amount: o.tax_amount, expires_at: o.expires_at,
     owner: o.owner ? { name: o.owner.name, iata: o.owner.iata_code, logo: o.owner.logo_symbol_url || null } : null,
     slices: o.slices.map(sliceSummary),
-    passengers: (o.passengers || []).map((p) => ({ id: p.id, type: p.type, age: p.age })),
+    passengers: (o.passengers || []).map((p) => ({ id: p.id, type: p.type, age: p.age, given_name: p.given_name || null, family_name: p.family_name || null })),
     conditions: o.conditions || null,
+    payment_requirements: o.payment_requirements || null,
+    supported_loyalty_programmes: o.supported_loyalty_programmes || [],
+    supported_passenger_identity_document_types: o.supported_passenger_identity_document_types || [],
+    available_airline_credit_ids: o.available_airline_credit_ids || [],
+    private_fares: o.private_fares || [],
+    total_emissions_kg: o.total_emissions_kg || null,
+    partial: !!o.partial,
   };
   if (includeServices) base.available_services = (o.available_services || []).map((s) => ({
     id: s.id, type: s.type, total_amount: s.total_amount, total_currency: s.total_currency,
@@ -149,8 +156,15 @@ async function handleFlightsSearch(req, res) {
   const cabinClass = CABIN_MAP[(cabin || 'economy').toLowerCase()] || 'economy';
   const slices = [{ origin: from.toUpperCase(), destination: to.toUpperCase(), departure_date: depart }];
   if (ret) slices.push({ origin: to.toUpperCase(), destination: from.toUpperCase(), departure_date: ret });
+  // v2 extras (all optional)
+  const payload = { slices, passengers, cabin_class: cabinClass, return_offers: true };
+  if (Number.isInteger(body.max_connections)) payload.max_connections = Math.max(0, Math.min(body.max_connections, 3));
+  if (body.private_fares && typeof body.private_fares === 'object') payload.private_fares = body.private_fares;
+  if (Array.isArray(body.airline_credit_ids) && body.airline_credit_ids.length) payload.airline_credit_ids = body.airline_credit_ids;
+  const opts = {};
+  if (Number.isInteger(body.supplier_timeout)) opts.supplier_timeout = Math.max(2000, Math.min(body.supplier_timeout, 60000));
   try {
-    const orq = await duffel.offerRequests.create({ slices, passengers, cabin_class: cabinClass, return_offers: true });
+    const orq = await duffel.offerRequests.create(payload, opts.supplier_timeout ? { supplier_timeout: opts.supplier_timeout } : undefined);
     const offers = (orq.data.offers || []).slice(0, 50).map((o) => offerSummary(o, false));
     const u = await getCurrentUser(req);
     await prisma.search.create({ data: { userId: u?.id, type: 'flights', payload: JSON.stringify(body), resultCount: offers.length, durationMs: Date.now() - startedAt } }).catch(() => {});
@@ -158,6 +172,69 @@ async function handleFlightsSearch(req, res) {
   } catch (e) {
     const d = e?.errors?.[0] || { message: e.message };
     return err(res, 502, 'DUFFEL_ERROR', d.message || 'offer request failed', d);
+  }
+}
+async function handleOfferRequestGet(req, res, id) {
+  try {
+    const r = await duffel.offerRequests.get(id);
+    return send(res, 200, {
+      id: r.data.id, created_at: r.data.created_at, live_mode: r.data.live_mode,
+      cabin_class: r.data.cabin_class, slices: r.data.slices || [],
+      passengers: r.data.passengers || [],
+      offers: (r.data.offers || []).map((o) => offerSummary(o)),
+    });
+  } catch (e) {
+    return err(res, 502, 'DUFFEL_ERROR', e?.errors?.[0]?.message || 'offer request fetch failed', e?.errors?.[0]);
+  }
+}
+function clean(obj) { const o = {}; for (const k in obj) if (obj[k] !== undefined && obj[k] !== null && obj[k] !== '') o[k] = obj[k]; return o; }
+async function handleOfferRequestList(req, res, query) {
+  try {
+    const r = await duffel.offerRequests.list(clean({ limit: Math.min(parseInt(query.limit || '20', 10), 200), after: query.after, before: query.before }));
+    return send(res, 200, {
+      meta: r.meta,
+      offer_requests: (r.data || []).map((x) => ({ id: x.id, created_at: x.created_at, cabin_class: x.cabin_class, slices: x.slices || [], live_mode: x.live_mode })),
+    });
+  } catch (e) {
+    return err(res, 502, 'DUFFEL_ERROR', e?.errors?.[0]?.message || e.message || 'offer requests list failed', e?.errors?.[0] || { message: e.message });
+  }
+}
+async function handleOffersList(req, res, query) {
+  const offerRequestId = query.offer_request_id;
+  if (!offerRequestId) return err(res, 422, 'VALIDATION_ERROR', 'offer_request_id query required');
+  try {
+    const r = await duffel.offers.list(clean({
+      offer_request_id: offerRequestId,
+      limit: Math.min(parseInt(query.limit || '50', 10), 200),
+      sort: query.sort || 'total_amount',
+      max_connections: query.max_connections != null ? parseInt(query.max_connections, 10) : undefined,
+      after: query.after, before: query.before,
+    }));
+    return send(res, 200, { meta: r.meta, offers: (r.data || []).map((o) => offerSummary(o)) });
+  } catch (e) {
+    return err(res, 502, 'DUFFEL_ERROR', e?.errors?.[0]?.message || 'offers list failed', e?.errors?.[0]);
+  }
+}
+async function handleOfferPrice(req, res, id) {
+  // POST /air/offers/:id/actions/price — intended_payment_methods + intended_services
+  const body = await readJson(req);
+  try {
+    const priced = await duffel.offers.getPriced(id, {
+      intended_payment_methods: body.intended_payment_methods || [],
+      intended_services: body.intended_services || [],
+    });
+    return send(res, 200, { offer: offerSummary(priced.data, true) });
+  } catch (e) {
+    return err(res, 502, 'DUFFEL_ERROR', e?.errors?.[0]?.message || 'offer pricing failed', e?.errors?.[0]);
+  }
+}
+async function handleOfferPassengerUpdate(req, res, offerId, passengerId) {
+  const body = await readJson(req);
+  try {
+    const r = await duffel.offers.update(offerId, passengerId, body);
+    return send(res, 200, { ok: true, offer: offerSummary(r.data, false) });
+  } catch (e) {
+    return err(res, 502, 'DUFFEL_ERROR', e?.errors?.[0]?.message || 'offer passenger update failed', e?.errors?.[0]);
   }
 }
 async function handleOfferGet(req, res, id) {
@@ -321,6 +398,7 @@ async function handleOrderGet(req, res, id) {
     payments: o.payments.map((p) => ({ status: p.status, amount: p.amount, currency: p.currency })),
   });
 }
+// Legacy one-shot cancel (kept for compatibility): create + confirm immediately.
 async function handleOrderCancel(req, res, id) {
   const o = await prisma.order.findUnique({ where: { id } });
   if (!o) return err(res, 404, 'NOT_FOUND', 'order not found');
@@ -330,10 +408,98 @@ async function handleOrderCancel(req, res, id) {
     const c = await duffel.orderCancellations.create({ order_id: o.duffelOrderId });
     const confirmed = await duffel.orderCancellations.confirm(c.data.id);
     await prisma.order.update({ where: { id: o.id }, data: { status: 'cancelled', cancelledAt: new Date() } });
-    await prisma.orderEvent.create({ data: { orderId: o.id, source: 'user', type: 'order.cancelled', payload: JSON.stringify({ refund_amount: confirmed.data.refund_amount, refund_currency: confirmed.data.refund_currency }) } });
-    return send(res, 200, { ok: true, refund_amount: confirmed.data.refund_amount, refund_currency: confirmed.data.refund_currency });
+    await prisma.orderEvent.create({ data: { orderId: o.id, source: 'user', type: 'order.cancelled', payload: JSON.stringify({ cancellation_id: confirmed.data.id, refund_amount: confirmed.data.refund_amount, refund_currency: confirmed.data.refund_currency }) } });
+    return send(res, 200, { ok: true, cancellation_id: confirmed.data.id, refund_amount: confirmed.data.refund_amount, refund_currency: confirmed.data.refund_currency });
   } catch (e) {
     return err(res, 502, 'DUFFEL_ERROR', e?.errors?.[0]?.message || 'cancel failed', e?.errors?.[0]);
+  }
+}
+// v2 two-step: quote (returns refund estimate) then confirm.
+async function handleOrderCancellationQuote(req, res, id) {
+  const o = await prisma.order.findUnique({ where: { id } });
+  if (!o) return err(res, 404, 'NOT_FOUND', 'order not found');
+  const u = await getCurrentUser(req);
+  if (o.userId && (!u || u.id !== o.userId)) return err(res, 403, 'FORBIDDEN', 'not your order');
+  try {
+    const c = await duffel.orderCancellations.create({ order_id: o.duffelOrderId });
+    await prisma.orderEvent.create({ data: { orderId: o.id, source: 'user', type: 'order.cancellation.quoted', payload: JSON.stringify({ cancellation_id: c.data.id, refund_amount: c.data.refund_amount, refund_currency: c.data.refund_currency }) } });
+    return send(res, 200, {
+      cancellation_id: c.data.id, expires_at: c.data.expires_at,
+      refund_amount: c.data.refund_amount, refund_currency: c.data.refund_currency,
+      refund_to: c.data.refund_to, refund_type: c.data.refund_type,
+    });
+  } catch (e) {
+    return err(res, 502, 'DUFFEL_ERROR', e?.errors?.[0]?.message || 'cancellation quote failed', e?.errors?.[0]);
+  }
+}
+async function handleOrderCancellationConfirm(req, res, id, cancellationId) {
+  const o = await prisma.order.findUnique({ where: { id } });
+  if (!o) return err(res, 404, 'NOT_FOUND', 'order not found');
+  const u = await getCurrentUser(req);
+  if (o.userId && (!u || u.id !== o.userId)) return err(res, 403, 'FORBIDDEN', 'not your order');
+  try {
+    const confirmed = await duffel.orderCancellations.confirm(cancellationId);
+    await prisma.order.update({ where: { id: o.id }, data: { status: 'cancelled', cancelledAt: new Date() } });
+    await prisma.orderEvent.create({ data: { orderId: o.id, source: 'user', type: 'order.cancelled', payload: JSON.stringify({ cancellation_id: confirmed.data.id, refund_amount: confirmed.data.refund_amount, refund_currency: confirmed.data.refund_currency }) } });
+    return send(res, 200, { ok: true, cancellation_id: confirmed.data.id, refund_amount: confirmed.data.refund_amount, refund_currency: confirmed.data.refund_currency });
+  } catch (e) {
+    return err(res, 502, 'DUFFEL_ERROR', e?.errors?.[0]?.message || 'cancellation confirm failed', e?.errors?.[0]);
+  }
+}
+async function handleCancellationGet(req, res, cancellationId) {
+  try {
+    const r = await duffel.orderCancellations.get(cancellationId);
+    return send(res, 200, {
+      id: r.data.id, order_id: r.data.order_id, confirmed_at: r.data.confirmed_at,
+      expires_at: r.data.expires_at, refund_amount: r.data.refund_amount,
+      refund_currency: r.data.refund_currency, refund_to: r.data.refund_to, refund_type: r.data.refund_type,
+      live_mode: r.data.live_mode,
+    });
+  } catch (e) {
+    return err(res, 502, 'DUFFEL_ERROR', e?.errors?.[0]?.message || 'cancellation fetch failed', e?.errors?.[0]);
+  }
+}
+async function handleCancellationsList(req, res, query) {
+  try {
+    const r = await duffel.orderCancellations.list(clean({
+      limit: Math.min(parseInt(query.limit || '50', 10), 200),
+      after: query.after, before: query.before, order_id: query.order_id,
+    }));
+    return send(res, 200, { meta: r.meta, cancellations: (r.data || []).map((c) => ({
+      id: c.id, order_id: c.order_id, confirmed_at: c.confirmed_at, expires_at: c.expires_at,
+      refund_amount: c.refund_amount, refund_currency: c.refund_currency, refund_to: c.refund_to,
+    })) });
+  } catch (e) {
+    return err(res, 502, 'DUFFEL_ERROR', e?.errors?.[0]?.message || 'cancellations list failed', e?.errors?.[0]);
+  }
+}
+// ---------- Airline-Initiated Changes ----------
+async function handleAircList(req, res, query) {
+  try {
+    const r = await duffel.airlineInitiatedChanges.list(clean({
+      limit: Math.min(parseInt(query.limit || '50', 10), 200),
+      order_id: query.order_id, after: query.after, before: query.before,
+    }));
+    return send(res, 200, { meta: r.meta, changes: r.data || [] });
+  } catch (e) {
+    return err(res, 502, 'DUFFEL_ERROR', e?.errors?.[0]?.message || 'AIC list failed', e?.errors?.[0]);
+  }
+}
+async function handleAircAccept(req, res, id) {
+  try {
+    const r = await duffel.airlineInitiatedChanges.accept(id);
+    return send(res, 200, { ok: true, change: r.data });
+  } catch (e) {
+    return err(res, 502, 'DUFFEL_ERROR', e?.errors?.[0]?.message || 'AIC accept failed', e?.errors?.[0]);
+  }
+}
+async function handleAircUpdate(req, res, id) {
+  const body = await readJson(req);
+  try {
+    const r = await duffel.airlineInitiatedChanges.update(id, body);
+    return send(res, 200, { ok: true, change: r.data });
+  } catch (e) {
+    return err(res, 502, 'DUFFEL_ERROR', e?.errors?.[0]?.message || 'AIC update failed', e?.errors?.[0]);
   }
 }
 
@@ -429,7 +595,7 @@ async function handlePartialOfferFares(req, res, id) {
   const selected = body.selected_partial_offers || body.partial_offer_ids;
   if (!Array.isArray(selected) || !selected.length) return err(res, 422, 'VALIDATION_ERROR', 'selected_partial_offers (array) required');
   try {
-    const r = await duffel.partialOfferRequests.getFares(id, { selected_partial_offer: selected });
+    const r = await duffel.partialOfferRequests.getFaresById(id, { selected_partial_offer: selected });
     return send(res, 200, { offers: (r.data && r.data.offers || []).map((o) => offerSummary(o)) });
   } catch (e) {
     return err(res, 502, 'DUFFEL_ERROR', e?.errors?.[0]?.message || 'partial fares failed', e?.errors?.[0]);
@@ -517,8 +683,16 @@ async function handle(req, res, urlPath, urlQuery) {
     if (urlPath === '/auth/verify' && req.method === 'GET') return await handleAuthVerify(req, res, urlQuery), true;
 
     if (urlPath === '/skybox-api/flights/search' && req.method === 'POST') return await handleFlightsSearch(req, res), true;
+    if (urlPath === '/skybox-api/flights/offer-requests' && req.method === 'GET') return await handleOfferRequestList(req, res, urlQuery), true;
+    const orqM = urlPath.match(/^\/skybox-api\/flights\/offer-requests\/([^/]+)$/);
+    if (orqM && req.method === 'GET') return await handleOfferRequestGet(req, res, orqM[1]), true;
+    if (urlPath === '/skybox-api/flights/offers' && req.method === 'GET') return await handleOffersList(req, res, urlQuery), true;
     const offerM = urlPath.match(/^\/skybox-api\/flights\/offers\/([^/]+)$/);
     if (offerM && req.method === 'GET') return await handleOfferGet(req, res, offerM[1]), true;
+    const offerPriceM = urlPath.match(/^\/skybox-api\/flights\/offers\/([^/]+)\/price$/);
+    if (offerPriceM && req.method === 'POST') return await handleOfferPrice(req, res, offerPriceM[1]), true;
+    const offerPaxM = urlPath.match(/^\/skybox-api\/flights\/offers\/([^/]+)\/passengers\/([^/]+)$/);
+    if (offerPaxM && req.method === 'PATCH') return await handleOfferPassengerUpdate(req, res, offerPaxM[1], offerPaxM[2]), true;
     const seatM = urlPath.match(/^\/skybox-api\/flights\/offers\/([^/]+)\/seat-maps$/);
     if (seatM && req.method === 'GET') return await handleSeatMaps(req, res, seatM[1]), true;
 
@@ -536,6 +710,20 @@ async function handle(req, res, urlPath, urlQuery) {
     if (oM && req.method === 'GET') return await handleOrderGet(req, res, oM[1]), true;
     const ocM = urlPath.match(/^\/skybox-api\/orders\/([^/]+)\/cancel$/);
     if (ocM && req.method === 'POST') return await handleOrderCancel(req, res, ocM[1]), true;
+    // v2 split cancellation: quote → confirm
+    const ocqM = urlPath.match(/^\/skybox-api\/orders\/([^/]+)\/cancellation$/);
+    if (ocqM && req.method === 'POST') return await handleOrderCancellationQuote(req, res, ocqM[1]), true;
+    const occM = urlPath.match(/^\/skybox-api\/orders\/([^/]+)\/cancellation\/([^/]+)\/confirm$/);
+    if (occM && req.method === 'POST') return await handleOrderCancellationConfirm(req, res, occM[1], occM[2]), true;
+    if (urlPath === '/skybox-api/cancellations' && req.method === 'GET') return await handleCancellationsList(req, res, urlQuery), true;
+    const ocgM = urlPath.match(/^\/skybox-api\/cancellations\/([^/]+)$/);
+    if (ocgM && req.method === 'GET') return await handleCancellationGet(req, res, ocgM[1]), true;
+    // Airline-initiated changes
+    if (urlPath === '/skybox-api/airline-initiated-changes' && req.method === 'GET') return await handleAircList(req, res, urlQuery), true;
+    const aicAccM = urlPath.match(/^\/skybox-api\/airline-initiated-changes\/([^/]+)\/accept$/);
+    if (aicAccM && req.method === 'POST') return await handleAircAccept(req, res, aicAccM[1]), true;
+    const aicUpdM = urlPath.match(/^\/skybox-api\/airline-initiated-changes\/([^/]+)$/);
+    if (aicUpdM && req.method === 'PATCH') return await handleAircUpdate(req, res, aicUpdM[1]), true;
 
     // Order changes
     const cgM = urlPath.match(/^\/skybox-api\/orders\/([^/]+)\/changes$/);
