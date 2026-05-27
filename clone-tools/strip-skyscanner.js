@@ -19,6 +19,15 @@ const STRIPS = [
   /<meta\s+name="msvalidate\.01"[^>]*>\s*/gi,
   // Pre-connect / dns-prefetch hints to external telemetry / ads.
   /<link\s+rel="(?:preconnect|dns-prefetch)"\s+href="[^"]*(?:googletagmanager|bam\.nr-data|gum\.criteo|criteo|js-agent\.newrelic|siteintercept\.qualtrics|sslwidget|google-analytics|googleadservices|doubleclick)[^"]*"[^>]*>\s*/gi,
+  // Pre-connect / dns-prefetch to Skyscanner CDNs (we serve those locally via /_ext/).
+  /<link\s+rel="(?:preconnect|dns-prefetch)"\s+href="https?:\/\/(?:js|css|content|images|logos|hotelscdn|help)\.skyscnr\.com[^"]*"[^>]*>\s*/gi,
+  /<link\s+rel="(?:preconnect|dns-prefetch)"\s+href="https?:\/\/(?:[a-z0-9.-]+\.)?skyscanner\.[a-z.]+[^"]*"[^>]*>\s*/gi,
+  // hreflang alternates that link to other Skyscanner regional sites — leak our origin.
+  /<link\s+rel="alternate"\s+href="https?:\/\/(?:[a-z0-9.-]+\.)?(?:skyscanner|tianxun)\.[a-z.]+\/[^"]*"\s+hreflang="[^"]*"\s*\/?>/gi,
+  // Canonical pointing at skyscanner.* — strip; we'll let our own host be canonical.
+  /<link\s+rel="canonical"\s+href="https?:\/\/(?:[a-z0-9.-]+\.)?skyscanner\.[a-z.]+[^"]*"[^>]*>\s*/gi,
+  // og:url to skyscanner.*
+  /<meta\s+property="og:url"\s+content="https?:\/\/(?:[a-z0-9.-]+\.)?skyscanner\.[a-z.]+[^"]*"\s*\/?>/gi,
 ];
 
 // Replacements (preserve the tag, swap the Skyscanner-branded value).
@@ -87,6 +96,54 @@ walkAll(OUT_DIR, (file) => {
   if (s !== before) fs.writeFileSync(file, s);
 });
 console.log(`[strip-skyscanner] tracking ID occurrences wiped: ${trackersWiped}`);
+
+// Rewrite any remaining outbound URLs to Skyscanner CDNs into local /_ext/ paths
+// so the browser never reaches out to skyscanner.* / skyscnr.com.
+// Hosts we mirror under /_ext/<host>/...:
+const CDN_HOSTS = ['js.skyscnr.com', 'css.skyscnr.com', 'content.skyscnr.com', 'images.skyscnr.com', 'logos.skyscnr.com', 'hotelscdn.skyscnr.com', 'help.skyscanner.net'];
+let outboundRewrites = 0, outboundStripped = 0;
+function rewriteOutbound(s) {
+  // 1. https://<known-cdn>/<path>  ->  /_ext/<host>/<path>
+  //    AND protocol-relative //<known-cdn>/<path> (JS string literals)
+  //    AND JSON-escaped //<host> or \/\/<host>
+  for (const host of CDN_HOSTS) {
+    const hostEsc = host.replace(/\./g, '\\.');
+    const reAbs = new RegExp('https?:\\/\\/' + hostEsc + '(?![a-zA-Z0-9.-])', 'g');
+    s = s.replace(reAbs, () => { outboundRewrites++; return '/_ext/' + host; });
+    const reProto = new RegExp('\\/\\/' + hostEsc + '(?![a-zA-Z0-9.-])', 'g');
+    s = s.replace(reProto, () => { outboundRewrites++; return '/_ext/' + host; });
+    // //<host> -> /_ext/<host>
+    const reUni = new RegExp('\\\\u002F\\\\u002F' + hostEsc, 'g');
+    s = s.replace(reUni, () => { outboundRewrites++; return '\\u002F_ext\\u002F' + host; });
+    // \/\/<host> -> \/_ext\/<host>
+    const reJson = new RegExp('\\\\\\/\\\\\\/' + hostEsc, 'g');
+    s = s.replace(reJson, () => { outboundRewrites++; return '\\/_ext\\/' + host; });
+  }
+  // 1b. Any other host with "skyscanner" in the name (e.g. skyscanner-cdn.relevant-digital.com)
+  // gets routed through our local /_ext/<host>/ stub.
+  s = s.replace(/https?:\/\/([a-z0-9.-]*skyscanner[a-z0-9.-]*)(?=[\/"'\s])/gi, (m, host) => {
+    outboundRewrites++; return '/_ext/' + host.toLowerCase();
+  });
+  // 2. Anchor hrefs / src to skyscanner.* (regional homepages, /book/, /book-with/) -> '/'
+  s = s.replace(/href="https?:\/\/(?:[a-z0-9.-]+\.)?skyscanner\.[a-z.]+(?:\/[^"]*)?"/gi, () => { outboundStripped++; return 'href="/"'; });
+  s = s.replace(/href="https?:\/\/(?:[a-z0-9.-]+\.)?tianxun\.com(?:\/[^"]*)?"/gi, () => { outboundStripped++; return 'href="/"'; });
+  // 3. Any remaining skyscanner.* / tianxun.com URL in JSON / JS strings -> our APP_URL host.
+  const APP_HOST = (process.env.APP_URL || 'http://localhost:8088').replace(/\/$/, '');
+  s = s.replace(/https?:\/\/(?:[a-z0-9.-]+\.)?skyscanner\.[a-z.]+/gi, () => { outboundStripped++; return APP_HOST; });
+  s = s.replace(/https?:\/\/(?:[a-z0-9.-]+\.)?tianxun\.com/gi, () => { outboundStripped++; return APP_HOST; });
+  return s;
+}
+walkAll(OUT_DIR, (file) => {
+  if (!/\.(html?|js|mjs|json|css|xml|svg|txt)$/i.test(file)) return;
+  // Don't touch our own custom Skybox files (they don't contain Skyscanner URLs anyway).
+  if (/skybox-(app|home|icon|og|trip|trips|offer|flights-search|confirmation)/i.test(file)) return;
+  let s; try { s = fs.readFileSync(file, 'utf8'); } catch { return; }
+  const before = s;
+  s = rewriteOutbound(s);
+  if (s !== before) fs.writeFileSync(file, s);
+});
+console.log(`[strip-skyscanner] outbound CDN URLs rewritten to /_ext/: ${outboundRewrites}`);
+console.log(`[strip-skyscanner] other skyscanner.* URLs stripped/rewritten: ${outboundStripped}`);
 
 // Drop in a neutral Skybox icon + og image (single sun-mark SVG).
 const ICON_SVG = `<?xml version="1.0" encoding="UTF-8"?>
