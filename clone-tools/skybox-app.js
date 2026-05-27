@@ -10,6 +10,119 @@
   if (window.__skyboxAppLoaded) return;
   window.__skyboxAppLoaded = true;
 
+  // ===================================================================
+  // Unified Skybox header. Injected onto every Skybox-built page so the
+  // logo + Help / Regional / Saved / Log in chrome matches the captured
+  // homepage header exactly. Skipped on captured pages that already have
+  // a #header.GlobalHeader_headerDark element.
+  // ===================================================================
+  function injectSkyboxHeader() {
+    // Captured header detector — covers both the homepage chrome
+    // (GlobalHeader_headerDark__…) and the landing-page chrome
+    // (header._Header_… / [class*="Header_"]).
+    if (document.querySelector('#header[class*="GlobalHeader_headerDark"], header[class*="_Header_"], header[class*="GlobalHeader_"]')) return;
+    if (document.querySelector('.sb-injected-header')) return;
+    if (!document.body) { document.addEventListener('DOMContentLoaded', injectSkyboxHeader, { once: true }); return; }
+
+    if (!document.getElementById('sb-injected-header-css')) {
+      const s = document.createElement('style');
+      s.id = 'sb-injected-header-css';
+      s.textContent = `
+        .sb-injected-header {
+          background: #05203c; color: #fff; padding: 14px 24px;
+          display: flex; align-items: center; gap: 16px;
+          font-family: "Skyscanner Relative",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+        }
+        .sb-injected-header #header-logo-link {
+          display: inline-flex !important; align-items: center; gap: 8px;
+          color: #fff !important; text-decoration: none;
+          font-weight: 900; font-size: 22px; letter-spacing: -0.5px;
+          line-height: 1;
+        }
+        .sb-injected-header #header-logo-link::before {
+          content: ""; display: inline-block; width: 22px; height: 22px;
+          background: currentColor;
+          -webkit-mask: radial-gradient(circle at 50% 100%,#000 9px,transparent 10px) no-repeat,
+                        conic-gradient(from 200deg at 50% 100%,#000 0 140deg,transparent 0) no-repeat;
+                  mask: radial-gradient(circle at 50% 100%,#000 9px,transparent 10px) no-repeat,
+                        conic-gradient(from 200deg at 50% 100%,#000 0 140deg,transparent 0) no-repeat;
+        }
+        .sb-injected-header #header-logo-link::after { content: "Skybox Global"; }
+        .sb-injected-header .sb-buttons { margin-left: auto; display: flex; align-items: center; gap: 12px; }
+        .sb-injected-header a.sb-help { color: #fff; text-decoration: underline; font-size: 14px; }
+        .sb-injected-header button.sb-iconbtn, .sb-injected-header a.sb-iconbtn {
+          width: 40px; height: 40px; border-radius: 50%; border: 0; background: transparent;
+          display: inline-flex; align-items: center; justify-content: center;
+          cursor: pointer; color: #fff;
+        }
+        .sb-injected-header button.sb-iconbtn:hover, .sb-injected-header a.sb-iconbtn:hover { background: rgba(255,255,255,.1); }
+        .sb-injected-header .sb-login {
+          background: transparent; color: #fff; border: 1px solid rgba(255,255,255,.35);
+          border-radius: 22px; padding: 8px 16px; font: inherit; font-size: 14px;
+          display: inline-flex; align-items: center; gap: 6px; cursor: pointer;
+          text-decoration: none;
+        }
+        .sb-injected-header .sb-login:hover { background: rgba(255,255,255,.08); }
+        .sb-injected-header .sb-pillname {
+          margin-left: 6px; font-size: 13px; color: #fff;
+        }
+        @media (max-width: 540px) {
+          .sb-injected-header .sb-help-label, .sb-injected-header .sb-pillname { display: none; }
+        }
+      `;
+      document.head.appendChild(s);
+    }
+
+    const hdr = document.createElement('header');
+    hdr.id = 'header';
+    hdr.className = 'sb-injected-header';
+    hdr.innerHTML = `
+      <a id="header-logo-link" aria-label="Skybox Global home" href="/"></a>
+      <div class="sb-buttons">
+        <a class="sb-help" href="/help" target="_blank" rel="noopener"><span class="sb-help-label">Help</span></a>
+        <button class="sb-iconbtn" aria-label="Regional settings" type="button" data-sb-action="regional">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+            <path fill="currentColor" d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2m6.93 9h-3a15.5 15.5 0 0 0-.85-4.32A8 8 0 0 1 18.93 11M12 4c1.07 0 2.42 2.84 2.92 7H9.08C9.58 6.84 10.93 4 12 4M5.07 11A8 8 0 0 1 8.92 6.68 15.5 15.5 0 0 0 8.07 11Zm0 2h3a15.5 15.5 0 0 0 .85 4.32A8 8 0 0 1 5.07 13m6.93 7c-1.07 0-2.42-2.84-2.92-7h5.84c-.5 4.16-1.85 7-2.92 7m3.08-.68A15.5 15.5 0 0 0 15.93 15h3A8 8 0 0 1 15.08 19.32"/>
+          </svg>
+        </button>
+        <a class="sb-iconbtn" href="/trips" aria-label="Saved trips" data-sb-action="saved">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+            <path fill="currentColor" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.27 2 8.5A5.5 5.5 0 0 1 7.5 3 6 6 0 0 1 12 5.09 6 6 0 0 1 16.5 3 5.5 5.5 0 0 1 22 8.5c0 3.77-3.4 6.86-8.55 11.53z"/>
+          </svg>
+        </a>
+        <button class="sb-login" aria-label="Log in or sign up" type="button" data-sb-action="login">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+            <path fill="currentColor" d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2m0 4a3 3 0 1 1-3 3 3 3 0 0 1 3-3m0 14a7 7 0 0 1-6-3.34c.03-2 4-3.16 6-3.16s5.97 1.16 6 3.16A7 7 0 0 1 12 20"/>
+          </svg>
+          Log in
+        </button>
+      </div>
+    `;
+    // Replace any pre-existing simple Skybox header (.top class) so we don't
+    // stack two; otherwise prepend to body.
+    const old = document.querySelector('body > header.top, header.top');
+    if (old) old.replaceWith(hdr);
+    else document.body.prepend(hdr);
+
+    // Wire actions.
+    hdr.querySelector('[data-sb-action="login"]').addEventListener('click', async () => {
+      // If already signed in, route to /trips. Otherwise prompt for email.
+      const me = await fetch('/skybox-api/auth/me').then((r) => r.json()).catch(() => ({}));
+      if (me && me.user) { location.href = '/trips'; return; }
+      const email = prompt('Enter your email to receive a sign-in link:');
+      if (!email) return;
+      const r = await fetch('/skybox-api/auth/login', {
+        method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ email }),
+      });
+      const j = await r.json();
+      alert(j.message || 'Sent. Check your email for the sign-in link.');
+    });
+    hdr.querySelector('[data-sb-action="regional"]').addEventListener('click', () => {
+      alert('Regional settings: locale en-CA, currency CAD. Customisation coming soon.');
+    });
+  }
+  injectSkyboxHeader();
+
   // Hide Stays/Hotels and Cars tabs across the cloned UI. CSS-only — does
   // not touch any captured HTML. Targets the BPK tab list buttons by their
   // accessible title attribute.
