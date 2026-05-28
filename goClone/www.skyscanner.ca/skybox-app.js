@@ -11,6 +11,110 @@
   window.__skyboxAppLoaded = true;
 
   // ===================================================================
+  // Ad-tech blocker (must run first). The captured chunks inject scripts
+  // and iframes for NewRelic, Criteo, PerimeterX, GTM, etc. at runtime.
+  // CSP blocks them, but Chrome still logs the violation. We intercept
+  // node-insertion and silently drop the offenders so neither happens.
+  // ===================================================================
+  (function adTechBlocker() {
+    const BLOCK = /googletagmanager\.com|js-agent\.newrelic|bam\.nr-data|gum\.criteo|sslwidget\.criteo|js\.px-cloud|criteo-partners|doubleclick\.net|adsafeprotected|onetrust|qualtrics|hotjar|tealiumiq|adservice|adsystem|skyscanner-cdn\.relevant-digital|\/g\/aps\/public\/api\/v1\/pixel|\/g\/tagging\/gtag\/js|\/g\/tagging\/gtm/i;
+    const STUB = '/* ad-tech blocked by skybox */';
+    function shouldBlock(url) { return typeof url === 'string' && BLOCK.test(url); }
+    // 1. Element.setAttribute('src', …)
+    const origSet = Element.prototype.setAttribute;
+    Element.prototype.setAttribute = function (name, value) {
+      if ((name === 'src' || name === 'href') && shouldBlock(value)) {
+        if (this.tagName === 'SCRIPT' || this.tagName === 'IFRAME' || this.tagName === 'IMG') {
+          // Don't set the attribute at all — leaves <script src=""> which doesn't load.
+          return undefined;
+        }
+      }
+      return origSet.apply(this, arguments);
+    };
+    // 1b. Direct property assignment: scriptEl.src = '...'  /  iframeEl.src = '...'
+    function patchSrcProp(proto) {
+      try {
+        const desc = Object.getOwnPropertyDescriptor(proto, 'src');
+        if (!desc || !desc.set) return;
+        Object.defineProperty(proto, 'src', {
+          configurable: true,
+          enumerable: desc.enumerable,
+          get() { return desc.get.call(this); },
+          set(v) { if (shouldBlock(v)) return; return desc.set.call(this, v); },
+        });
+      } catch (_) {}
+    }
+    patchSrcProp(HTMLScriptElement.prototype);
+    patchSrcProp(HTMLIFrameElement.prototype);
+    patchSrcProp(HTMLImageElement.prototype);
+    // 2. node-append: if a script/iframe element is added with a blocked src, stop it.
+    const origInsert = Node.prototype.insertBefore;
+    const origAppend = Node.prototype.appendChild;
+    function safeInsert(orig, parent, node, ref) {
+      try {
+        if (node && (node.tagName === 'SCRIPT' || node.tagName === 'IFRAME' || node.tagName === 'IMG')) {
+          const src = node.getAttribute && (node.getAttribute('src') || node.getAttribute('href'));
+          if (src && shouldBlock(src)) {
+            // Replace with an inert placeholder so caller's references stay valid.
+            const stub = document.createElement('span');
+            stub.setAttribute('data-skybox-blocked', src.slice(0, 80));
+            return orig.call(parent, stub, ref || null);
+          }
+        }
+      } catch (_) {}
+      return orig.call(parent, node, ref || null);
+    }
+    Node.prototype.appendChild = function (node) { return safeInsert(origAppend, this, node, null); };
+    Node.prototype.insertBefore = function (node, ref) { return safeInsert(origInsert, this, node, ref); };
+    // 3. fetch / XHR to blocked URLs — return empty 200.
+    const origFetch = window.fetch && window.fetch.bind(window);
+    if (origFetch) {
+      window.fetch = function (input, init) {
+        const url = typeof input === 'string' ? input : (input && input.url) || '';
+        if (shouldBlock(url)) return Promise.resolve(new Response('', { status: 204 }));
+        return origFetch(input, init);
+      };
+    }
+    const origOpen = XMLHttpRequest.prototype.open;
+    XMLHttpRequest.prototype.open = function (method, url) {
+      if (shouldBlock(url)) {
+        // Redirect to a 204 endpoint we control.
+        arguments[1] = '/_ad_blocked';
+      }
+      return origOpen.apply(this, arguments);
+    };
+    // 4. Safety net: MutationObserver catches iframes/scripts inserted via
+    // innerHTML or insertAdjacentHTML (which bypass appendChild + property setter).
+    function killIfBlocked(el) {
+      if (!el || el.nodeType !== 1) return;
+      const tag = el.tagName;
+      if (tag === 'IFRAME' || tag === 'SCRIPT' || tag === 'IMG') {
+        const src = el.getAttribute && (el.getAttribute('src') || el.getAttribute('href'));
+        if (src && shouldBlock(src)) {
+          el.remove && el.remove();
+          return;
+        }
+      }
+      // Recurse into children (insertAdjacentHTML may add a subtree).
+      if (el.querySelectorAll) {
+        el.querySelectorAll('iframe[src],script[src],img[src]').forEach((c) => {
+          const s = c.getAttribute('src');
+          if (s && shouldBlock(s)) c.remove();
+        });
+      }
+    }
+    const mo = new MutationObserver((muts) => {
+      for (const m of muts) for (const n of m.addedNodes) killIfBlocked(n);
+    });
+    function startObserver() {
+      if (document.documentElement) mo.observe(document.documentElement, { childList: true, subtree: true });
+      else document.addEventListener('DOMContentLoaded', startObserver, { once: true });
+    }
+    startObserver();
+  })();
+
+
+  // ===================================================================
   // Unified Skybox header. Injected onto every Skybox-built page so the
   // logo + Help / Regional / Saved / Log in chrome matches the captured
   // homepage header exactly. Skipped on captured pages that already have
@@ -118,24 +222,73 @@
       alert(j.message || 'Sent. Check your email for the sign-in link.');
     });
     hdr.querySelector('[data-sb-action="regional"]').addEventListener('click', () => {
-      alert('Regional settings: locale en-CA, currency CAD. Customisation coming soon.');
+      // Open a Skybox-native settings dialog (real <dialog>, not alert).
+      let dlg = document.getElementById('sb-regional-dlg');
+      if (!dlg) {
+        dlg = document.createElement('div');
+        dlg.id = 'sb-regional-dlg';
+        dlg.setAttribute('role', 'dialog');
+        dlg.setAttribute('aria-label', 'Regional settings');
+        dlg.style.cssText = 'position:fixed;inset:0;background:rgba(5,32,60,.5);display:flex;align-items:center;justify-content:center;z-index:100000;';
+        dlg.innerHTML = '<div style="background:#fff;border-radius:8px;padding:24px;max-width:380px;width:90%;font-family:\'Skybox Sans\',\'Skyscanner Relative\',sans-serif;">' +
+          '<h2 style="margin:0 0 12px;font-size:18px;color:#05203c;">Regional settings</h2>' +
+          '<div style="margin-bottom:12px;font-size:14px;color:#545860;">Locale, currency, and country.</div>' +
+          '<label style="display:block;margin-bottom:10px;font-size:13px;">Country<br><select id="sb-r-country" style="width:100%;padding:8px;border:1px solid #dadce0;border-radius:4px;"><option>Canada</option><option>United States</option><option>United Kingdom</option><option>France</option><option>Germany</option></select></label>' +
+          '<label style="display:block;margin-bottom:10px;font-size:13px;">Language<br><select id="sb-r-lang" style="width:100%;padding:8px;border:1px solid #dadce0;border-radius:4px;"><option>English (CA)</option><option>English (US)</option><option>English (UK)</option><option>Français</option></select></label>' +
+          '<label style="display:block;margin-bottom:16px;font-size:13px;">Currency<br><select id="sb-r-curr" style="width:100%;padding:8px;border:1px solid #dadce0;border-radius:4px;"><option>CAD — Canadian Dollar</option><option>USD — US Dollar</option><option>GBP — British Pound</option><option>EUR — Euro</option></select></label>' +
+          '<div style="display:flex;gap:8px;justify-content:flex-end;"><button type="button" id="sb-r-cancel" style="border:1px solid #dadce0;background:#fff;border-radius:24px;padding:8px 16px;font:inherit;cursor:pointer;">Cancel</button><button type="button" id="sb-r-save" style="border:0;background:#0062e3;color:#fff;border-radius:24px;padding:8px 16px;font:inherit;font-weight:700;cursor:pointer;">Save</button></div>' +
+          '</div>';
+        document.body.appendChild(dlg);
+        const close = () => dlg.remove();
+        dlg.addEventListener('click', (e) => { if (e.target === dlg) close(); });
+        dlg.querySelector('#sb-r-cancel').addEventListener('click', close);
+        dlg.querySelector('#sb-r-save').addEventListener('click', close);
+      }
     });
   }
   injectSkyboxHeader();
 
-  // Hide Stays/Hotels and Cars tabs across the cloned UI. CSS-only — does
-  // not touch any captured HTML. Targets the BPK tab list buttons by their
-  // accessible title attribute.
+  // Hotels / Cars verticals are completely deleted. Hide every nav tab,
+  // homepage card, and footer link that points at them.
   (function injectHideCSS() {
     const css = [
-      // Hide Stays / Hotels / Cars tabs everywhere they appear.
       'button[role="tab"][title="Stays"],',
       'button[role="tab"][title="Hotels"],',
       'button[role="tab"][title="Cars"],',
-      'a[href="/hotels"][class*="tab"],',
-      'a[href="/car-rental"][class*="tab"],',
-      'a[href="/carhire"][class*="tab"],',
-      // Hide "Add a place to stay" parallel-search checkbox (it would search hotels alongside flights).
+      // Hotel/stay links
+      'a[href="/hotels"],',
+      'a[href^="/hotels/"],',
+      'a[href^="/hotel/"],',
+      // Car rental links (every prefix the footer uses)
+      'a[href="/car-rental"],',
+      'a[href="/carhire"],',
+      'a[href^="/car-rental/"],',
+      'a[href^="/car-rental-in/"],',
+      'a[href^="/car-rental-from/"],',
+      'a[href^="/car-rentals/"],',
+      'a[href^="/carhire/"],',
+      // Footer SEO accordion groups for car hire
+      'div[id="car-hire-home"],',
+      'div[id="car-hire-group"],',
+      '[id^="car-hire-home-"],',
+      '[id^="car-hire-group-"],',
+      // "Our international sites" footer block (links to other regional Skyscanner sites)
+      'div[id="internationalSites-group"],',
+      '[id^="internationalSites-group"],',
+      '[class*="InternationalSites_sitesContainer"],',
+      '[class*="InternationalSiteCard"],',
+      // "Start planning your adventure" SEO internal-links section
+      '[data-tracking-element-id="internal_links"],',
+      '[class*="_InternalLinks_"],',
+      '[class*="_HeaderSection_"],',
+      '[class*="_TabGroup_"][class*="_MobileScroll_"],',
+      '[id^="tab-group-Country"],',
+      '[id^="tab-group-Airport"],',
+      '[id^="tab-group-City"],',
+      '[id^="tab-group-Region"],',
+      '[id^="tab-group-More-"],',
+      '[id^="link-block-"],',
+      // "Add a place to stay" parallel-search checkbox.
       '[class*="ParallelSearchOptionContainer"],',
       'label:has(> input[name="parallel-search-option"]),',
       'input[name="parallel-search-option"]',
@@ -256,6 +409,13 @@
       '[class*="scrim"]', '[class*="Scrim"]',
     ].join(',');
     let hidden = 0;
+    // First: move focus OUT of any modal so the upcoming aria-hidden does not
+    // hide a focused element (which is the a11y rule the browser warns about).
+    const active = document.activeElement;
+    if (active && active !== document.body) {
+      const insideModal = active.closest && active.closest(sel);
+      if (insideModal) { try { active.blur(); } catch (_) {} }
+    }
     document.querySelectorAll(sel).forEach((el) => {
       const cs = getComputedStyle(el);
       if (cs.display === 'none' || cs.visibility === 'hidden') return;
@@ -264,8 +424,17 @@
       const isOverlayPositioned = cs.position === 'fixed' || cs.position === 'absolute';
       const isDialog = el.getAttribute('role') === 'dialog' || /bpk-modal|\bModal\b/.test(el.className || '');
       if (!isDialog && !isOverlayPositioned) return;
+      // If a descendant has focus, blur it before adding aria-hidden so screen
+      // readers don't get a "focused element is hidden from assistive tech" state.
+      const focused = el.querySelector && el.querySelector(':focus');
+      if (focused) { try { focused.blur(); } catch (_) {} }
       el.style.setProperty('display', 'none', 'important');
-      el.setAttribute('aria-hidden', 'true');
+      // Prefer inert over aria-hidden (inert prevents focus too) when supported.
+      if ('inert' in HTMLElement.prototype) {
+        try { el.inert = true; } catch (_) { el.setAttribute('aria-hidden', 'true'); }
+      } else {
+        el.setAttribute('aria-hidden', 'true');
+      }
       hidden++;
     });
     // Restore body scroll if React locked it.
@@ -820,24 +989,26 @@
   }
 
   // ---------------- Hook every form field ----------------
+  // Use capture phase so we beat any captured React handler that might
+  // stopPropagation on the input/legend.
   document.addEventListener('click', (ev) => {
     if (ev.target.closest && ev.target.closest('.sb-pop')) return;
     const origin = ev.target.closest && ev.target.closest('#originInput-input, [for="originInput-input"], legend');
     if (origin && ev.target.closest('#originInput-input, [for="originInput-input"]')) {
-      ev.preventDefault(); ev.stopPropagation();
+      ev.preventDefault(); ev.stopPropagation(); ev.stopImmediatePropagation();
       openPlacePopover(ev.target.closest('fieldset, [class*="_origin"]') || ev.target, 'from');
       return;
     }
     const dest = ev.target.closest && ev.target.closest('#destinationInput-input, [for="destinationInput-input"]');
     if (dest) {
-      ev.preventDefault(); ev.stopPropagation();
+      ev.preventDefault(); ev.stopPropagation(); ev.stopImmediatePropagation();
       openPlacePopover(ev.target.closest('fieldset, [class*="_DestinationInput"]') || ev.target, 'to');
       return;
     }
     const departBtn = ev.target.closest && ev.target.closest('[data-testid="depart-btn"]');
-    if (departBtn) { ev.preventDefault(); ev.stopPropagation(); openDatePopover(departBtn, 'depart'); return; }
+    if (departBtn) { ev.preventDefault(); ev.stopPropagation(); ev.stopImmediatePropagation(); openDatePopover(departBtn, 'depart'); return; }
     const retBtn = ev.target.closest && ev.target.closest('[data-testid="return-btn"]');
-    if (retBtn) { ev.preventDefault(); ev.stopPropagation(); openDatePopover(retBtn, 'ret'); return; }
+    if (retBtn) { ev.preventDefault(); ev.stopPropagation(); ev.stopImmediatePropagation(); openDatePopover(retBtn, 'ret'); return; }
     const travBtn = ev.target.closest && ev.target.closest('[data-testid="traveller-button"]');
     if (travBtn) { ev.preventDefault(); ev.stopPropagation(); openTravellerPopover(travBtn); return; }
     // Trip type chip: aria-label starts with "Select trip type" OR title.

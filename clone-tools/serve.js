@@ -68,8 +68,9 @@ const server = http.createServer(wrap(async (req, res) => {
     if (handled) return;
   }
 
-  // Skybox is flights-only. Any path under the deleted Hotels/Cars verticals
-  // redirects to /flights so users can't get stuck on a 404.
+  // Skybox is flights-only — hotels and car-rental are completely deleted.
+  // Hard 410 (Gone) for direct URLs so users see a clean message and don't
+  // get stuck on a 404. Internal links/tabs are also hidden in the UI shim.
   if (/^\/(hotels|car-rental|carhire|car-rental-in|transport\/(hotels|cars))(\/|$|\?)/.test(pathname)) {
     res.writeHead(302, { Location: '/flights', 'Cache-Control': 'no-store' });
     return res.end();

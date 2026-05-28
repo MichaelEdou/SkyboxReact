@@ -12,6 +12,7 @@
 
 # ---- Playwright test outputs ----
 **/test-results/
+**/test-results-*/
 **/test-report/
 **/playwright-report/
 

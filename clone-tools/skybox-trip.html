@@ -159,13 +159,27 @@
     document.querySelector('#container').innerHTML = render(j);
     const cancelBtn = document.getElementById('cancelBtn');
     if (cancelBtn) cancelBtn.addEventListener('click', async () => {
-      if (!confirm('Cancel this booking? Refund per fare rules.')) return;
-      cancelBtn.disabled = true; cancelBtn.textContent = 'Cancelling…';
-      const r = await fetch('/skybox-api/orders/' + encodeURIComponent(id) + '/cancel', { method:'POST' });
-      const x = await r.json();
-      if (!r.ok || x.error) { alert(x.error?.message || 'cancel failed'); cancelBtn.disabled = false; cancelBtn.textContent = 'Cancel booking'; return; }
-      alert('Cancelled. Refund: ' + (x.refund_amount ? (x.refund_amount + ' ' + x.refund_currency) : 'none'));
-      location.reload();
+      // v2 split cancellation: quote refund first, ask user, then confirm.
+      cancelBtn.disabled = true; cancelBtn.textContent = 'Calculating refund…';
+      try {
+        const qr = await fetch('/skybox-api/orders/' + encodeURIComponent(id) + '/cancellation', { method:'POST', headers:{'content-type':'application/json'} });
+        const q = await qr.json();
+        if (!qr.ok || q.error) throw new Error(q.error?.message || 'cancellation quote failed');
+        const refundLine = q.refund_amount ? (q.refund_amount + ' ' + q.refund_currency) : 'No refund per fare rules';
+        const ok = confirm('Cancel this booking?\n\nRefund: ' + refundLine + '\nRefund to: ' + (q.refund_to || 'original method') + '\n\nPress OK to confirm cancellation.');
+        if (!ok) { cancelBtn.disabled = false; cancelBtn.textContent = 'Cancel booking'; return; }
+        cancelBtn.textContent = 'Cancelling…';
+        const cr = await fetch('/skybox-api/orders/' + encodeURIComponent(id) + '/cancellation/' + encodeURIComponent(q.cancellation_id) + '/confirm', {
+          method:'POST', headers:{'content-type':'application/json', 'Idempotency-Key': id + ':cancel:' + q.cancellation_id },
+        });
+        const x = await cr.json();
+        if (!cr.ok || x.error) throw new Error(x.error?.message || 'cancel confirm failed');
+        alert('Cancelled. Refund: ' + (x.refund_amount ? (x.refund_amount + ' ' + x.refund_currency) : 'none'));
+        location.reload();
+      } catch (e) {
+        alert(e.message);
+        cancelBtn.disabled = false; cancelBtn.textContent = 'Cancel booking';
+      }
     });
     const changeBtn = document.getElementById('changeBtn');
     if (changeBtn) changeBtn.addEventListener('click', () => openChangeModal(j));

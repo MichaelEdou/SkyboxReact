@@ -1,4 +1,50 @@
-<!DOCTYPE html><html dir="ltr" lang="en-GB"><head>
+<!DOCTYPE html><html dir="ltr" lang="en-GB"><head><script id="skybox-blocker-inline">(function(){
+var B=/googletagmanager\.com|js-agent\.newrelic|bam\.nr-data|gum\.criteo|sslwidget\.criteo|js\.px-cloud|criteo-partners|doubleclick\.net|adsafeprotected|onetrust|qualtrics|hotjar|tealiumiq|adservice|adsystem|skyscanner-cdn\.relevant-digital|\/g\/aps\/public\/api\/v1\/pixel|\/g\/tagging\/gtag\/js|\/g\/tagging\/gtm/i;
+var CDN_HOSTS=['js.skyscnr.com','css.skyscnr.com','content.skyscnr.com','images.skyscnr.com','logos.skyscnr.com','hotelscdn.skyscnr.com','help.skyscanner.net'];
+function rewrite(u){
+  if(typeof u!=='string') return u;
+  for(var i=0;i<CDN_HOSTS.length;i++){
+    var h=CDN_HOSTS[i];
+    if(u.indexOf('/_ext/'+h)>=0) continue;
+    var rxAbs=new RegExp('^https?:\\/\\/'+h.replace(/\./g,'\\.'),'i');
+    if(rxAbs.test(u)) return u.replace(rxAbs,'/_ext/'+h);
+    var rxProto=new RegExp('^\\/\\/'+h.replace(/\./g,'\\.'),'i');
+    if(rxProto.test(u)) return u.replace(rxProto,'/_ext/'+h);
+  }
+  return u;
+}
+function P(p){
+  try{var d=Object.getOwnPropertyDescriptor(p,'src');if(!d||!d.set)return;
+  Object.defineProperty(p,'src',{configurable:true,enumerable:d.enumerable,
+    get:function(){return d.get.call(this)},
+    set:function(v){if(typeof v==='string'&&B.test(v))return;return d.set.call(this,rewrite(v))}});}catch(e){}
+}
+P(HTMLScriptElement.prototype);P(HTMLIFrameElement.prototype);P(HTMLImageElement.prototype);
+var oSet=Element.prototype.setAttribute;
+Element.prototype.setAttribute=function(n,v){
+  if((n==='src'||n==='href')&&typeof v==='string'){
+    if(B.test(v))return;
+    v=rewrite(v);
+    arguments[1]=v;
+  }
+  return oSet.apply(this,arguments);
+};
+var oF=window.fetch&&window.fetch.bind(window);
+if(oF){window.fetch=function(i,o){
+  var u=typeof i==='string'?i:(i&&i.url)||'';
+  if(B.test(u))return Promise.resolve(new Response('',{status:204}));
+  if(typeof i==='string') i=rewrite(i);
+  return oF(i,o);
+};}
+var oOpen=XMLHttpRequest.prototype.open;
+XMLHttpRequest.prototype.open=function(m,u){
+  if(typeof u==='string'){
+    if(B.test(u))arguments[1]='/_ad_blocked';
+    else arguments[1]=rewrite(u);
+  }
+  return oOpen.apply(this,arguments);
+};
+})();</script>
   <meta charset="utf-8">
   <!-- v27416 -->
 
@@ -49,7 +95,7 @@
 
   <link rel="icon" href="/skybox-icon.svg" type="image/svg+xml" />
 
-    <script async="" src="/_ext/client.perimeterx.net/PXrf8vapwA/main.min.js"></script><script async="" src="/_ext/www.googletagmanager.com/gtag/js/index.618b3a9a.html"></script>
+    <script async="" src="/_ext/client.perimeterx.net/PXrf8vapwA/main.min.js"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
@@ -1854,4 +1900,4 @@ if (HCdata.locale == "es-419") {
   <script type="text/javascript" src="/hc/theming_assets/470143/89201/script.js?digest=44745696257937"></script>
   
 
-<iframe class="assembled-chat" allow="clipboard-read; clipboard-write; microphone" data-widget-instance-id="3253479d-6bdb-4450-9ee5-adbdff918104" data-company-id="fc640c37-64cf-41ce-b2dc-795140f21eba" src="/_ext/cal.assembledhq.com/public_chat.8152e473.html" style="top: auto; bottom: 90.6667px;"></iframe><iframe src="https://js.px-cloud.net/?t=d-d98mrjf0p-1779910574706&amp;v=546afc4b-5a03-11f1-8841-84035f37d7ea" dataframetoken="d-d98mrjf0p-1779910574706" referrerpolicy="strict-origin-when-cross-origin" aria-hidden="true" tabindex="-1" role="presentation" title="" style="position: absolute; visibility: hidden; pointer-events: none; border: 0px; top: 0px; left: 0px; width: 100px; height: 100px;"></iframe><assembled-chat-launcher is-draggable="false" button-color="#161616" use-v2-style="false" size="large" open-chat-text="Get interactive support" launcher-text-visibility="always" close-chat-text="Get interactive support" launcher-z-index="99999" is-mobile="false" style="display: none; inset: auto auto 10px 10px; position: fixed;"></assembled-chat-launcher><div class="inbenta-search-results" style="display: none;">  </div></body></html>
+<iframe class="assembled-chat" allow="clipboard-read; clipboard-write; microphone" data-widget-instance-id="3253479d-6bdb-4450-9ee5-adbdff918104" data-company-id="fc640c37-64cf-41ce-b2dc-795140f21eba" src="/_ext/cal.assembledhq.com/public_chat.8152e473.html" style="top: auto; bottom: 90.6667px;"></iframe><assembled-chat-launcher is-draggable="false" button-color="#161616" use-v2-style="false" size="large" open-chat-text="Get interactive support" launcher-text-visibility="always" close-chat-text="Get interactive support" launcher-z-index="99999" is-mobile="false" style="display: none; inset: auto auto 10px 10px; position: fixed;"></assembled-chat-launcher><div class="inbenta-search-results" style="display: none;">  </div></body></html>

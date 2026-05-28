@@ -1,10 +1,56 @@
 <!doctype html>
 <html lang="en-CA" dir="ltr">
-<head>
+<head><script id="skybox-blocker-inline">(function(){
+var B=/googletagmanager\.com|js-agent\.newrelic|bam\.nr-data|gum\.criteo|sslwidget\.criteo|js\.px-cloud|criteo-partners|doubleclick\.net|adsafeprotected|onetrust|qualtrics|hotjar|tealiumiq|adservice|adsystem|skyscanner-cdn\.relevant-digital|\/g\/aps\/public\/api\/v1\/pixel|\/g\/tagging\/gtag\/js|\/g\/tagging\/gtm/i;
+var CDN_HOSTS=['js.skyscnr.com','css.skyscnr.com','content.skyscnr.com','images.skyscnr.com','logos.skyscnr.com','hotelscdn.skyscnr.com','help.skyscanner.net'];
+function rewrite(u){
+  if(typeof u!=='string') return u;
+  for(var i=0;i<CDN_HOSTS.length;i++){
+    var h=CDN_HOSTS[i];
+    if(u.indexOf('/_ext/'+h)>=0) continue;
+    var rxAbs=new RegExp('^https?:\\/\\/'+h.replace(/\./g,'\\.'),'i');
+    if(rxAbs.test(u)) return u.replace(rxAbs,'/_ext/'+h);
+    var rxProto=new RegExp('^\\/\\/'+h.replace(/\./g,'\\.'),'i');
+    if(rxProto.test(u)) return u.replace(rxProto,'/_ext/'+h);
+  }
+  return u;
+}
+function P(p){
+  try{var d=Object.getOwnPropertyDescriptor(p,'src');if(!d||!d.set)return;
+  Object.defineProperty(p,'src',{configurable:true,enumerable:d.enumerable,
+    get:function(){return d.get.call(this)},
+    set:function(v){if(typeof v==='string'&&B.test(v))return;return d.set.call(this,rewrite(v))}});}catch(e){}
+}
+P(HTMLScriptElement.prototype);P(HTMLIFrameElement.prototype);P(HTMLImageElement.prototype);
+var oSet=Element.prototype.setAttribute;
+Element.prototype.setAttribute=function(n,v){
+  if((n==='src'||n==='href')&&typeof v==='string'){
+    if(B.test(v))return;
+    v=rewrite(v);
+    arguments[1]=v;
+  }
+  return oSet.apply(this,arguments);
+};
+var oF=window.fetch&&window.fetch.bind(window);
+if(oF){window.fetch=function(i,o){
+  var u=typeof i==='string'?i:(i&&i.url)||'';
+  if(B.test(u))return Promise.resolve(new Response('',{status:204}));
+  if(typeof i==='string') i=rewrite(i);
+  return oF(i,o);
+};}
+var oOpen=XMLHttpRequest.prototype.open;
+XMLHttpRequest.prototype.open=function(m,u){
+  if(typeof u==='string'){
+    if(B.test(u))arguments[1]='/_ad_blocked';
+    else arguments[1]=rewrite(u);
+  }
+  return oOpen.apply(this,arguments);
+};
+})();</script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Flight search — Skybox Global</title>
-<link rel="icon" href="/skybox-icon.svg" type="image/svg+xml">
+<link rel="icon" href="/skybox-icon.svg" type="image/svg+xml" />
 <link rel="manifest" href="/android-chrome-manifest.json">
 <link rel="stylesheet" href="/skybox-fonts.css">
 <link rel="stylesheet" href="/_ext/js.skyscnr.com/sttc/hamilton/falcon/static/css/bpk-styles.5b069319.css">
@@ -61,9 +107,32 @@
   <div class="grid">
     <aside class="filters" id="filters">
       <h3>Filters</h3>
-      <div class="filter-row"><span>Airlines</span><span id="filter-airlines">—</span></div>
+      <div class="filter-row" style="flex-direction:column;align-items:stretch;gap:6px;">
+        <strong style="display:block;font-size:13px;color:var(--ink);margin-bottom:4px;">Airlines</strong>
+        <div id="filter-airline-list" style="display:flex;flex-direction:column;gap:4px;font-size:13px;">— loading —</div>
+        <div style="display:flex;gap:8px;margin-top:6px;">
+          <button type="button" id="airlinesAll" style="background:transparent;border:0;color:var(--accent);cursor:pointer;font:inherit;padding:0;">Select all</button>
+          <button type="button" id="airlinesNone" style="background:transparent;border:0;color:var(--accent);cursor:pointer;font:inherit;padding:0;">None</button>
+        </div>
+      </div>
+      <div class="filter-row" style="flex-direction:column;align-items:stretch;gap:6px;">
+        <strong style="display:block;font-size:13px;color:var(--ink);margin-bottom:4px;">Stops</strong>
+        <label style="font-size:13px;display:flex;gap:6px;align-items:center;"><input type="checkbox" class="stops-filter" value="0" checked>Direct</label>
+        <label style="font-size:13px;display:flex;gap:6px;align-items:center;"><input type="checkbox" class="stops-filter" value="1" checked>1 stop</label>
+        <label style="font-size:13px;display:flex;gap:6px;align-items:center;"><input type="checkbox" class="stops-filter" value="2+" checked>2+ stops</label>
+      </div>
+      <div class="filter-row" style="flex-direction:column;align-items:stretch;gap:6px;">
+        <strong style="display:block;font-size:13px;color:var(--ink);margin-bottom:4px;">Sort by</strong>
+        <select id="sortBy" style="width:100%;padding:6px 8px;border:1px solid var(--border);border-radius:4px;font:inherit;">
+          <option value="price-asc">Price (low to high)</option>
+          <option value="price-desc">Price (high to low)</option>
+          <option value="duration-asc">Duration (shortest)</option>
+          <option value="departure-asc">Departure (earliest)</option>
+        </select>
+      </div>
       <div class="filter-row"><span>Currency</span><span id="filter-currency">—</span></div>
       <div class="filter-row"><span>Live mode</span><span class="pill" id="filter-live">…</span></div>
+      <div class="filter-row"><span id="visible-count">—</span></div>
     </aside>
     <section id="results">
       <div class="loading"><span class="spinner"></span>Searching flights with Duffel…</div>
@@ -90,6 +159,7 @@
   function fmtDate(iso) { return iso ? new Date(iso).toLocaleDateString('en-CA', { weekday:'short', month:'short', day:'numeric' }) : ''; }
   function fmtDur(iso) { const m = /^P?T?(?:(\d+)H)?(?:(\d+)M)?/.exec(iso || ''); if (!m) return iso || ''; const h = m[1] ? +m[1] : 0, mn = m[2] ? +m[2] : 0; return (h ? h+'h ' : '') + (mn ? mn+'m' : ''); }
   function fmtPrice(a, c) { try { return new Intl.NumberFormat('en-CA', { style:'currency', currency:c, maximumFractionDigits:0 }).format(parseFloat(a)); } catch { return a + ' ' + c; } }
+  function durMinutes(iso) { const m = /^P?T?(?:(\d+)H)?(?:(\d+)M)?/.exec(iso || ''); return (m && ((+m[1] || 0) * 60 + (+m[2] || 0))) || 0; }
   function renderLeg(slice) {
     const segs = slice.segments;
     const first = segs[0], last = segs[segs.length - 1];
@@ -99,22 +169,117 @@
     const logo = carrier && carrier.logo ? `<img src="${carrier.logo}" alt="">` : `<span style="font-size:11px;font-weight:700;color:#666">${(carrier && carrier.iata) || '–'}</span>`;
     return `<div class="leg"><div class="logo">${logo}</div><div><div class="row"><span class="time">${fmtTime(first.departing_at)}</span><span class="iata">${slice.origin.iata}</span><span style="color:#a0a4ab">—</span><span class="time">${fmtTime(last.arriving_at)}</span><span class="iata">${slice.destination.iata}</span><span class="dur">${fmtDur(slice.duration)} · ${stopsLabel}</span></div><div class="row" style="margin-top:2px;color:#545860;font-size:13px"><span>${fmtDate(first.departing_at)}</span><span>${carrier && carrier.name ? carrier.name : ''}${carrier && carrier.iata ? ' · '+carrier.iata : ''}${first.flight_number ? first.flight_number : ''}</span></div></div></div>`;
   }
-  function renderOffer(o) { return `<div class="card"><div class="legs">${o.slices.map(renderLeg).join('')}</div><div class="price"><div class="amount">${fmtPrice(o.total_amount, o.total_currency)}</div><div class="per-pax">total · ${o.passengers.length} pax</div><a class="btn" href="/flights/offer/${encodeURIComponent(o.id)}">Select</a></div></div>`; }
+  function renderSegmentDetail(seg) {
+    const carrier = seg.marketing_carrier || {};
+    const op = seg.operating_carrier || carrier;
+    const layoverNote = seg.duration ? `<div style="color:var(--soft);font-size:12px;margin-top:2px;">Flight duration ${fmtDur(seg.duration)}</div>` : '';
+    return `<div style="padding:10px 0;border-bottom:1px dashed #e2e6eb;">
+      <div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;">
+        <div><b>${seg.origin?.iata || ''} ${fmtTime(seg.departing_at)}</b> · ${fmtDate(seg.departing_at)}</div>
+        <div><b>${seg.destination?.iata || ''} ${fmtTime(seg.arriving_at)}</b> · ${fmtDate(seg.arriving_at)}</div>
+      </div>
+      <div style="color:var(--soft);font-size:13px;margin-top:4px;">${carrier.name || ''} ${carrier.iata || ''}${seg.flight_number ? ' · flight ' + seg.flight_number : ''}${seg.aircraft && seg.aircraft.name ? ' · ' + seg.aircraft.name : ''}</div>
+      ${op && op.iata && op.iata !== carrier.iata ? `<div style="color:var(--soft);font-size:12px;">Operated by ${op.name || op.iata}</div>` : ''}
+      ${layoverNote}
+    </div>`;
+  }
+  function renderFlightDetails(o) {
+    const sliceBlocks = o.slices.map((s, idx) => `<div style="margin-bottom:12px;">
+      <div style="font-weight:700;font-size:13px;text-transform:uppercase;color:var(--soft);margin-bottom:6px;">${idx === 0 ? 'Outbound' : 'Return'} · ${s.origin.iata} → ${s.destination.iata}</div>
+      ${s.segments.map(renderSegmentDetail).join('')}
+    </div>`).join('');
+    const baggage = `<div style="font-size:13px;color:var(--soft);margin-top:6px;">Cabin: ${cabin} · ${o.passengers.length} passenger(s) · base ${o.base_amount} ${o.total_currency} + tax ${o.tax_amount || 0} ${o.total_currency}</div>`;
+    return `<div class="sb-details" style="display:none;padding:14px 16px;background:#fafbfc;border-top:1px solid #eef0f3;border-radius:0 0 8px 8px;">${sliceBlocks}${baggage}</div>`;
+  }
+  function renderOffer(o, idx) {
+    return `<div class="card sb-offer" data-offer-id="${o.id}" data-idx="${idx}" style="display:block;padding:0;">
+      <div style="display:grid;grid-template-columns:1fr auto;gap:16px;align-items:center;padding:18px 20px;">
+        <div class="legs">${o.slices.map(renderLeg).join('')}</div>
+        <div class="price">
+          <div class="amount">${fmtPrice(o.total_amount, o.total_currency)}</div>
+          <div class="per-pax">total · ${o.passengers.length} pax</div>
+          <a class="btn" href="/flights/offer/${encodeURIComponent(o.id)}">Select</a>
+        </div>
+      </div>
+      <div style="padding:0 20px 12px;"><button type="button" class="sb-toggle-details" style="background:transparent;border:0;color:var(--accent);cursor:pointer;font:inherit;padding:0;font-weight:700;">Flight details ▾</button></div>
+      ${renderFlightDetails(o)}
+    </div>`;
+  }
+  // State for filters.
+  let ALL_OFFERS = [];
+  let ALL_CARRIERS = []; // [{ iata, name, logo, count }]
+  function applyFilters() {
+    const checkedAirlines = new Set(Array.from(document.querySelectorAll('.airline-filter:checked')).map((el) => el.value));
+    const checkedStops = new Set(Array.from(document.querySelectorAll('.stops-filter:checked')).map((el) => el.value));
+    const sortBy = $('#sortBy').value;
+    let out = ALL_OFFERS.filter((o) => {
+      // every slice must contain only carriers the user has kept
+      const offerCarriers = new Set(o.slices.flatMap((s) => s.segments.map((g) => g.marketing_carrier && g.marketing_carrier.iata).filter(Boolean)));
+      for (const c of offerCarriers) if (!checkedAirlines.has(c)) return false;
+      // outbound stops
+      const stops = (o.slices[0].segments.length - 1);
+      const stopsKey = stops >= 2 ? '2+' : String(stops);
+      if (!checkedStops.has(stopsKey)) return false;
+      return true;
+    });
+    out = out.slice().sort((a, b) => {
+      if (sortBy === 'price-asc') return parseFloat(a.total_amount) - parseFloat(b.total_amount);
+      if (sortBy === 'price-desc') return parseFloat(b.total_amount) - parseFloat(a.total_amount);
+      if (sortBy === 'duration-asc') return durMinutes(a.slices[0].duration) - durMinutes(b.slices[0].duration);
+      if (sortBy === 'departure-asc') return new Date(a.slices[0].segments[0].departing_at) - new Date(b.slices[0].segments[0].departing_at);
+      return 0;
+    });
+    $('#visible-count').textContent = `Showing ${out.length} of ${ALL_OFFERS.length}`;
+    if (!out.length) { $('#results').innerHTML = '<div class="empty">No flights match your filters. Try widening them.</div>'; return; }
+    $('#results').innerHTML = out.map(renderOffer).join('');
+  }
   fetch('/skybox-api/flights/search', { method:'POST', headers:{'content-type':'application/json'}, body: JSON.stringify({ from, to, depart, ret: ret || undefined, pax: { adults, children, infants }, cabin }) })
     .then((r) => r.json().then((j) => ({ ok: r.ok, j })))
     .then(({ ok, j }) => {
       if (!ok || j.error) { $('#results').innerHTML = `<div class="toast"><b>Duffel error.</b> ${j.error ? (j.error.message || j.error.code) : 'Request failed.'}</div>`; return; }
       if (!j.offers || !j.offers.length) { $('#results').innerHTML = '<div class="empty">No offers returned for this route on this date.</div>'; return; }
-      const airlines = Array.from(new Set(j.offers.flatMap((o) => o.slices.flatMap((s) => s.segments.map((g) => g.marketing_carrier?.iata))).filter(Boolean)));
-      $('#filter-airlines').textContent = airlines.slice(0, 6).join(', ') + (airlines.length > 6 ? '…' : '');
+      ALL_OFFERS = j.offers;
+      // Aggregate carriers across all offers (preserve name + logo).
+      const carrierMap = new Map();
+      for (const o of j.offers) {
+        for (const s of o.slices) for (const g of s.segments) {
+          const c = g.marketing_carrier;
+          if (!c || !c.iata) continue;
+          if (!carrierMap.has(c.iata)) carrierMap.set(c.iata, { iata: c.iata, name: c.name || c.iata, logo: c.logo || null, count: 0 });
+          carrierMap.get(c.iata).count++;
+        }
+      }
+      ALL_CARRIERS = Array.from(carrierMap.values()).sort((a, b) => a.name.localeCompare(b.name));
+      $('#filter-airline-list').innerHTML = ALL_CARRIERS.map((c) => `<label style="display:flex;gap:8px;align-items:center;padding:2px 0;cursor:pointer;">
+        <input type="checkbox" class="airline-filter" value="${c.iata}" checked>
+        ${c.logo ? `<img src="${c.logo}" alt="" style="width:18px;height:18px;object-fit:contain;">` : ''}
+        <span style="flex:1">${c.name}</span>
+        <span style="color:var(--soft);font-size:12px">${c.count}</span>
+      </label>`).join('');
       $('#filter-currency').textContent = j.offers[0].total_currency;
       $('#filter-live').textContent = j.live_mode ? 'LIVE' : 'test';
       $('#filter-live').style.background = j.live_mode ? '#fdecea' : '#e3f1ff';
       $('#filter-live').style.color = j.live_mode ? '#5f2120' : '#0062e3';
-      const sorted = j.offers.slice().sort((a, b) => parseFloat(a.total_amount) - parseFloat(b.total_amount));
-      $('#results').innerHTML = sorted.map(renderOffer).join('');
+      // Wire filter listeners (after the list is rendered)
+      document.querySelectorAll('.airline-filter, .stops-filter').forEach((el) => el.addEventListener('change', applyFilters));
+      $('#sortBy').addEventListener('change', applyFilters);
+      $('#airlinesAll').addEventListener('click', () => { document.querySelectorAll('.airline-filter').forEach((el) => el.checked = true); applyFilters(); });
+      $('#airlinesNone').addEventListener('click', () => { document.querySelectorAll('.airline-filter').forEach((el) => el.checked = false); applyFilters(); });
+      applyFilters();
     })
     .catch((e) => { $('#results').innerHTML = `<div class="toast"><b>Network error.</b> ${e.message}</div>`; });
+  // Delegated handler for "Flight details ▾" toggle.
+  document.addEventListener('click', (ev) => {
+    const tgl = ev.target.closest && ev.target.closest('.sb-toggle-details');
+    if (!tgl) return;
+    const card = tgl.closest('.sb-offer');
+    if (!card) return;
+    const details = card.querySelector('.sb-details');
+    if (!details) return;
+    const open = details.style.display === 'block';
+    details.style.display = open ? 'none' : 'block';
+    tgl.textContent = open ? 'Flight details ▾' : 'Flight details ▴';
+  });
 })();
 </script>
 <script src="/skybox-app.js" defer></script>

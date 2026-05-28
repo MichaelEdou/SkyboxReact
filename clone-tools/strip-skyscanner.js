@@ -11,6 +11,25 @@ const OUT_DIR = path.resolve(process.argv[2] || path.resolve(__dirname, '..', 'g
 
 // Regexes (each anchored to a meta/link tag to avoid touching unrelated text).
 const STRIPS = [
+  // Ad-tech scripts and frames — these fail CSP at runtime and contribute
+  // zero functional value. Strip from the captured HTML before serving.
+  /<script[^>]*src=["'][^"']*googletagmanager\.com[^"']*["'][^>]*>\s*<\/script>/gi,
+  /<script[^>]*src=["'][^"']*js-agent\.newrelic\.com[^"']*["'][^>]*>\s*<\/script>/gi,
+  /<script[^>]*src=["'][^"']*bam\.nr-data\.net[^"']*["'][^>]*>\s*<\/script>/gi,
+  /<script[^>]*src=["'][^"']*gum\.criteo\.com[^"']*["'][^>]*>\s*<\/script>/gi,
+  /<script[^>]*src=["'][^"']*onetrust[^"']*["'][^>]*>\s*<\/script>/gi,
+  /<script[^>]*src=["'][^"']*siteintercept\.qualtrics[^"']*["'][^>]*>\s*<\/script>/gi,
+  /<script[^>]*src=["'][^"']*static\.adsafeprotected[^"']*["'][^>]*>\s*<\/script>/gi,
+  /<script[^>]*src=["'][^"']*sslwidget\.criteo[^"']*["'][^>]*>\s*<\/script>/gi,
+  /<iframe[^>]*src=["'][^"']*gum\.criteo\.com[^"']*["'][^>]*>\s*<\/iframe>/gi,
+  /<iframe[^>]*src=["'][^"']*js\.px-cloud\.net[^"']*["'][^>]*>\s*<\/iframe>/gi,
+  /<iframe[^>]*src=["'][^"']*criteo-partners[^"']*["'][^>]*>\s*<\/iframe>/gi,
+  /<iframe[^>]*src=["'][^"']*doubleclick\.net[^"']*["'][^>]*>\s*<\/iframe>/gi,
+  /<img[^>]*src=["'][^"']*\/g\/aps\/public\/api\/v1\/pixel\/view[^"']*["'][^>]*>/gi,
+  // The captured /g/tagging/gtag/js endpoint returns JSON, not JS — strip the
+  // <script> that tries to execute it as JS.
+  /<script[^>]*src=["'][^"']*\/g\/tagging\/gtag\/js[^"']*["'][^>]*>\s*<\/script>/gi,
+  /<script[^>]*src=["'][^"']*\/g\/tagging\/gtm[^"']*["'][^>]*>\s*<\/script>/gi,
   /<meta\s+name="y_key"[^>]*>\s*/gi,
   /<meta\s+name="yandex-verification"[^>]*>\s*/gi,
   /<meta\s+name="naver-site-verification"[^>]*>\s*/gi,
@@ -40,6 +59,60 @@ const REPLACE = [
   [/<link\s+rel="shortcut icon"[^>]*>/gi, ''],
 ];
 
+// Tiny ad-tech blocker + runtime URL rewriter injected at the TOP of every
+// <head> so it runs before any async/inline script (including the captured
+// criteo/perimeter loaders and React-chunk lazy loaders).
+// - BLOCK regex: silently dropped (no CSP error, no network request).
+// - REWRITE regex: protocol-relative / absolute skyscnr CDN URLs are remapped
+//   to local /_ext/<host>/... so they hit our mirror instead of the network.
+const BLOCKER_INLINE = `<script>(function(){
+var B=/googletagmanager\\.com|js-agent\\.newrelic|bam\\.nr-data|gum\\.criteo|sslwidget\\.criteo|js\\.px-cloud|criteo-partners|doubleclick\\.net|adsafeprotected|onetrust|qualtrics|hotjar|tealiumiq|adservice|adsystem|skyscanner-cdn\\.relevant-digital|\\/g\\/aps\\/public\\/api\\/v1\\/pixel|\\/g\\/tagging\\/gtag\\/js|\\/g\\/tagging\\/gtm/i;
+var CDN_HOSTS=['js.skyscnr.com','css.skyscnr.com','content.skyscnr.com','images.skyscnr.com','logos.skyscnr.com','hotelscdn.skyscnr.com','help.skyscanner.net'];
+function rewrite(u){
+  if(typeof u!=='string') return u;
+  for(var i=0;i<CDN_HOSTS.length;i++){
+    var h=CDN_HOSTS[i];
+    if(u.indexOf('/_ext/'+h)>=0) continue;
+    var rxAbs=new RegExp('^https?:\\\\/\\\\/'+h.replace(/\\./g,'\\\\.'),'i');
+    if(rxAbs.test(u)) return u.replace(rxAbs,'/_ext/'+h);
+    var rxProto=new RegExp('^\\\\/\\\\/'+h.replace(/\\./g,'\\\\.'),'i');
+    if(rxProto.test(u)) return u.replace(rxProto,'/_ext/'+h);
+  }
+  return u;
+}
+function P(p){
+  try{var d=Object.getOwnPropertyDescriptor(p,'src');if(!d||!d.set)return;
+  Object.defineProperty(p,'src',{configurable:true,enumerable:d.enumerable,
+    get:function(){return d.get.call(this)},
+    set:function(v){if(typeof v==='string'&&B.test(v))return;return d.set.call(this,rewrite(v))}});}catch(e){}
+}
+P(HTMLScriptElement.prototype);P(HTMLIFrameElement.prototype);P(HTMLImageElement.prototype);
+var oSet=Element.prototype.setAttribute;
+Element.prototype.setAttribute=function(n,v){
+  if((n==='src'||n==='href')&&typeof v==='string'){
+    if(B.test(v))return;
+    v=rewrite(v);
+    arguments[1]=v;
+  }
+  return oSet.apply(this,arguments);
+};
+var oF=window.fetch&&window.fetch.bind(window);
+if(oF){window.fetch=function(i,o){
+  var u=typeof i==='string'?i:(i&&i.url)||'';
+  if(B.test(u))return Promise.resolve(new Response('',{status:204}));
+  if(typeof i==='string') i=rewrite(i);
+  return oF(i,o);
+};}
+var oOpen=XMLHttpRequest.prototype.open;
+XMLHttpRequest.prototype.open=function(m,u){
+  if(typeof u==='string'){
+    if(B.test(u))arguments[1]='/_ad_blocked';
+    else arguments[1]=rewrite(u);
+  }
+  return oOpen.apply(this,arguments);
+};
+})();</script>`;
+
 let filesChanged = 0, totalStripped = 0;
 
 function walk(dir) {
@@ -55,6 +128,13 @@ function processFile(file) {
   const before = html;
   for (const re of STRIPS) html = html.replace(re, () => { totalStripped++; return ''; });
   for (const [re, rep] of REPLACE) html = html.replace(re, rep);
+  // Inject (or replace) the blocker as the first thing inside <head>.
+  if (/<head[^>]*>/i.test(html)) {
+    // Remove existing copy first.
+    html = html.replace(/<script id="skybox-blocker-inline">[\s\S]*?<\/script>/g, '');
+    const inner = BLOCKER_INLINE.replace(/^<script>|<\/script>$/g, '');
+    html = html.replace(/<head([^>]*)>/i, '<head$1><script id="skybox-blocker-inline">' + inner + '</script>');
+  }
   if (html !== before) { fs.writeFileSync(file, html); filesChanged++; }
 }
 

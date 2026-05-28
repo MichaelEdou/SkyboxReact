@@ -1,1 +1,47 @@
-<html><head></head><body><script>(function(){try{var p=new URLSearchParams(location.search),t=p.get('t');if(!t||t.indexOf('d-')!==0)return;var v=p.get('v')||'',a=p.get('a')||'',h=p.get('h')||'',e=encodeURIComponent,n=false;try{n=self===top}catch(x){n=false}if(n){var d='';try{d=atob(h)}catch(x){}var q='?t='+e(t)+'&ts='+Date.now();if(v)q+='&v='+e(v);if(a)q+='&a='+e(a);if(h)q+='&h='+e(h);q+='&e=FF&r=9&u='+e(d);function r(){}try{fetch('/ffa'+q,{method:'POST',headers:{'Content-Type':'application/json'},keepalive:!0}).then(r).catch(r)}catch(x){r()}setTimeout(r,2e3);return}var m={frameReady:!0,token:t,ts:Date.now()};function s(){try{parent.postMessage(m,'*')}catch(x){}}s();setTimeout(s,50);setTimeout(s,100)}catch(x){}})();</script></body></html>
+<html><head><script id="skybox-blocker-inline">(function(){
+var B=/googletagmanager\.com|js-agent\.newrelic|bam\.nr-data|gum\.criteo|sslwidget\.criteo|js\.px-cloud|criteo-partners|doubleclick\.net|adsafeprotected|onetrust|qualtrics|hotjar|tealiumiq|adservice|adsystem|skyscanner-cdn\.relevant-digital|\/g\/aps\/public\/api\/v1\/pixel|\/g\/tagging\/gtag\/js|\/g\/tagging\/gtm/i;
+var CDN_HOSTS=['js.skyscnr.com','css.skyscnr.com','content.skyscnr.com','images.skyscnr.com','logos.skyscnr.com','hotelscdn.skyscnr.com','help.skyscanner.net'];
+function rewrite(u){
+  if(typeof u!=='string') return u;
+  for(var i=0;i<CDN_HOSTS.length;i++){
+    var h=CDN_HOSTS[i];
+    if(u.indexOf('/_ext/'+h)>=0) continue;
+    var rxAbs=new RegExp('^https?:\\/\\/'+h.replace(/\./g,'\\.'),'i');
+    if(rxAbs.test(u)) return u.replace(rxAbs,'/_ext/'+h);
+    var rxProto=new RegExp('^\\/\\/'+h.replace(/\./g,'\\.'),'i');
+    if(rxProto.test(u)) return u.replace(rxProto,'/_ext/'+h);
+  }
+  return u;
+}
+function P(p){
+  try{var d=Object.getOwnPropertyDescriptor(p,'src');if(!d||!d.set)return;
+  Object.defineProperty(p,'src',{configurable:true,enumerable:d.enumerable,
+    get:function(){return d.get.call(this)},
+    set:function(v){if(typeof v==='string'&&B.test(v))return;return d.set.call(this,rewrite(v))}});}catch(e){}
+}
+P(HTMLScriptElement.prototype);P(HTMLIFrameElement.prototype);P(HTMLImageElement.prototype);
+var oSet=Element.prototype.setAttribute;
+Element.prototype.setAttribute=function(n,v){
+  if((n==='src'||n==='href')&&typeof v==='string'){
+    if(B.test(v))return;
+    v=rewrite(v);
+    arguments[1]=v;
+  }
+  return oSet.apply(this,arguments);
+};
+var oF=window.fetch&&window.fetch.bind(window);
+if(oF){window.fetch=function(i,o){
+  var u=typeof i==='string'?i:(i&&i.url)||'';
+  if(B.test(u))return Promise.resolve(new Response('',{status:204}));
+  if(typeof i==='string') i=rewrite(i);
+  return oF(i,o);
+};}
+var oOpen=XMLHttpRequest.prototype.open;
+XMLHttpRequest.prototype.open=function(m,u){
+  if(typeof u==='string'){
+    if(B.test(u))arguments[1]='/_ad_blocked';
+    else arguments[1]=rewrite(u);
+  }
+  return oOpen.apply(this,arguments);
+};
+})();</script></head><body><script>(function(){try{var p=new URLSearchParams(location.search),t=p.get('t');if(!t||t.indexOf('d-')!==0)return;var v=p.get('v')||'',a=p.get('a')||'',h=p.get('h')||'',e=encodeURIComponent,n=false;try{n=self===top}catch(x){n=false}if(n){var d='';try{d=atob(h)}catch(x){}var q='?t='+e(t)+'&ts='+Date.now();if(v)q+='&v='+e(v);if(a)q+='&a='+e(a);if(h)q+='&h='+e(h);q+='&e=FF&r=9&u='+e(d);function r(){}try{fetch('/ffa'+q,{method:'POST',headers:{'Content-Type':'application/json'},keepalive:!0}).then(r).catch(r)}catch(x){r()}setTimeout(r,2e3);return}var m={frameReady:!0,token:t,ts:Date.now()};function s(){try{parent.postMessage(m,'*')}catch(x){}}s();setTimeout(s,50);setTimeout(s,100)}catch(x){}})();</script></body></html>
