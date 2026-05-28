@@ -1,0 +1,41 @@
+# Fly.io app config for Skybox Global.
+# Replace `app` with the name you pick during `fly launch` (or run
+# `fly apps create skybox-global` then keep it as below).
+
+app = "skybox-global"
+primary_region = "yyz"   # Toronto — closest to where the client is. Change if needed.
+
+[build]
+  dockerfile = "Dockerfile"
+
+[env]
+  NODE_ENV = "production"
+  APP_PORT = "8080"
+  # APP_URL is set as a secret so it matches the real Fly hostname.
+  # DUFFEL_LIVE_MODE = "true"  # set via `fly secrets` to match your key.
+
+# Persistent volume so SQLite survives deploys.
+# (You can swap to Neon/Postgres later by updating DATABASE_URL secret only.)
+[mounts]
+  source = "skybox_data"
+  destination = "/data"
+
+[http_service]
+  internal_port = 8080
+  force_https = true
+  auto_stop_machines = "stop"
+  auto_start_machines = true
+  min_machines_running = 1   # demo quality — no cold starts
+  processes = ["app"]
+
+  [[http_service.checks]]
+    grace_period = "10s"
+    interval = "30s"
+    method = "GET"
+    timeout = "5s"
+    path = "/skybox-api/health"
+
+[[vm]]
+  size = "shared-cpu-1x"
+  memory = "512mb"
+  cpus = 1
