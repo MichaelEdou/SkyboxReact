@@ -151,6 +151,70 @@
     try { console.log.apply(console, ['[skybox]'].concat([].slice.call(arguments))); } catch (_) {}
   }
 
+  // BPK Accordion items — captured HTML ships them collapsed and the original
+  // React handler isn't wired in the static clone. Delegate clicks on the
+  // toggle buttons (capture phase so we beat any captured React handler) and
+  // animate open/close.
+  document.addEventListener('click', (ev) => {
+    const btn = ev.target.closest && ev.target.closest('button[class*="BpkAccordionItem_bpk-accordion__toggle-button"]');
+    if (!btn) return;
+    const item = btn.closest('[class*="bpk-accordion__item"]');
+    if (!item) return;
+    ev.preventDefault();
+    ev.stopImmediatePropagation();
+    const contentId = btn.getAttribute('aria-controls');
+    const container = contentId ? document.getElementById(contentId)
+                                : item.querySelector('[class*="BpkAccordionItem_bpk-accordion__content-container"]');
+    if (!container) return;
+    const animator = container.firstElementChild; // <div style="height:0; overflow:hidden; transition: height 200ms;">
+    const inner = animator && animator.firstElementChild; // <div style="display:none;">
+    const expanded = btn.getAttribute('aria-expanded') === 'true';
+    const icon = btn.querySelector('[class*="bpk-accordion__icon-wrapper"]');
+    if (expanded) {
+      // Closing
+      btn.setAttribute('aria-expanded', 'false');
+      if (animator) {
+        animator.style.height = animator.scrollHeight + 'px';
+        // Force reflow
+        animator.offsetHeight; // eslint-disable-line no-unused-expressions
+        animator.style.transition = 'height 200ms ease';
+        animator.style.height = '0px';
+        animator.style.overflow = 'hidden';
+        animator.addEventListener('transitionend', function once() {
+          animator.removeEventListener('transitionend', once);
+          if (inner) inner.style.display = 'none';
+        });
+      }
+      if (icon) icon.style.transform = '';
+    } else {
+      // Opening
+      btn.setAttribute('aria-expanded', 'true');
+      if (inner) inner.style.display = '';
+      if (animator) {
+        animator.style.transition = 'height 200ms ease';
+        animator.style.overflow = 'hidden';
+        animator.style.height = '0px';
+        // Force reflow
+        animator.offsetHeight; // eslint-disable-line no-unused-expressions
+        const target = animator.scrollHeight;
+        animator.style.height = target + 'px';
+        animator.addEventListener('transitionend', function once() {
+          animator.removeEventListener('transitionend', once);
+          animator.style.height = 'auto';
+          animator.style.overflow = '';
+        });
+      }
+      if (icon) icon.style.transform = 'rotate(180deg)';
+    }
+  }, true); // capture phase
+  // Ensure icons rotate smoothly (captured CSS doesn't set a transition on the wrapper).
+  (function injectAccordionCss() {
+    const tag = document.createElement('style');
+    tag.id = 'sb-accordion-css';
+    tag.textContent = '[class*="bpk-accordion__icon-wrapper"]{transition:transform 200ms ease;display:inline-block;will-change:transform;}';
+    (document.head || document.documentElement).appendChild(tag);
+  })();
+
   // Homepage tabs: navigate to vertical landing pages.
   const HOMEPAGE_TAB_TARGETS = { Flights: '/flights', Hotels: '/hotels', Cars: '/car-rental' };
   document.addEventListener('click', function (ev) {

@@ -1,0 +1,27 @@
+/* Skybox Global — same typography as the captured BPK build.
+ * Aliases each weight under both "Skybox Sans" (for Skybox pages) and
+ * "Skyscanner Relative" (for captured pages that still use that family).
+ * All .woff2 files are local at /_ext/js.skyscnr.com/sttc/bpk-fonts/.
+ */
+@font-face { font-family: "Skybox Sans"; font-style: normal; font-weight: 400; font-display: swap;
+  src: url(/_ext/js.skyscnr.com/sttc/bpk-fonts/SkyscannerRelative-Book-f9356ad6.woff2) format("woff2"); }
+@font-face { font-family: "Skybox Sans"; font-style: italic; font-weight: 400; font-display: swap;
+  src: url(/_ext/js.skyscnr.com/sttc/bpk-fonts/SkyscannerRelative-Italic-10532ac3.woff2) format("woff2"); }
+@font-face { font-family: "Skybox Sans"; font-style: normal; font-weight: 500; font-display: swap;
+  src: url(/_ext/js.skyscnr.com/sttc/bpk-fonts/SkyscannerRelative-Medium-c08dc28b.woff2) format("woff2"); }
+@font-face { font-family: "Skybox Sans"; font-style: normal; font-weight: 700; font-display: swap;
+  src: url(/_ext/js.skyscnr.com/sttc/bpk-fonts/SkyscannerRelative-Bold-8545937e.woff2) format("woff2"); }
+@font-face { font-family: "Skybox Sans"; font-style: normal; font-weight: 900; font-display: swap;
+  src: url(/_ext/js.skyscnr.com/sttc/bpk-fonts/SkyscannerRelative-Black-bb3c9434.woff2) format("woff2"); }
+
+/* Same files, aliased under the legacy family name so captured chunk CSS still resolves. */
+@font-face { font-family: "Skyscanner Relative"; font-style: normal; font-weight: 400; font-display: swap;
+  src: url(/_ext/js.skyscnr.com/sttc/bpk-fonts/SkyscannerRelative-Book-f9356ad6.woff2) format("woff2"); }
+@font-face { font-family: "Skyscanner Relative"; font-style: italic; font-weight: 400; font-display: swap;
+  src: url(/_ext/js.skyscnr.com/sttc/bpk-fonts/SkyscannerRelative-Italic-10532ac3.woff2) format("woff2"); }
+@font-face { font-family: "Skyscanner Relative"; font-style: normal; font-weight: 500; font-display: swap;
+  src: url(/_ext/js.skyscnr.com/sttc/bpk-fonts/SkyscannerRelative-Medium-c08dc28b.woff2) format("woff2"); }
+@font-face { font-family: "Skyscanner Relative"; font-style: normal; font-weight: 700; font-display: swap;
+  src: url(/_ext/js.skyscnr.com/sttc/bpk-fonts/SkyscannerRelative-Bold-8545937e.woff2) format("woff2"); }
+@font-face { font-family: "Skyscanner Relative"; font-style: normal; font-weight: 900; font-display: swap;
+  src: url(/_ext/js.skyscnr.com/sttc/bpk-fonts/SkyscannerRelative-Black-bb3c9434.woff2) format("woff2"); }
